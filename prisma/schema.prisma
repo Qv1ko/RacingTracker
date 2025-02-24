@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Driver {
+  id             BigInt           @id @default(autoincrement())
+  name           String           @db.VarChar(50)
+  surname        String           @db.VarChar(100)
+  nationality    String?          @db.VarChar(100)
+  participations Participation[]
+
+  @@unique([name, surname], map: "name")
+  @@index([nationality], map: "idx_drivers_nationality")
+  @@map("drivers")
+}
+
+model Participation {
+  id           BigInt   @id @default(autoincrement())
+  driverId     BigInt
+  teamId       BigInt?
+  raceId       BigInt
+  position     Int      @db.UnsignedTinyInt
+  driverPoints Decimal  @default(0.00) @db.Decimal(5, 2)
+  uncertainty  Decimal  @default(0.00) @db.Decimal(5, 2)
+  teamPoints   Decimal? @default(0.00) @db.Decimal(5, 2)
+  drivers      Driver  @relation(fields: [driverId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_driver")
+  races        Race    @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_race")
+  teams        Team?   @relation(fields: [teamId], references: [id], onUpdate: Restrict, map: "fk_participations_team")
+
+  @@unique([driverId, raceId], map: "driver_id")
+  @@index([driverId], map: "idx_participations_driver")
+  @@index([position], map: "idx_participations_position")
+  @@index([raceId], map: "idx_participations_race")
+  @@index([teamId], map: "idx_participations_team")
+  @@map("participations")
+}
+
+model Race {
+  id             BigInt           @id @default(autoincrement())
+  name           String           @db.VarChar(100)
+  date           DateTime         @db.Date
+  participations Participation[]
+
+  @@unique([name, date], map: "name")
+  @@index([date], map: "idx_races_date")
+  @@map("races")
+}
+
+model Team {
+  id             BigInt           @id @default(autoincrement())
+  name           String           @unique(map: "name") @db.VarChar(100)
+  nationality    String?          @db.VarChar(100)
+  color          String?          @db.Char(7)
+  participations Participation[]
+
+  @@index([nationality], map: "idx_teams_nationality")
+  @@map("teams")
+}
