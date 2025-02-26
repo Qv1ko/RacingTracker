@@ -8,10 +8,10 @@ datasource db {
 }
 
 model Driver {
-  id             BigInt           @id @default(autoincrement())
-  name           String           @db.VarChar(50)
-  surname        String           @db.VarChar(100)
-  nationality    String?          @db.VarChar(100)
+  id             BigInt          @id @default(autoincrement())
+  name           String          @db.VarChar(50)
+  surname        String          @db.VarChar(100)
+  nationality    String?         @db.VarChar(100)
   participations Participation[]
 
   @@unique([name, surname], map: "name")
@@ -24,13 +24,13 @@ model Participation {
   driverId     BigInt
   teamId       BigInt?
   raceId       BigInt
-  position     Int      @db.UnsignedTinyInt
+  position     String   @db.VarChar(4)
   driverPoints Decimal  @default(0.00) @db.Decimal(5, 2)
   uncertainty  Decimal  @default(0.00) @db.Decimal(5, 2)
   teamPoints   Decimal? @default(0.00) @db.Decimal(5, 2)
-  drivers      Driver  @relation(fields: [driverId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_driver")
-  races        Race    @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_race")
-  teams        Team?   @relation(fields: [teamId], references: [id], onUpdate: Restrict, map: "fk_participations_team")
+  drivers      Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_driver")
+  races        Race     @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_race")
+  teams        Team?    @relation(fields: [teamId], references: [id], onUpdate: Restrict, map: "fk_participations_team")
 
   @@unique([driverId, raceId], map: "driver_id")
   @@index([driverId], map: "idx_participations_driver")
@@ -41,9 +41,9 @@ model Participation {
 }
 
 model Race {
-  id             BigInt           @id @default(autoincrement())
-  name           String           @db.VarChar(100)
-  date           DateTime         @db.Date
+  id             BigInt          @id @default(autoincrement())
+  name           String          @db.VarChar(100)
+  date           DateTime        @db.Date
   participations Participation[]
 
   @@unique([name, date], map: "name")
@@ -52,10 +52,10 @@ model Race {
 }
 
 model Team {
-  id             BigInt           @id @default(autoincrement())
-  name           String           @unique(map: "name") @db.VarChar(100)
-  nationality    String?          @db.VarChar(100)
-  color          String?          @db.Char(7)
+  id             BigInt          @id @default(autoincrement())
+  name           String          @unique(map: "name") @db.VarChar(100)
+  nationality    String?         @db.VarChar(100)
+  color          String?         @db.Char(7)
   participations Participation[]
 
   @@index([nationality], map: "idx_teams_nationality")
