@@ -1,8 +1,13 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { getAllDrivers, Driver } from '../controllers/driverController';
+import { getAllDrivers } from '@/controllers/driverController';
 
 interface DriversPageProps {
-  drivers: Driver[];
+  drivers: {
+    id: string;
+    name: string;
+    surname: string;
+    nationality: string | null;
+  }[];
 }
 
 const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
@@ -31,7 +36,10 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<DriversPageProps> = async () => {
-  const drivers = await getAllDrivers();
+  const drivers = (await getAllDrivers()).map(driver => ({
+    ...driver,
+    id: driver.id.toString(),
+  }));
   return { props: { drivers } };
 };
 

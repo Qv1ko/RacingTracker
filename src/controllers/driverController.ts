@@ -1,23 +1,17 @@
 import prisma from "../models/prismaClient";
 import type { Driver } from "@prisma/client";
 
-export type { Driver };
-
 export const getAllDrivers = async (): Promise<Driver[]> => {
   return await prisma.driver.findMany({
-    orderBy: { name: "desc" },
+    orderBy: { surname: "asc" },
   });
 };
 
-interface CreateDriverInput {
+export const createDriver = async (data: {
   name: string;
   surname: string;
   nationality?: string;
-}
-
-export const createDriver = async (
-  data: CreateDriverInput
-): Promise<Driver> => {
+}): Promise<Driver> => {
   return await prisma.driver.create({
     data: {
       name: data.name,
