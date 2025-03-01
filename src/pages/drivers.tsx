@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { getAllDrivers } from '@/controllers/driverController';
+import flagIcon from "@/components/flagIcon";
 
 interface DriversPageProps {
   drivers: {
@@ -25,7 +26,9 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
                 {driver.surname}
               </p>
               <p className="text-xs text-gray-400">
-                {driver.nationality}
+              {driver.nationality && (
+                <>{flagIcon(driver.nationality)} {driver.nationality}</>
+              )}
               </p>
             </li>
           ))}
