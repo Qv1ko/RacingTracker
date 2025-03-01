@@ -25,14 +25,14 @@ model Participation {
   teamId       BigInt?
   raceId       BigInt
   position     String   @db.VarChar(4)
-  driverPoints Decimal  @default(0.00) @db.Decimal(5, 2)
-  uncertainty  Decimal  @default(0.00) @db.Decimal(5, 2)
-  teamPoints   Decimal? @default(0.00) @db.Decimal(5, 2)
+  driverPoints Decimal  @default(0.000) @db.Decimal(8, 3)
+  uncertainty  Decimal  @default(0.000) @db.Decimal(8, 3)
+  teamPoints   Decimal? @db.Decimal(8, 3)
   drivers      Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_driver")
   races        Race     @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_participations_race")
   teams        Team?    @relation(fields: [teamId], references: [id], onUpdate: Restrict, map: "fk_participations_team")
 
-  @@unique([driverId, raceId], map: "driver_id")
+  @@unique([driverId, raceId], map: "driverId")
   @@index([driverId], map: "idx_participations_driver")
   @@index([position], map: "idx_participations_position")
   @@index([raceId], map: "idx_participations_race")
@@ -55,7 +55,6 @@ model Team {
   id             BigInt          @id @default(autoincrement())
   name           String          @unique(map: "name") @db.VarChar(100)
   nationality    String?         @db.VarChar(100)
-  color          String?         @db.Char(7)
   participations Participation[]
 
   @@index([nationality], map: "idx_teams_nationality")
