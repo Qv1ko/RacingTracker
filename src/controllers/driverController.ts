@@ -10,14 +10,35 @@ export const getAllDrivers = async (): Promise<Driver[]> => {
 export const createDriver = async (data: {
   name: string;
   surname: string;
-  nationality?: string;
+  nationality?: string | null;
 }): Promise<Driver> => {
   return await prisma.driver.create({
     data: {
       name: data.name,
       surname: data.surname,
-      nationality: data.nationality,
-      participations: {},
+      nationality: data.nationality ?? null,
     },
+  });
+};
+
+export const updateDriver = async (data: {
+  id: number;
+  name: string;
+  surname: string;
+  nationality?: string | null;
+}): Promise<Driver> => {
+  return await prisma.driver.update({
+    where: { id: data.id },
+    data: {
+      name: data.name,
+      surname: data.surname,
+      nationality: data.nationality ?? null,
+    },
+  });
+};
+
+export const deleteDriver = async (id: number): Promise<Driver> => {
+  return await prisma.driver.delete({
+    where: { id },
   });
 };

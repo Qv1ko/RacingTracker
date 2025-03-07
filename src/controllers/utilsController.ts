@@ -111,7 +111,7 @@ export const nationalities: string[] = [
   "Mexican",
   "Micronesian",
   "Moldovan",
-  "Monegasque",
+  "Monégasque",
   "Mongolian",
   "Montenegrin",
   "Moroccan",
