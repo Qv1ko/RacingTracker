@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getAllDrivers } from '@/controllers/driverController';
+import FieldSearchBar from '@/components/fieldSearchBar';
+import FlagIcon from '@/components/flagIcon';
+import Modal from '@/components/modal';
 import { nationalities } from '@/controllers/utilsController';
-import flagIcon from '@/components/flagIcon';
 
 interface Driver {
   id: number;
@@ -13,234 +15,185 @@ interface Driver {
   nationality: string | null;
 }
 
-interface DriversPageProps {
+interface DriversPageManagementProps {
   drivers: Driver[];
 }
 
-const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
+// Función helper para realizar llamadas a la API de manera centralizada
+// Recibe la URL, el método HTTP y, opcionalmente, el cuerpo de la petición
+const API_CALL = async (url: string, method: string, body?: unknown) => {
+  const response = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : null,
+  });
+  return response.ok;
+};
+
+// Componente principal de la página de gestión de drivers
+const DriversManagementPage: NextPage<DriversPageManagementProps> = ({ drivers }) => {
+  // Hook para acceder a las rutas y recargar la página
   const router = useRouter();
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  const [selectedDriver, setSelectedUser] = useState<{ id: number; name: string; surname: string } | null>(null)
 
-  const [createModalOpen, setCreateModalOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filteredDrivers, setFilteredDrivers] = useState<{ id: number, name: string, surname: string, nationality: string | null }[]>([])
+  // Estados para controlar la visibilidad de modales y la selección de driver
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
 
-  const [editingDriverId, setEditingDriverId] = useState<number | null>(null)
-  const [editFormData, setEditFormData] = useState({
-    name: "",
-    surname: "",
-    nationality: "",
-  })
+  // Estado para el término de búsqueda ingresado en el campo de búsqueda
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Referencia para detectar clics fuera de la fila en edición
-  const editRowRef = useRef<HTMLTableRowElement>(null)
+  // Estado para controlar qué driver se está editando y sus datos en edición
+  const [editingDriverId, setEditingDriverId] = useState<number | null>(null);
+  const [editFormData, setEditFormData] = useState({ name: '', surname: '', nationality: '' });
 
-  // Formulario para nuevo piloto
-  const [newDriver, setNewDriver] = useState({
-    name: "",
-    surname: "",
-    nationality: "",
-  })
+  // Referencia para detectar clics fuera de la fila que se está editando
+  const editRowRef = useRef<HTMLTableRowElement>(null);
 
-  useEffect(() => {
-    const results = drivers.filter(
+  // Estado para el formulario de creación de un nuevo driver
+  const [newDriver, setNewDriver] = useState({ name: '', surname: '', nationality: '' });
+
+  // useMemo para optimizar el filtrado de drivers según el término de búsqueda
+  const filteredDrivers = useMemo(() => {
+    return drivers.filter(
       (driver) =>
         driver.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        driver.surname.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-    setFilteredDrivers(results)
-  }, [drivers, searchTerm])
+        driver.surname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [drivers, searchTerm]);
 
-  // Detectar clics fuera de la fila que se esta editando
+  // useEffect para detectar clics fuera de la fila en edición y cancelar la edición
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const handleClickOutside = (event: MouseEvent) => {
       if (editRowRef.current && !editRowRef.current.contains(event.target as Node)) {
-        cancelEdit()
+        cancelEdit();
       }
-    }
-
-    // Añadir event listener solo mientras se edita
+    };
+    // Si se está editando, se añade el listener para detectar clics externos
     if (editingDriverId !== null) {
-      document.addEventListener("mousedown", handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside);
     }
+    // Se elimina el listener al desmontar o cambiar el estado de edición
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [editingDriverId]);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [editingDriverId])
-
-  const handleEdit = (user: Driver) => {
-    setEditingDriverId(user.id)
+  // Función para iniciar el modo edición y cargar los datos del driver a editar
+  const handleEdit = (driver: Driver) => {
+    setEditingDriverId(driver.id);
     setEditFormData({
-      name: user.name,
-      surname: user.surname,
-      nationality: user.nationality || "",
-    })
-  }
+      name: driver.name,
+      surname: driver.surname,
+      nationality: driver.nationality || '',
+    });
+  };
 
+  // Función para manejar los cambios en los inputs del formulario de edición
   const handleEditInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setEditFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setEditFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
+  // Función para guardar los cambios del driver editado
   const saveEdit = async () => {
-    console.log(`Saving changes for user ID: ${editingDriverId}`, editFormData)
-    try {
-      const response = await fetch(`/api/driver?id=${editingDriverId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editFormData),
-      });
-      if (response.ok) {
-        console.log(`Driver with ID ${editingDriverId} deleted successfully`);
-      } else {
-        console.error("Error deleting driver");
-      }
-      router.reload();
-    } catch (error) {
-      console.error("Error deleting driver:", error);
-    }
+    if (!editingDriverId) return;
+    // Se realiza la llamada a la API para actualizar el driver
+    const success = await API_CALL(`/api/driver?id=${editingDriverId}`, 'PATCH', editFormData);
+    if (success) console.log(`Driver ${editingDriverId} updated successfully`);
+    else console.error('Error updating driver');
+    // Se cierra el modo edición y se recarga la página
+    setEditingDriverId(null);
+    router.reload();
+  };
 
-    // Salir del modo edición
-    setEditingDriverId(null)
-  }
+  // Función para cancelar la edición
+  const cancelEdit = () => setEditingDriverId(null);
 
-  const cancelEdit = () => {
-    setEditingDriverId(null)
-  }
+  // Función para abrir el modal de eliminación y seleccionar el driver correspondiente
+  const handleDeleteClick = (driver: Driver) => {
+    setSelectedDriver(driver);
+    setDeleteModalOpen(true);
+  };
 
-  const handleDeleteClick = (driver: { id: number; name: string; surname: string; }) => {
-    setSelectedUser(driver)
-    setDeleteModalOpen(true)
-  }
-
+  // Función para confirmar la eliminación del driver seleccionado
   const confirmDelete = async () => {
     if (selectedDriver) {
-      console.log(`Deleting driver with ID: ${selectedDriver.id}`)
-      try {
-        const response = await fetch(`/api/driver?id=${selectedDriver.id}`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          console.log(`Driver with ID ${selectedDriver.id} deleted successfully`);
-        } else {
-          console.error("Error deleting driver");
-        }
-        router.reload();
-      } catch (error) {
-        console.error("Error deleting driver:", error);
-      }
-
-      // Cerrar modal después de eliminar
-      setDeleteModalOpen(false)
-      setSelectedUser(null)
+      // Llamada a la API para eliminar el driver
+      const success = await API_CALL(`/api/driver?id=${selectedDriver.id}`, 'DELETE');
+      if (success) console.log(`Driver ${selectedDriver.id} deleted successfully`);
+      else console.error('Error deleting driver');
+      // Se cierra el modal y se reinicia la selección
+      setDeleteModalOpen(false);
+      setSelectedDriver(null);
+      router.reload();
     }
-  }
+  };
 
-
+  // Función para manejar el envío del formulario de creación de un nuevo driver
   const handleCreateSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Creating new driver:", newDriver)
-    try {
-      const response = await fetch(`/api/driver`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newDriver),
-      });
-      console.log(response.status);
-      if (response.ok) {
-        console.log(`Driver ${newDriver.name} ${newDriver.surname} added successfully`);
-        router.reload();
-      } else {
-        console.error("Error adding driver");
-      }
-    } catch (error) {
-      console.error("Error adding driver:", error);
-    }
+    e.preventDefault();
+    // Se realiza la llamada a la API para crear el driver
+    const success = await API_CALL(`/api/driver`, 'POST', newDriver);
+    if (success) console.log(`Driver ${newDriver.name} ${newDriver.surname} added successfully`);
+    else console.error('Error adding driver');
+    // Se cierra el modal, se resetean los campos y se recarga la página
+    setCreateModalOpen(false);
+    setNewDriver({ name: '', surname: '', nationality: '' });
+    router.reload();
+  };
 
-    // Cerrar modal y resetear formulario
-    setCreateModalOpen(false)
-    setNewDriver({ name: "", surname: "", nationality: "" })
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setNewDriver((prev) => ({ ...prev, [name]: value }))
-  }
+  // Función para manejar los cambios en los inputs del formulario de creación
+  const handleNewDriverChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setNewDriver((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <h1 className='text-center text-3xl font-bold my-4'>DRIVERS MANAGEMENT</h1>
+      <h1 className="text-center text-3xl font-bold my-4">DRIVERS MANAGEMENT</h1>
 
+      {/* Sección de búsqueda y creación */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-        <div className="relative w-full sm:w-64">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Image
-              className="dark:invert"
-              src="/search.svg"
-              alt="Search"
-              width={16}
-              height={16}
-              priority
-            />
-          </div>
-          <input
-            type="text"
-            className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-            placeholder="Search by name or surname..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+        {/* Componente de búsqueda */}
+        <FieldSearchBar
+          placeholder="Search by name or surname..."
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+        {/* Botón adicional para abrir el modal de creación */}
         <button
           className="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-sm font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-800 focus:ring ring-blue-300 disabled:opacity-25 transition"
           onClick={() => setCreateModalOpen(true)}
         >
-          <Image
-            className="dark:invert"
-            src="/plus.svg"
-            alt="Plus"
-            width={16}
-            height={16}
-            priority
-          />
+          <Image className="dark:invert" src="/plus.svg" alt="Plus icon" width={16} height={16} priority />
           CREATE
         </button>
       </div>
 
+      {/* Tabla que muestra la lista de drivers */}
       <div className="overflow-hidden border border-gray-200 rounded-sm dark:border-gray-700">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                Surname
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                Nationality
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                Actions
-              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">Name</th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">Surname</th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">Nationality</th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
+            {/* Iteramos sobre los drivers filtrados */}
             {filteredDrivers.map((driver) => (
               <tr
                 key={driver.id}
+                // Asignamos la referencia para detectar clics externos solo en la fila en edición
                 ref={driver.id === editingDriverId ? editRowRef : null}
-                className={`transition-all duration-200 group ${driver.id === editingDriverId
-                  ? "bg-blue-50 dark:bg-blue-900/10"
-                  : "bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }`}
+                className={`transition-all duration-200 group ${
+                  driver.id === editingDriverId
+                    ? 'bg-blue-50 dark:bg-blue-900/10'
+                    : 'bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
               >
+                {/* Columna de nombre: si está en edición se muestra un input, sino el valor */}
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 relative group-hover:before:content-[''] group-hover:before:absolute group-hover:before:left-0 group-hover:before:top-0 group-hover:before:h-full group-hover:before:w-1 group-hover:before:bg-orange-500">
                   {driver.id === editingDriverId ? (
                     <input
@@ -254,6 +207,7 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
                     driver.name
                   )}
                 </td>
+                {/* Columna de apellido */}
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                   {driver.id === editingDriverId ? (
                     <input
@@ -267,6 +221,7 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
                     driver.surname
                   )}
                 </td>
+                {/* Columna de nacionalidad */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   {driver.id === editingDriverId ? (
                     <select
@@ -276,83 +231,57 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
                       onChange={handleEditInputChange}
                     >
                       <option value="">Select nationality</option>
-                      {nationalities.map((nationality) => (
-                        <option key={nationality.toLowerCase()} value={nationality}>{flagIcon(nationality.toLowerCase())} {nationality}</option>
+                      {nationalities.map((n) => (
+                        <option key={n.toLowerCase()} value={n}>
+                          {FlagIcon(n.toLowerCase())} {n}
+                        </option>
                       ))}
                     </select>
                   ) : driver.nationality ? (
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 mr-2">
-                        {flagIcon(driver.nationality)}
-                      </div>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {driver.nationality}
-                      </span>
+                      <div className="flex-shrink-0 mr-2">{FlagIcon(driver.nationality)}</div>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{driver.nationality}</span>
                     </div>
                   ) : null}
                 </td>
+                {/* Columna de acciones (editar, eliminar) */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex space-x-2">
                     {driver.id === editingDriverId ? (
                       <>
+                        {/* Botón para confirmar la edición */}
                         <button
                           className="p-2 rounded-sm border border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                           onClick={saveEdit}
                         >
-                          <Image
-                            className="dark:invert"
-                            src="/check.svg"
-                            alt="Accept"
-                            width={16}
-                            height={16}
-                            priority
-                          />
+                          <Image className="dark:invert" src="/check.svg" alt="Confirm" width={16} height={16} priority />
                           <span className="sr-only">Confirm</span>
                         </button>
+                        {/* Botón para cancelar la edición */}
                         <button
                           className="p-2 rounded-sm border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                           onClick={cancelEdit}
                         >
-                          <Image
-                            className="dark:invert"
-                            src="/x.svg"
-                            alt="Close"
-                            width={16}
-                            height={16}
-                            priority
-                          />
+                          <Image className="dark:invert" src="/x.svg" alt="Cancel" width={16} height={16} priority />
                           <span className="sr-only">Cancel</span>
                         </button>
                       </>
                     ) : (
                       <>
+                        {/* Botón para iniciar la edición */}
                         <button
                           className="p-2 rounded-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                           onClick={() => handleEdit(driver)}
                         >
-                          <Image
-                            className="dark:invert"
-                            src="/edit.svg"
-                            alt="Edit"
-                            width={16}
-                            height={16}
-                            priority
-                          />
+                          <Image className="dark:invert" src="/edit.svg" alt="Edit" width={16} height={16} priority />
                           <span className="sr-only">Edit</span>
                         </button>
-
+                        {/* Botón para eliminar el driver */}
                         <button
                           className="p-2 rounded-sm border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                           onClick={() => handleDeleteClick(driver)}
                         >
-                          <Image
-                            className="dark:invert"
-                            src="/trash.svg"
-                            alt="Edit"
-                            width={16}
-                            height={16}
-                            priority
-                          />
+                          <Image className="dark:invert" src="/trash.svg" alt="Delete" width={16} height={16} priority />
                           <span className="sr-only">Delete</span>
                         </button>
                       </>
@@ -365,193 +294,142 @@ const DriversPage: NextPage<DriversPageProps> = ({ drivers }) => {
         </table>
       </div>
 
-      {/* Modal of confirmation */}
+      {/* Modal de confirmación para eliminar un driver */}
       {deleteModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+        <Modal onClose={() => setDeleteModalOpen(false)}>
+          <div className="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6 sm:pb-4">
+            <div className="sm:flex sm:items-start">
+              {/* Icono de advertencia */}
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full dark:bg-red-900/20 sm:mx-0 sm:h-10 sm:w-10">
+                <Image className="w-6 h-6" src="/trash.svg" alt="Delete" width={16} height={16} priority />
+              </div>
+              {/* Texto de confirmación */}
+              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+                  Confirm deletion
+                </h3>
+                <div className="mt-2">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete driver {selectedDriver?.name} {selectedDriver?.surname}?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Botones de acción en el modal de eliminación */}
+          <div className="px-4 py-3 bg-gray-50 dark:bg-gray-700 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-sm shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              onClick={confirmDelete}
+            >
+              Confirm
+            </button>
+            <button
+              type="button"
+              className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
               onClick={() => setDeleteModalOpen(false)}
-            ></div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-sm shadow-xl dark:bg-gray-800 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full dark:bg-red-900/20 sm:mx-0 sm:h-10 sm:w-10">
-                    <Image
-                      className="w-6 h-6 text-red-600 dark:text-red-400"
-                      src="/trash.svg"
-                      alt="Edit"
-                      width={16}
-                      height={16}
-                      priority
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {/* Modal para crear un nuevo driver */}
+      {createModalOpen && (
+        <Modal onClose={() => setCreateModalOpen(false)}>
+          <form onSubmit={handleCreateSubmit}>
+            <div className="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6">
+              <div className="mb-4">
+                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-4">
+                  Create new driver
+                </h3>
+                <div className="grid grid-cols-1 gap-4">
+                  {/* Campo para ingresar el nombre */}
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      required
+                      className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+                      value={newDriver.name}
+                      onChange={handleNewDriverChange}
                     />
                   </div>
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                      Confirm deletion
-                    </h3>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Are you sure you want to delete the pilot {selectedDriver?.name} {selectedDriver?.surname}?
-                      </p>
-                    </div>
+                  {/* Campo para ingresar el apellido */}
+                  <div>
+                    <label htmlFor="surname" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Surname
+                    </label>
+                    <input
+                      type="text"
+                      name="surname"
+                      id="surname"
+                      required
+                      className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+                      value={newDriver.surname}
+                      onChange={handleNewDriverChange}
+                    />
+                  </div>
+                  {/* Campo para seleccionar la nacionalidad */}
+                  <div>
+                    <label htmlFor="nationality" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Nationality
+                    </label>
+                    <select
+                      name="nationality"
+                      id="nationality"
+                      className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+                      value={newDriver.nationality}
+                      onChange={handleNewDriverChange}
+                    >
+                      <option value="">Select nationality</option>
+                      {nationalities.map((n) => (
+                        <option key={n.toLowerCase()} value={n}>
+                          {FlagIcon(n.toLowerCase())} {n}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 bg-gray-50 dark:bg-gray-700 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-sm shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={confirmDelete}
-                >
-                  Confirm
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
-                  onClick={() => setDeleteModalOpen(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-              <button
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                onClick={() => setDeleteModalOpen(false)}
-              >
-                <span className="sr-only">Close</span>
-                <Image
-                  className="dark:invert"
-                  src="/x.svg"
-                  alt="X"
-                  width={24}
-                  height={24}
-                  priority
-                />
-              </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal */}
-      {createModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
-              onClick={() => setCreateModalOpen(false)}
-            ></div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-sm shadow-xl dark:bg-gray-800 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <form onSubmit={handleCreateSubmit}>
-                <div className="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-4">
-                      Create new driver
-                    </h3>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <label
-                          htmlFor="name"
-                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                        >
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          required
-                          className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
-                          value={newDriver.name}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="surname"
-                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                        >
-                          Surname
-                        </label>
-                        <input
-                          type="text"
-                          name="surname"
-                          id="surname"
-                          required
-                          className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
-                          value={newDriver.surname}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="nationality"
-                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                        >
-                          Nationality
-                        </label>
-                        <select
-                          name="nationality"
-                          id="nationality"
-                          className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
-                          value={newDriver.nationality}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Select nationality</option>
-                          {nationalities.map((nationality) => (
-                            <option key={nationality.toLowerCase()} value={nationality}>{flagIcon(nationality.toLowerCase())} {nationality}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="px-4 py-3 bg-gray-50 dark:bg-gray-700 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-sm shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  >
-                    Create
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
-                    onClick={() => setCreateModalOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+            {/* Botones de acción para el modal de creación */}
+            <div className="px-4 py-3 bg-gray-50 dark:bg-gray-700 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
+                type="submit"
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-sm shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Create
+              </button>
+              <button
+                type="button"
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
                 onClick={() => setCreateModalOpen(false)}
               >
-                <span className="sr-only">Close</span>
-                <Image
-                  className="dark:invert"
-                  src="/x.svg"
-                  alt="X"
-                  width={24}
-                  height={24}
-                  priority
-                />
+                Cancel
               </button>
             </div>
-          </div>
-        </div>
+          </form>
+        </Modal>
       )}
     </div>
-  )
-}
+  );
+};
 
-export const getServerSideProps: GetServerSideProps<DriversPageProps> = async () => {
-  const drivers = (await getAllDrivers()).map(driver => ({
+// Server-side props function
+export const getServerSideProps: GetServerSideProps<DriversPageManagementProps> = async () => {
+  const drivers = (await getAllDrivers()).map((driver) => ({
     ...driver,
     id: Number(driver.id),
   }));
   return { props: { drivers } };
 };
 
-export default DriversPage;
+// Export page component
+export default DriversManagementPage;

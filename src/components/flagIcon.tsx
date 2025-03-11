@@ -1,6 +1,6 @@
 import React from 'react';
 
-const flagIcon = (nationality: string) => {
+const FlagIcon = (nationality: string) => {
   switch (nationality.toLowerCase()) {
     case 'afghan':
       return (
@@ -4145,4 +4145,4 @@ const flagIcon = (nationality: string) => {
   }
 };
 
-export default flagIcon;
+export default FlagIcon;
