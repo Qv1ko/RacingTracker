@@ -1,6 +1,11 @@
 import React from 'react';
 
-const FlagIcon = (nationality: string) => {
+interface FlagIconProps {
+  nationality: string;
+  size?: number;
+}
+
+const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) =>  {
   switch (nationality.toLowerCase()) {
     case 'afghan':
       return (
@@ -12,8 +17,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M36 26.999a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-18a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#007A36" d="M32 4.999a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4h-8v-26h8z"></path>
@@ -47,8 +52,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E41E20" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M25.335 21.202a.358.358 0 0 1-.199-.105c-.161-.151-.333-.162-.522-.047a.785.785 0 0 0-.174.142a.146.146 0 0 1-.114.05l-.777.021c-.02.001-.045.013-.059-.016c.116-.112.237-.222.352-.335c.058-.058.112-.074.196-.054c.255.062.446-.019.548-.224a.4.4 0 0 1 .271-.213c.053-.014.107-.019.171-.032c-.154-.147-.319-.146-.492-.077c-.052.021-.095.03-.15.01c-.241-.092-.352-.04-.445.199c-.018.045-.035.09-.081.119c-.24.157-.479.316-.718.478a.137.137 0 0 1-.13.02c-.325-.088-.652-.17-.978-.256a46.673 46.673 0 0 1-.645-.173c.127-.126.241-.235.353-.347c.091-.091.065-.19-.059-.226c-.102-.029-.205-.05-.309-.076c-.812-.196-1.326-.708-1.574-1.498a.451.451 0 0 1-.019-.267c.019-.061.053-.108.119-.119c.062-.01.11.025.14.074c.031.05.055.105.077.159c.145.347.336.656.648.879a.357.357 0 0 0 .255.068c.078-.007.166-.016.195-.102c.028-.085-.038-.142-.101-.184c-.272-.189-.411-.46-.484-.774c-.035-.145.034-.289.162-.324c.117-.032.238.052.283.198c.055.179.103.36.168.535c.154.418.438.722.846.907a.38.38 0 0 0 .436-.095c.079-.089.079-.19-.001-.278a.486.486 0 0 0-.179-.116c-.223-.096-.429-.22-.578-.418a.929.929 0 0 1-.171-.734c.022-.138.102-.169.224-.106a.502.502 0 0 1 .145.119c.49.539.977 1.081 1.499 1.587c.269.263.604.374.979.3c.231-.045.443-.138.569-.355c.054-.093.085-.194.017-.292c-.068-.097-.173-.105-.279-.094a1.759 1.759 0 0 1-1.354-.393c-.373-.3-.651-.678-.899-1.082a.586.586 0 0 1-.096-.32c.003-.098.047-.122.134-.076a.467.467 0 0 1 .151.136c.277.345.605.629.998.836c.31.164.634.266.989.222c.261-.032.382-.118.431-.442c.033-.22-.077-.309-.287-.245c-.443.135-.863.071-1.263-.153c-.385-.217-.686-.53-.953-.874a.483.483 0 0 1-.091-.355c.011-.083.062-.119.146-.109a.358.358 0 0 1 .189.094c.31.25.638.471 1.003.631c.254.112.513.203.797.158c.265-.041.462-.272.443-.52c-.009-.144-.095-.236-.237-.254c-.083-.009-.162.005-.243.014c-.413.046-.802-.015-1.155-.248a7.241 7.241 0 0 1-.744-.584a.255.255 0 0 1-.054-.064c-.054-.082-.064-.191-.016-.226c.073-.055.137-.003.195.034c.323.203.669.347 1.041.431c.286.065.572.103.862.029a.448.448 0 0 0 .357-.378c.041-.222-.108-.375-.331-.341a.63.63 0 0 0-.203.067a1.072 1.072 0 0 1-.824.097a2.822 2.822 0 0 1-.786-.363c-.125-.077-.256-.146-.359-.253c-.083-.088-.092-.196-.033-.272c.057-.072.139-.08.255-.021c.142.072.284.142.435.196c.357.129.72.206 1.102.143a.9.9 0 0 0 .763-.736a.325.325 0 0 0-.004-.158c-.033-.12-.121-.173-.242-.145a.594.594 0 0 0-.241.138a1.308 1.308 0 0 1-1.245.269a2.212 2.212 0 0 1-.592-.274c-.095-.058-.175-.119-.209-.227c-.036-.117.013-.184.136-.183c.046 0 .092.006.139.015c.486.097.973.128 1.455-.014c.385-.113.679-.326.787-.737c.037-.138-.008-.295-.109-.363c-.093-.064-.21-.048-.336.049c-.059.046-.113.099-.17.147c-.48.401-1.052.42-1.634.392c-.151-.007-.252-.152-.237-.287c.014-.122.111-.186.273-.197c.725-.05 1.353-.332 1.893-.808c.188-.166.315-.38.37-.628a.534.534 0 0 0-.15-.516c-.119-.12-.257-.108-.361.024c-.033.042-.058.089-.088.133a2.794 2.794 0 0 1-1.854 1.24c-.085.017-.127-.004-.174-.073c-.083-.125-.159-.152-.266-.111c-.596.232-1.175.506-1.737.81c-.061.033-.083.079-.081.144a.962.962 0 0 0 .062.282c.065.2.05.395-.022.587c-.094.254-.312.39-.594.377c-.227-.01-.429-.186-.493-.435a1.014 1.014 0 0 1 .081-.747c.216-.4.532-.699.954-.874c.318-.133.658-.191.992-.268c.181-.04.363-.067.518-.181c.05-.037.094-.078.103-.156c-.141.042-.269.087-.4.12c-.179.045-.325-.025-.458-.144c.047-.012.092-.014.137-.012c.274.014.548.02.82-.037c.226-.047.438-.106.574-.312a.265.265 0 0 0 .049-.148c-.001-.125-.085-.175-.194-.111a.723.723 0 0 0-.188.182a.723.723 0 0 1-.401.242a1.735 1.735 0 0 1-.547.053a.393.393 0 0 1-.15-.035c.11-.115.22-.211.358-.269c.157-.065.253-.044.372.078c.013.013.021.041.049.031c.041-.229-.068-.383-.297-.423a1.437 1.437 0 0 0-.393.005c-.023.002-.056.026-.068-.018c-.038-.121-.146-.158-.248-.192a1.261 1.261 0 0 0-.889.044a3.942 3.942 0 0 1-.79.227c-.161.029-.323.047-.494.072c.148.143.322.237.488.364a1.742 1.742 0 0 0-.727.551l.006.032h.454l-.002.026c-.141.051-.283.097-.421.153a.983.983 0 0 0-.377.265c.078.019.147.034.216.052c.055.014.066.045.022.084c-.198.173-.363.379-.543.569c-.046.048-.069.027-.104-.009c-.177-.184-.337-.386-.531-.555c-.056-.049-.032-.079.028-.094c.065-.017.13-.031.205-.048c-.218-.247-.517-.318-.802-.417l.007-.032h.475a1.783 1.783 0 0 0-.746-.578c.166-.128.343-.22.489-.37a4.537 4.537 0 0 1-1.306-.3a1.232 1.232 0 0 0-.915-.022c-.079.03-.161.064-.192.151c-.017.047-.037.05-.082.044c-.154-.021-.31-.036-.464.013c-.186.059-.271.222-.217.415c.068-.067.128-.142.229-.153c.161-.019.459.158.528.312a1.003 1.003 0 0 1-.382.022c-.297-.024-.573-.099-.76-.359a.403.403 0 0 0-.085-.085c-.056-.043-.117-.089-.186-.039c-.067.049-.059.127-.038.198a.405.405 0 0 0 .097.148c.113.122.259.178.417.215c.304.071.612.078.922.058c.043-.003.091-.012.14.017a.552.552 0 0 1-.589.109c-.089-.033-.177-.071-.276-.088c.006.076.05.115.098.151a.898.898 0 0 0 .351.146c.247.057.492.115.739.168c.501.109.912.36 1.227.768c.207.268.301.564.25.902c-.042.284-.248.512-.498.519c-.332.009-.537-.125-.626-.423a.862.862 0 0 1-.003-.543a.906.906 0 0 0 .061-.292c-.001-.055-.019-.096-.069-.123a15.437 15.437 0 0 0-1.763-.824a.165.165 0 0 0-.175.03a.389.389 0 0 0-.103.119c-.025.047-.055.055-.107.046a2.811 2.811 0 0 1-1.943-1.322c-.132-.218-.325-.221-.466-.008a.564.564 0 0 0-.073.501c.122.381.381.648.713.85c.491.298 1.008.522 1.597.53a.21.21 0 0 1 .197.136a.218.218 0 0 1-.038.237a.301.301 0 0 1-.235.116c-.15.001-.3.002-.45-.004c-.47-.02-.896-.154-1.241-.493a.52.52 0 0 0-.179-.119c-.129-.047-.243-.001-.305.122a.354.354 0 0 0-.026.247a.928.928 0 0 0 .404.576c.233.151.494.221.766.251a3.47 3.47 0 0 0 1.099-.067c.085-.017.185-.048.248.048c.039.059-.008.194-.085.271c-.009.009-.018.018-.029.024c-.145.084-.284.182-.44.246c-.549.227-1.06.188-1.521-.213a.477.477 0 0 0-.213-.112c-.116-.026-.203.026-.236.141a.35.35 0 0 0-.005.167c.079.432.444.73.916.751c.34.016.664-.056.98-.174c.152-.057.296-.131.441-.204c.07-.035.14-.035.2.022c.061.059.066.131.036.207a.305.305 0 0 1-.118.143a4.54 4.54 0 0 1-.785.454c-.391.169-.78.214-1.166-.018a.441.441 0 0 0-.199-.05c-.191-.013-.323.135-.292.333a.453.453 0 0 0 .355.391c.171.046.346.049.521.03a3.27 3.27 0 0 0 1.398-.497c.019-.012.037-.024.057-.032c.042-.016.084-.031.124.002c.039.032.037.078.029.122a.314.314 0 0 1-.113.188c-.177.154-.359.302-.544.444c-.366.281-.774.425-1.24.381c-.084-.008-.168-.018-.252-.024c-.218-.019-.346.108-.327.326c.019.219.206.409.438.449c.174.031.343.001.508-.049c.486-.149.899-.428 1.293-.738a.439.439 0 0 1 .153-.089c.114-.033.187.015.189.135a.505.505 0 0 1-.102.334c-.21.269-.445.516-.722.718c-.335.245-.703.387-1.125.364c-.142-.008-.277-.044-.413-.08c-.116-.031-.203.014-.232.113c-.065.22.1.514.322.567c.287.071.566.02.834-.085c.507-.196.914-.531 1.255-.949a.483.483 0 0 1 .159-.143c.082-.043.126-.017.127.075a.628.628 0 0 1-.105.345a4.533 4.533 0 0 1-.757.949c-.385.355-.833.543-1.362.518c-.069-.003-.137-.017-.205-.013c-.187.008-.275.139-.215.314c.03.091.081.168.159.227c.49.376 1.071.242 1.413-.089c.526-.508 1.014-1.053 1.506-1.593a.53.53 0 0 1 .15-.125c.119-.059.196-.027.22.103a.931.931 0 0 1-.069.567c-.136.297-.39.462-.676.588a.532.532 0 0 0-.167.102c-.101.098-.103.216 0 .31c.124.112.268.152.425.079a1.57 1.57 0 0 0 .841-.91c.065-.179.113-.363.17-.545c.042-.132.164-.214.275-.185c.118.028.202.163.173.293c-.068.31-.188.59-.461.78a.358.358 0 0 0-.107.102c-.054.079-.04.147.049.182c.121.048.243.05.358-.028c.325-.222.52-.539.668-.895c.023-.054.047-.109.078-.158c.031-.05.08-.082.142-.07c.062.012.096.057.113.113a.447.447 0 0 1-.016.268c-.25.798-.768 1.311-1.59 1.505a7.296 7.296 0 0 0-.3.074c-.118.035-.142.134-.057.221c.094.097.19.19.284.287c.019.018.047.03.045.067a.553.553 0 0 1-.079.024c-.504.133-1.008.264-1.511.399a.15.15 0 0 1-.139-.023c-.204-.138-.408-.277-.616-.409a.458.458 0 0 1-.204-.241c-.059-.161-.164-.222-.324-.169a.545.545 0 0 1-.348-.013c-.142-.044-.274-.008-.389.109c.023.005.034.008.046.009c.181.016.327.083.411.262c.06.126.172.194.313.208a.604.604 0 0 0 .25-.019c.053-.017.092-.008.133.032c.123.12.251.235.376.353c.004.004.003.016.002.007c-.247 0-.494-.003-.74.001a.333.333 0 0 1-.256-.099c-.229-.214-.469-.25-.702.006c-.029.031-.063.035-.1.04a.325.325 0 0 0-.281.23c.188-.126.344-.043.5.054c.01.008.022.011.034.016c.198.081.389.086.565-.056a.098.098 0 0 1 .069-.021c.301.02.603.037.923.059c-.068.07-.143.094-.203.138a.48.48 0 0 1-.412.094c-.218-.047-.426.017-.541.227c-.116.215-.196.444-.187.695c.001.017-.006.037.014.053c.027-.053.05-.107.08-.157c.075-.127.165-.228.337-.167c.031.012.067.009.102.009c.205-.002.335-.095.375-.284a.21.21 0 0 1 .132-.164c.051-.024.1-.052.151-.075c.16-.07.328-.122.472-.227c.031-.022.058-.011.088-.001l.514.174c.03.009.054.021.071.053c.144.271.263.329.567.289a.496.496 0 0 1 .31.047c.086.046.08.138.099.223a.3.3 0 0 0-.037-.418a.979.979 0 0 1-.162-.201c-.085-.146-.232-.2-.387-.139c-.093.038-.167.023-.249-.016c-.125-.06-.244-.135-.398-.184c.102-.032.181-.059.262-.08c.445-.121.901-.199 1.342-.34c.046-.014.075.003.108.032c.119.105.237.212.359.315c.107.087.188.073.263-.041c.043-.065.085-.133.127-.198c.169-.272.309-.563.49-.83c.175-.256.369-.5.628-.675c.237-.158.457-.063.515.213c.05.242-.006.471-.104.692c-.24.546-.63.952-1.143 1.248a.793.793 0 0 1-.565.11a.638.638 0 0 0-.386.032c-.129.058-.155.153-.076.271a.55.55 0 0 0 .294.203c.329.11.632.101.888-.17c.062-.066.132-.123.202-.182a.158.158 0 0 1 .185-.017c.063.036.089.093.083.165a.216.216 0 0 1-.055.126c-.101.12-.206.235-.324.338c-.216.188-.46.31-.753.314a.394.394 0 0 0-.196.057c-.099.054-.115.138-.044.224a.433.433 0 0 0 .158.114c.293.134.566.072.829-.085c.165-.099.299-.235.433-.37c.054-.056.116-.148.201-.095c.083.051.061.158.035.241a1.45 1.45 0 0 1-.226.47a.741.741 0 0 1-.42.28c-.085.021-.173.021-.261.026c-.146.01-.201.115-.13.242a.524.524 0 0 0 .775.141c.231-.176.364-.423.486-.678c.035-.072.066-.163.165-.154c.101.009.125.102.15.182a.438.438 0 0 1 .02.148a1.059 1.059 0 0 1-.191.579a2.173 2.173 0 0 1-.387.42c-.041.034-.047.06-.017.107c.351.527.7 1.057 1.047 1.586c.03.046.046.038.07-.002c.065-.104.13-.206.198-.308c.279-.422.557-.844.839-1.265c.038-.056.035-.086-.018-.129a2.192 2.192 0 0 1-.273-.272c-.181-.212-.297-.452-.295-.738c0-.094.022-.182.079-.256c.056-.074.126-.076.189-.008c.032.036.051.079.071.121c.122.255.256.502.49.674a.531.531 0 0 0 .753-.127c.091-.141.033-.267-.132-.265c-.416.006-.668-.213-.819-.578c-.044-.105-.099-.21-.087-.331c.004-.043.006-.091.05-.114c.049-.026.093.002.126.033c.076.07.147.145.223.215c.194.184.406.332.679.372a.696.696 0 0 0 .555-.142c.126-.102.106-.22-.042-.279a.516.516 0 0 0-.164-.038c-.499-.017-.808-.332-1.094-.685a.17.17 0 0 1 .021-.238c.068-.06.155-.053.236.019c.094.082.186.167.282.246a.565.565 0 0 0 .281.138c.211.03.409-.011.603-.094a.465.465 0 0 0 .186-.151c.095-.126.065-.227-.079-.288a.665.665 0 0 0-.387-.026a.712.712 0 0 1-.53-.1c-.122-.08-.25-.154-.366-.243a2.432 2.432 0 0 1-.866-1.204c-.061-.186-.087-.38-.019-.57c.073-.206.249-.275.444-.179a.682.682 0 0 1 .183.129c.189.183.368.374.511.596c.21.325.378.675.595.997c.09.134.167.144.29.038c.113-.097.227-.194.338-.296c.038-.036.073-.049.124-.032c.315.1.639.169.961.243c.205.047.409.098.627.174c-.17.05-.297.143-.441.202a.216.216 0 0 1-.178.002c-.16-.065-.308-.024-.396.112a1.516 1.516 0 0 1-.192.238a.287.287 0 0 0-.024.394c.033-.256.157-.259.368-.266c.031-.001.061.008.093.012c.236.034.409-.058.508-.275c.02-.045.049-.065.093-.081c.146-.046.292-.091.434-.145c.082-.031.147-.036.225.021c.07.05.155.079.234.114c.121.053.243.097.356.166a.164.164 0 0 1 .089.121c.035.188.139.276.329.303a.55.55 0 0 0 .232-.017c.066-.018.107.006.15.044c.092.08.141.187.194.292c.01-.045.01-.087.01-.131c0-.16-.063-.305-.109-.453c-.092-.289-.287-.441-.586-.391c-.204.033-.352-.027-.505-.129c-.044-.029-.099-.045-.134-.103c.309-.019.604-.039.9-.059c.028-.001.054-.002.079.017c.21.172.436.145.646.019c.148-.09.285-.109.439-.039c.004.002.01-.005.019-.01a.299.299 0 0 0-.232-.187z" fill="#000000"></path>
@@ -65,8 +70,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006233" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"></path>
           <path fill="#EEE" d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
@@ -84,8 +89,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D01C3A" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#0020a8" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -114,8 +119,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
           <path fill="#CE1B26" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
@@ -134,8 +139,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FFF" d="M11.077 21L18 31l6.923-10z"></path>
           <path fill="#141414" d="M10.279 15l-.105-.022l3.988-.827l-3.392-2.417l3.977.889l-2.28-3.64l3.36 2.47l-.821-4.308l2.232 3.675L18 6.5l.763 4.321l2.232-3.675l-.821 4.308l3.36-2.47l-2.28 3.64l3.977-.889l-3.392 2.417l3.988.827l-.106.021h3.356l5.956-8.603A3.988 3.988 0 0 0 32 5H4A3.988 3.988 0 0 0 .967 6.397L6.923 15h3.356z"></path>
@@ -154,8 +159,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#75AADB" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -176,8 +181,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D90012" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#F2A800" d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"></path>
@@ -194,8 +199,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00247D" d="M32 5H4c-.205 0-.407.015-.604.045l-.004 1.754l-2.73-.004A3.984 3.984 0 0 0 0 9v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFF" d="M9 26.023l-1.222 1.129l.121-1.66l-1.645-.251l1.373-.94l-.829-1.443l1.591.488L9 21.797l.612 1.549l1.591-.488l-.83 1.443l1.374.94l-1.645.251l.121 1.66zM27.95 9.562l-.799.738l.079-1.086l-1.077-.164l.899-.615l-.542-.944l1.04.319l.4-1.013l.401 1.013l1.041-.319l-.543.944l.898.615l-1.076.164l.079 1.086zm-4 6l-.799.739l.079-1.086l-1.077-.164l.899-.616l-.542-.944l1.04.319l.4-1.013l.401 1.013l1.041-.319l-.543.944l.898.616l-1.076.164l.079 1.086zm9-2l-.799.739l.079-1.086l-1.077-.164l.899-.616l-.542-.944l1.04.319l.4-1.013l.401 1.013l1.041-.319l-.543.944l.898.616l-1.076.164l.079 1.086zm-5 14l-.799.739l.079-1.086l-1.077-.164l.899-.616l-.542-.944l1.04.319l.4-1.013l.401 1.013l1.041-.319l-.543.944l.898.616l-1.076.164l.079 1.086zM31 16l.294.596l.657.095l-.475.463l.112.655L31 17.5l-.588.309l.112-.655l-.475-.463l.657-.095z"></path>
@@ -215,8 +220,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
           <path fill="#ED2939" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4zM4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"></path>
@@ -232,8 +237,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E00034" d="M0 13h36v10H0z"></path>
           <path fill="#0098C3" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path><g fill="#FFF">
@@ -252,8 +257,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00ABC9" d="M1.364 29.987A3.966 3.966 0 0 0 4 31h28a4 4 0 0 0 4-4v-4.5H11.442L1.364 29.987z"></path>
           <path fill="#FAE042" d="M17.5 18l-6.058 4.5H36v-9H11.442z"></path>
@@ -271,8 +276,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M15 6L8 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h4l7-1V6z"></path>
           <path fill="#CE1126" d="M32 5H8l6.081 2.6L8 10.2l6.081 2.6L8 15.4l6.081 2.6L8 20.6l6.081 2.6L8 25.8l6.081 2.6L8 31h24a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
@@ -288,8 +293,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006A4D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <circle fill="#F42A41" cx="16" cy="17.5" r="7"></circle>
@@ -305,8 +310,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00267F" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#00267F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -324,8 +329,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#4AA657" d="M6 31h26a4 4 0 0 0 4-4v-4H6v8z"></path>
           <path fill="#C8313E" d="M32 5H6v18h30V9a4 4 0 0 0-4-4z"></path>
@@ -347,8 +352,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FEE833" d="M12 5h12v26H12z"></path>
@@ -365,8 +370,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1B26" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#003E87" d="M.555 7A3.955 3.955 0 0 0 0 9v18c0 .732.211 1.409.555 2h34.891A3.967 3.967 0 0 0 36 27V9c0-.732-.211-1.41-.555-2H.555z"></path>
@@ -432,8 +437,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FCD116" d="M32 5H14v13h22V9a4 4 0 0 0-4-4z"></path>
           <path fill="#E8112D" d="M14 31h18a4 4 0 0 0 4-4v-9H14v13z"></path>
@@ -450,8 +455,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FF4E11" d="M1.193 29.846A3.985 3.985 0 0 0 4 31h28a4 4 0 0 0 4-4V9c0-.896-.305-1.714-.803-2.381L1.193 29.846z"></path>
           <path fill="#FFD521" d="M32 5H4a4 4 0 0 0-4 4v18c0 1.114.458 2.121 1.193 2.846L35.197 6.619A3.982 3.982 0 0 0 32 5z"></path>
@@ -468,8 +473,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#007934" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFE000" d="M0 13h36v10H0z"></path>
@@ -515,8 +520,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#2D3189" d="M32 5H9.177l-.665.484l.365 1.123l-.956-.695l-.956.695l.365-1.123L6.665 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h19.725l.105-.324l-.955-.695h1.181l.365-1.123l.365 1.123h1.181l-.955.695l.105.324H32a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#E1E8ED" d="M6.965 6.607l.956-.695l.955.695l-.364-1.123L9.177 5H6.665l.665.484zm19.002 23.374h-1.181l-.365-1.122l-.365 1.122h-1.181l.955.695l-.105.324h1.392l-.106-.324zM9.999 6.815l.364 1.123h1.182l-.956.695l.365 1.123l-.955-.695l-.956.695l.365-1.123l-.955-.695h1.18zm2.069 3.15l.365 1.122h1.182l-.956.695l.365 1.123l-.956-.694l-.955.694l.365-1.123l-.956-.695h1.181zm2.054 3.148l.365 1.123h1.181l-.956.695l.365 1.123l-.955-.695l-.956.695l.365-1.123l-.955-.695h1.181zm2.061 3.15l.365 1.123h1.181l-.955.694l.365 1.123l-.956-.694l-.955.694l.365-1.123l-.956-.694h1.181zm2.061 3.149l.365 1.123h1.182l-.956.694l.365 1.124l-.956-.695l-.955.695l.365-1.124l-.955-.694h1.181zm2.062 3.149l.365 1.123h1.181l-.955.694l.364 1.123l-.955-.694l-.955.694l.364-1.123l-.955-.694h1.181zm2.053 3.148l.365 1.124h1.182l-.956.694l.365 1.123l-.956-.694l-.955.694l.365-1.123l-.956-.694h1.181z"></path>
@@ -533,8 +538,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
           <path fill="#75AADB" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4zM0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
@@ -551,8 +556,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009B3A" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FEDF01" d="M32.728 18L18 29.124L3.272 18L18 6.875z"></path>
@@ -573,8 +578,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#F7E017" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#141414" d="M36 27L0 19v-5l36 8z"></path>
@@ -596,8 +601,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#D62612" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
@@ -614,8 +619,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009E49" d="M19.602 18.942l.99 3.048L18 20.106l-2.593 1.884l.99-3.048L15.101 18H0v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H20.899l-1.297.942z"></path>
           <path fill="#EF2B2D" d="M32 5H4a4 4 0 0 0-4 4v9h15.101l-1.296-.942h3.205L18 14.01l.99 3.048h3.205L20.899 18H36V9a4 4 0 0 0-4-4z"></path>
@@ -632,8 +637,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#CE1126" d="M13.685 13.068a6.471 6.471 0 0 1 8.616-.032l10.833-7.854A3.975 3.975 0 0 0 32 5H4c-.411 0-.8.08-1.174.195l10.859 7.873z"></path>
@@ -657,8 +662,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#032EA1" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#E01E24" d="M0 10.572h36v14.855H0z"></path>
@@ -676,8 +681,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CC212D" d="M12 5v26h12V5H12zm7.882 15.59L18 19.223l-1.882 1.367l.719-2.212l-1.882-1.367h2.326L18 14.798l.719 2.212h2.326l-1.882 1.367l.719 2.213z"></path>
           <path fill="#288541" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -694,8 +699,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D52B1E" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h6V5H4zm28 0h-6v26h6a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M10 5h16v26H10z"></path>
@@ -712,8 +717,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#003893" d="M32 5H4a4 4 0 0 0-4 4v10h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M0 19h36v2H0zm0 5h36v2H0z"></path>
@@ -732,8 +737,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#003082" d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M0 11.5h36V18H0z"></path>
@@ -753,8 +758,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002664" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FECB00" d="M12 5h12v26H12z"></path>
@@ -771,8 +776,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#1F429B" d="M13 5H4a4 4 0 0 0-4 4v9h13V5zm-4.663 9.292l-1.882-1.367l-1.882 1.367l.719-2.212l-1.882-1.368h2.326L6.455 8.5l.719 2.212H9.5L7.618 12.08l.719 2.212z"></path>
           <path fill="#EEE" d="M32 5H13v13h23V9a4 4 0 0 0-4-4z"></path>
@@ -790,8 +795,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DE2910" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFDE02" d="M11.136 8.977l.736.356l.589-.566l-.111.81l.72.386l-.804.144l-.144.804l-.386-.72l-.81.111l.566-.589zm4.665 2.941l-.356.735l.566.59l-.809-.112l-.386.721l-.144-.805l-.805-.144l.721-.386l-.112-.809l.59.566zm-.957 3.779l.268.772l.817.017l-.651.493l.237.783l-.671-.467l-.671.467l.236-.783l-.651-.493l.817-.017zm-3.708 3.28l.736.356l.589-.566l-.111.81l.72.386l-.804.144l-.144.804l-.386-.72l-.81.111l.566-.589zM7 10.951l.929 2.671l2.826.058l-2.253 1.708l.819 2.706L7 16.479l-2.321 1.615l.819-2.706l-2.253-1.708l2.826-.058z"></path>
@@ -807,8 +812,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FBD116" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#22408C" d="M0 18h36v7H0z"></path>
@@ -825,8 +830,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#3A75C4" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
           <path fill="#FFC61E" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
@@ -849,8 +854,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009543" d="M4 5a4 4 0 0 0-4 4v18c0 1.104.448 2.104 1.172 2.828L26 5H4z"></path>
           <path fill="#FBDE4A" d="M32 5h-6L1.172 29.828A3.988 3.988 0 0 0 4 31h6L34.828 6.172A3.988 3.988 0 0 0 32 5z"></path>
@@ -867,8 +872,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002B7F" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 9h36v18H0z"></path>
@@ -893,8 +898,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#F77F00" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#EEE" d="M12 5h12v26H12z"></path>
@@ -911,8 +916,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 12.9h36v10.2H0z"></path>
           <path fill="#171796" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"></path>
@@ -933,8 +938,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002A8F" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M13.846 15H36v-5H6.923zM6.923 26H36v-5H13.846z"></path>
@@ -952,8 +957,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <g fill-rule="evenodd" clip-rule="evenodd" fill="#5C913B">
@@ -973,8 +978,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D7141A" d="M1.383 29.973A3.795 3.795 0 0 0 4 31h28c2.209 0 4-1.791 4-4.5V18H17.5L1.383 29.973z"></path>
           <path fill="#EEE" d="M32 5H4a3.98 3.98 0 0 0-2.646 1.006L17.5 18H36V9a4 4 0 0 0-4-4z"></path>
@@ -991,8 +996,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C60C30" d="M32 5H15v11h21V9a4 4 0 0 0-4-4zM15 31h17c2.209 0 4-1.791 4-4.5V20H15v11zM0 20v6.5C0 29.209 1.791 31 4 31h7V20H0zM11 5H4a4 4 0 0 0-4 4v7h11V5z"></path>
           <path fill="#EEE" d="M15 5h-4v11H0v4h11v11h4V20h21v-4H15z"></path>
@@ -1008,8 +1013,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#6AB2E7" d="M32 5H4a3.98 3.98 0 0 0-2.646 1.006L17.5 18H36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#12AD2B" d="M32 31H4a3.98 3.98 0 0 1-2.646-1.006L17.5 18H36v9a4 4 0 0 1-4 4z"></path>
@@ -1027,8 +1032,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006B3F" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M36 15H21V5h-6v10H0v6h15v10h6V21h15z"></path>
@@ -1059,8 +1064,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002D62" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#DD2E44" d="M32 5H20v11h16V9a4 4 0 0 0-4-4z"></path>
@@ -1101,8 +1106,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#007FFF" d="M4 31h28a4 4 0 0 0 4-4V11.25L3.215 30.921c.254.05.516.079.785.079zM32 5H4a4 4 0 0 0-4 4v15.75L32.785 5.079A4.058 4.058 0 0 0 32 5zM9.63 16.02l-3.06-2.34l-3.06 2.34l1.17-3.78L1.62 9.9H5.4l1.17-3.78L7.74 9.9h3.78l-3.06 2.34l1.17 3.78z"></path>
           <path fill="#F7D618" d="M7.74 9.9L6.57 6.12L5.4 9.9H1.62l3.06 2.34l-1.17 3.78l3.06-2.34l3.06 2.34l-1.17-3.78l3.06-2.34zM3.215 30.921L36 11.25V9.9L1.873 30.376c.406.256.856.448 1.342.545zm29.57-25.842L0 24.75v1.35L34.127 5.624a3.975 3.975 0 0 0-1.342-.545z"></path>
@@ -1119,8 +1124,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#ED1C23" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#034EA2" d="M0 17h36v7H0z"></path>
@@ -1154,8 +1159,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1179,8 +1184,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0F47AF" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1212,8 +1217,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E32118" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1246,8 +1251,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#3E9A00" d="M32 5H4a3.974 3.974 0 0 0-2.97 1.343V18H36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#4289DE" d="M32 31H4a3.974 3.974 0 0 1-2.97-1.343V18H36v9a4 4 0 0 1-4 4z"></path>
@@ -1265,8 +1270,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M0 14h36v9H0z"></path>
           <path fill="#4891D9" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -1283,8 +1288,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#3E5EB9" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFD900" d="M0 10h36v16H0z"></path>
@@ -1311,8 +1316,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FCDD0A" d="M0 13h36v10H0z"></path>
           <path fill="#088930" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
@@ -1337,8 +1342,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#68BFE5" d="M32 5H4c-.205 0-.407.015-.604.045l-.004 1.754l-2.73-.004A3.984 3.984 0 0 0 0 9v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#000000" d="M27.646 11.625h-4.875v8.25c0 2.791 4.875 4.354 4.875 4.354s4.875-1.563 4.875-4.354v-8.25h-4.875z"></path>
@@ -1371,8 +1376,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EDECEC" d="M32 5H18v10h18V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M11 5H4a4 4 0 0 0-4 4v6h11V5z"></path>
@@ -1390,8 +1395,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#ED2939" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"></path>
           <path fill="#002495" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -1408,8 +1413,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009E60" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#3A75C4" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
@@ -1426,8 +1431,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CC162B" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#3C762C" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
@@ -1445,8 +1450,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M32 5H20.5v10.5H36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#E8112D" d="M20.5 5h-5v10.5H0v5h15.5V31h5V20.5H36v-5H20.5z"></path>
@@ -1469,8 +1474,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FFCD05" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#ED1F24" d="M0 14h36v9H0z"></path>
@@ -1487,8 +1492,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CC212D" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FBD116" d="M15.423 22h5.185l-2.592-1.884zm3.587-4.941h3.215l-2.601 1.889l.991 3.052H36v-8H18.016zm-2.602 1.889l-2.601-1.889h3.215L18.016 14H0v8h15.416z"></path>
@@ -1506,8 +1511,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0D5EB0" d="M4 31h28a3.98 3.98 0 0 0 1.935-.5H2.065A3.98 3.98 0 0 0 4 31z"></path>
           <path fill="#EEE" d="M8.5 19.5H0V22h36v-2.5H14zM0 27c0 .17.014.336.035.5h35.931c.02-.164.034-.33.034-.5v-2H0v2zm14-13h22v2.5H14zm0-5.5V11h22V9c0-.17-.014-.336-.035-.5H14z"></path>
@@ -1525,8 +1530,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#007A5E" d="M3.5 8.5h29v19h-29z"></path>
@@ -1546,8 +1551,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#4997D0" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4zM4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#EEE" d="M12 5h12v26H12z"></path>
@@ -1578,8 +1583,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FCD116" d="M32 5H15v13h21V9a4 4 0 0 0-4-4z"></path>
           <path fill="#009E49" d="M15 31h17a4 4 0 0 0 4-4v-9H15v13z"></path>
@@ -1597,8 +1602,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FCD116" d="M12 5h12v26H12z"></path>
@@ -1615,8 +1620,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009E49" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFF" d="M1.808 5.654a3.978 3.978 0 0 0-.44.334v24.024c.139.121.286.233.441.335L36 18L1.808 5.654c.001-.001 0-.001 0 0z"></path>
@@ -1635,8 +1640,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D21C33" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#00209F" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
@@ -1668,8 +1673,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
           <path fill="#0156A3" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4zM0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
@@ -1686,8 +1691,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
           <path fill="#CD2A3E" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -1704,8 +1709,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#003897" d="M10 5H4a4 4 0 0 0-4 4v6h10V5zm22 0H16v10h20V9a4 4 0 0 0-4-4zM10 31H4a4 4 0 0 1-4-4v-6h10v10zm22 0H16V21h20v6a4 4 0 0 1-4 4z"></path>
           <path fill="#D72828" d="M14.5 5h-2.944l-.025 11.5H0v3h11.525L11.5 31h3V19.5H36v-3H14.5z"></path>
@@ -1722,8 +1727,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#138808" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1744,8 +1749,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DC1F26" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"></path>
@@ -1761,8 +1766,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DA0001" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1785,8 +1790,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -1807,8 +1812,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#169B62" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#EEE" d="M12 5h12v26H12z"></path>
@@ -1825,8 +1830,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EDECEC" d="M20.666 19l-.467.809h.934zM18 21.618l.467-.809h-.934z"></path>
           <path fill="#EEE" d="M0 25h36V11H0v14zM.294 7.5h35.413A4 4 0 0 0 32 5H4A3.999 3.999 0 0 0 .294 7.5z"></path>
@@ -1846,8 +1851,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE2B37" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"></path>
           <path fill="#009246" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -1864,8 +1869,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009B3A" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#141414" d="M35.762 28.361c.154-.425.238-.883.238-1.361V9c0-.477-.084-.935-.237-1.359l-.001-.002L21.416 18l14.346 10.361zM14.584 18L.238 7.639v.001A3.984 3.984 0 0 0 0 9v18c0 .478.084.936.238 1.361L14.584 18z"></path>
@@ -1882,8 +1887,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <circle fill="#ED1B2F" cx="18" cy="18" r="7"></circle>
@@ -1899,8 +1904,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#007A3D" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
@@ -1919,8 +1924,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00AFCA" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <g fill="#FFCC4D">
@@ -1951,8 +1956,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#060" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#BB1600" d="M0 13h36v10H0z"></path>
@@ -1977,8 +1982,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v9h35.926L36 9a4 4 0 0 0-4-4z"></path>
@@ -2003,8 +2008,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#007A3D" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#CE1126" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
@@ -2022,8 +2027,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E8112D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFCC4D" d="M18.473 11.986c.014-1.045.94-1.764.979-3.156c.663.834-.433 2.397-.044 3.304c.178-1.029 1.203-1.595 1.461-2.963c.525.928-.803 2.3-.561 3.256c.336-.99 1.438-1.387 1.906-2.699c.373.999-1.152 2.146-1.062 3.128c.486-.924 1.637-1.144 2.305-2.367c.213 1.045-1.475 1.939-1.539 2.924c.625-.837 1.797-.875 2.647-1.978c.047 1.066-1.76 1.684-1.977 2.647c.748-.729 1.91-.583 2.922-1.54c-.119 1.06-2 1.389-2.367 2.306c.854-.603 1.98-.277 3.129-1.063c-.283 1.028-2.193 1.059-2.697 1.907c.936-.462 1.996.036 3.256-.561c-.441.97-2.334.702-2.965 1.461c.998-.31 1.969.349 3.305-.044c-.59.89-2.414.328-3.156.979c1.033-.15 1.889.651 3.269.473c-.719.787-2.435-.053-3.269.473c1.045.014 1.764.941 3.154.978c-.834.666-2.396-.434-3.303-.043c1.031.178 1.596 1.203 2.965 1.461c-.928.525-2.301-.803-3.258-.561c.99.336 1.389 1.438 2.699 1.906c-.998.375-2.144-1.152-3.129-1.062c.926.486 1.147 1.637 2.367 2.305c-1.045.213-1.938-1.475-2.924-1.539c.838.625.875 1.797 1.979 2.647c-1.065.047-1.686-1.76-2.647-1.977c.729.748.582 1.91 1.539 2.922c-1.061-.119-1.389-2-2.305-2.367c.602.854.275 1.98 1.062 3.129c-1.029-.283-1.059-2.193-1.906-2.697c.463.936-.037 1.996.561 3.256c-.971-.441-.703-2.334-1.461-2.965c.309.998-.348 1.969.044 3.305c-.89-.59-.328-2.414-.979-3.156c.15 1.033-.651 1.889-.473 3.269c-.787-.719.053-2.435-.473-3.269c-.014 1.045-.94 1.764-.979 3.154c-.665-.832.433-2.396.043-3.303c-.177 1.031-1.203 1.596-1.46 2.965c-.525-.928.803-2.301.56-3.256c-.336.988-1.438 1.387-1.906 2.697c-.374-.998 1.153-2.144 1.063-3.129c-.487.926-1.638 1.147-2.305 2.367c-.213-1.045 1.475-1.938 1.539-2.922c-.625.836-1.796.873-2.646 1.977c-.048-1.065 1.76-1.686 1.977-2.647c-.748.729-1.911.582-2.923 1.539c.12-1.061 2.002-1.389 2.367-2.305c-.853.602-1.979.275-3.128 1.062c.284-1.029 2.194-1.059 2.698-1.906c-.937.463-1.997-.035-3.256.561c.442-.971 2.333-.703 2.964-1.461c-.998.309-1.967-.348-3.304.043c.588-.888 2.414-.328 3.155-.978c-1.034.15-1.888-.652-3.269-.473c.72-.786 2.435.053 3.269-.473c-1.044-.014-1.763-.94-3.155-.979c.834-.665 2.397.433 3.304.043c-1.03-.177-1.595-1.203-2.963-1.46c.928-.526 2.3.803 3.256.56c-.99-.336-1.387-1.438-2.699-1.906c.999-.374 2.146 1.153 3.128 1.063c-.925-.487-1.144-1.638-2.367-2.305c1.045-.213 1.939 1.475 2.924 1.539c-.837-.625-.875-1.796-1.978-2.646c1.065-.047 1.684 1.76 2.647 1.977c-.729-.748-.583-1.911-1.54-2.923c1.059.12 1.389 2.002 2.306 2.367c-.604-.853-.277-1.978-1.063-3.128c1.028.284 1.059 2.194 1.907 2.698c-.462-.937.036-1.997-.561-3.255c.97.441.702 2.332 1.461 2.963c-.31-.998.349-1.967-.044-3.304c.89.588.328 2.414.979 3.155c-.151-1.034.651-1.888.473-3.269c.786.719-.054 2.435.472 3.269z"></path>
@@ -2044,8 +2049,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-3H0v3zM32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#002868" d="M0 24h36V12H0v12zm18-11a5 5 0 1 1-.001 10.001A5 5 0 0 1 18 13z"></path>
@@ -2062,8 +2067,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#9E3039" d="M32 5H4a4 4 0 0 0-4 4v6h36V9a4 4 0 0 0-4-4zm0 26H4a4 4 0 0 1-4-4v-6h36v6a4 4 0 0 1-4 4z"></path>
           <path fill="#EEE" d="M0 15h36v6H0z"></path>
@@ -2079,8 +2084,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#ED1C23" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -2098,8 +2103,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009543" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -2120,8 +2125,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#BF0A30" d="M35.692 28.538H.308A4 4 0 0 0 4 31h28a4 4 0 0 0 3.692-2.462zM0 23.811h36v2.561H0zM11.5 9.629H36v2.561H11.5zm24.192-2.167A4 4 0 0 0 32 5H11.5v2.462h24.192zM11.5 14.356H36v2.561H11.5zM0 19.083h36v2.561H0z"></path>
           <path fill="#EEE" d="M11.5 12.189H36v2.167H11.5zM0 16.917v2.166h36v-2.166H12zm11.5-9.455v2.167H36V9c0-.545-.111-1.064-.308-1.538H11.5zM0 21.644h36v2.167H0zM0 27c0 .545.111 1.064.308 1.538h35.383A3.98 3.98 0 0 0 36 27v-.629H0V27z"></path>
@@ -2139,8 +2144,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M0 24h36V12H0v12zm21.25-8.298l1.032 1.42l1.67-.542L22.92 18l1.032 1.42l-1.67-.542l-1.032 1.42v-1.756L19.58 18l1.67-.543v-1.755zM18 14.75c.902 0 1.718.368 2.307.961a2.808 2.808 0 0 0-1.649-.535a2.824 2.824 0 1 0 1.649 5.113A3.25 3.25 0 1 1 18 14.75z"></path>
           <path fill="#E70013" d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"></path>
@@ -2159,8 +2164,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1B26" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#002B7F" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
@@ -2181,8 +2186,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006A44" d="M0 14h36v8H0z"></path>
           <path fill="#FDB913" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -2199,8 +2204,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
           <path fill="#ED2939" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -2217,8 +2222,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FC3D32" d="M32 5H13v13h23V9a4 4 0 0 0-4-4z"></path>
           <path fill="#007E3A" d="M13 31h19a4 4 0 0 0 4-4v-9H13v13z"></path>
@@ -2235,8 +2240,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#77B255" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#DD2E44" d="M0 13h36v10H0z"></path>
@@ -2254,8 +2259,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DD2E44" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M.555 29h34.891A3.967 3.967 0 0 0 36 27H0c0 .732.211 1.409.555 2zM0 23h36v2H0zm0-4h36v2H0zm0-4h36v2H0zm0-4h36v2H0zm.555-4A3.955 3.955 0 0 0 0 9h36c0-.732-.211-1.41-.555-2H.555z"></path>
@@ -2274,8 +2279,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D21034" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#007E3A" d="M6 11h24v14H6z"></path>
@@ -2292,8 +2297,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#14B53A" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FCD116" d="M12 5h12v26H12z"></path>
@@ -2310,8 +2315,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CF142B" d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"></path>
@@ -2346,8 +2351,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#003893" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#F4900C" d="M34.593 5.977L.835 29.42c.025.033.053.064.08.098L36 11V9a3.976 3.976 0 0 0-1.407-3.023z"></path>
@@ -2365,8 +2370,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE2540" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#0F6433" d="M0 9v18h36V9z"></path>
@@ -2384,8 +2389,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EA2839" d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#1A206D" d="M0 11.5h36V18H0z"></path>
@@ -2403,8 +2408,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006847" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h7V5H4z"></path>
           <path fill="#CE1126" d="M32 5h-7v26h7a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
@@ -2429,8 +2434,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#75B2DD" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFF" d="M18.3 7.6l-.584 1.797h-1.889l1.528 1.11l-.583 1.796l1.528-1.11l1.528 1.11l-.583-1.796l1.528-1.11h-1.889zm8.603 9.816v-1.889l-1.11 1.528l-1.796-.583L25.107 18l-1.11 1.528l1.796-.583l1.11 1.528v-1.889L28.7 18zm-7.658 8.077l.583-1.796l-1.528 1.11l-1.528-1.11l.583 1.796l-1.528 1.11h1.889L18.3 28.4l.584-1.797h1.889zm-8.438-8.438l-1.11-1.528v1.889L7.9 18l1.797.584v1.889l1.11-1.528l1.796.583L11.493 18l1.11-1.528z"></path>
@@ -2446,8 +2451,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DD2E44" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#265FB5" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
@@ -2472,8 +2477,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
           <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
@@ -2489,8 +2494,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C4272F" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#005197" d="M12 5h12v26H12z"></path>
@@ -2511,8 +2516,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FFCC4D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#DD2E44" d="M35 27a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h28a3 3 0 0 1 3 3v18z"></path>
@@ -2534,8 +2539,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C1272D" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#006233" d="M15.047 22.165l1.128-3.471l-2.953-2.145h3.649L18 13.074l1.129 3.474h3.649l-2.953 2.145l1.128 3.471L18 20.019l-2.953 2.146zm3.583-2.603l.916.665l-.35-1.077l-.566.412zm-1.826-.412l-.35 1.077l.916-.665l-.566-.412zm.241-.74l.955.694l.955-.694l-.365-1.122h-1.182l-.363 1.122zM15.5 17.288l.915.665l.216-.665H15.5zm3.869 0l.216.665l.915-.665h-1.131zm-1.019-.74L18 15.47l-.35 1.079h.7z"></path>
@@ -2551,8 +2556,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FCE100" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#141414" d="M0 13h36v10H0z"></path>
@@ -2575,8 +2580,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EA2839" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#34B232" d="M0 13h36v10H0z"></path>
@@ -2594,8 +2599,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009543" d="M1.067 29.701A3.973 3.973 0 0 0 4 31h28a4 4 0 0 0 4-4V9a3.97 3.97 0 0 0-1.019-2.643L1.067 29.701z"></path>
           <path fill="#003580" d="M34.933 6.299A3.973 3.973 0 0 0 32 5H4a4 4 0 0 0-4 4v18a3.97 3.97 0 0 0 1.019 2.643L34.933 6.299z"></path>
@@ -2616,8 +2621,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002B7F" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFC61E" d="M0 17h36v2H0z"></path>
@@ -2634,8 +2639,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#22408B" d="M27.796 19L8 5v26h19.796L15.918 19z"></path>
           <path fill="#DD2F45" d="M25 18L9 7.196V30h16L13.574 18z"></path>
@@ -2652,8 +2657,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
           <path fill="#AE1F28" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -2670,8 +2675,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00247D" d="M32 5H4c-.205 0-.407.015-.604.045l-.004 1.754l-2.73-.004A3.984 3.984 0 0 0 0 9v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEEDED" d="M29.194 9.5h-1.263l-.194-.58l-.237-.706l-.237.706l-.194.58h-1.263l.535.443l.472.39l-.199.587l-.267.782l.656-.504l.497-.383l.497.383l.656.504l-.267-.782l-.199-.587l.472-.39z"></path>
@@ -2698,8 +2703,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#265FB5" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -2728,8 +2733,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
           <path fill="#E05206" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
@@ -2747,8 +2752,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009A49" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#EEE" d="M12 5h12v26H12z"></path>
@@ -2765,8 +2770,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#024FA2" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M0 9h36v1H0zm0 17h36v1H0z"></path>
@@ -2784,8 +2789,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D20000" d="M34.618 5.998L32 6l-1.5-1H20l-2 1l-2-1H5.5L4 6l-2.618-.002A3.973 3.973 0 0 0 0 9v6.5L1 18l-1 2.5V27c0 1.203.542 2.269 1.382 3.002L4 30l1.5 1H16l2-1l2 1h10.5l1.5-1l2.618.002A3.973 3.973 0 0 0 36 27v-6.5L35 18l1-2.5V9a3.973 3.973 0 0 0-1.382-3.002z"></path>
           <path fill="#FFE600" d="M36 20.5v-5l-13.681 1.9a4.344 4.344 0 0 0-.779-1.957l13.091-9.455A3.982 3.982 0 0 0 32 5h-1.5l-9.663 9.691a4.338 4.338 0 0 0-2.392-1.026L20 5h-4l1.555 8.665a4.335 4.335 0 0 0-2.392 1.026L5.5 5H4a3.986 3.986 0 0 0-2.632.988l13.092 9.455a4.344 4.344 0 0 0-.779 1.957L0 15.5v5l13.681-1.9c.101.724.369 1.391.779 1.957L1.368 30.012l.001.001A3.983 3.983 0 0 0 4 31h1.5l9.663-9.691a4.338 4.338 0 0 0 2.392 1.026L16 31h4l-1.555-8.665a4.335 4.335 0 0 0 2.392-1.026L30.5 31H32a3.984 3.984 0 0 0 2.632-.988L21.54 20.557c.41-.566.678-1.233.779-1.957L36 20.5z"></path>
@@ -2802,8 +2807,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EF2B2D" d="M10 5H4a4 4 0 0 0-4 4v6h10V5zm22 0H16v10h20V9a4 4 0 0 0-4-4zM10 31H4a4 4 0 0 1-4-4v-6h10v10zm22 0H16V21h20v6a4 4 0 0 1-4 4z"></path>
           <path fill="#002868" d="M14.5 5h-2.944l-.025 11.5H0v3h11.525L11.5 31h3V19.5H36v-3H14.5z"></path>
@@ -2820,8 +2825,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="green" d="M8 31h24a4 4 0 0 0 4-4v-4H8v8z"></path>
           <path fill="#EEE" d="M32 5H8v8h28V9a4 4 0 0 0-4-4z"></path>
@@ -2842,8 +2847,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#004600" d="M32 5H9v26h23a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4zm-9.5 20.472a7.5 7.5 0 0 1-7.5-7.5c0-3.72 2.711-6.799 6.263-7.39A6.496 6.496 0 0 0 24 22.972a6.496 6.496 0 0 0 5.89-3.763c-.591 3.553-3.67 6.263-7.39 6.263zm5.11-10.424l-1.213 2.022l-.208-2.349l-2.298-.528l2.17-.924l-.207-2.349l1.548 1.779l2.17-.924l-1.212 2.023l1.548 1.779l-2.298-.529z"></path>
           <path fill="#EEE" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"></path>
@@ -2861,8 +2866,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#4AADD6" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <circle fill="#FFDE00" cx="14.8" cy="18" r="8"></circle>
@@ -2878,8 +2883,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#007229" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
@@ -2897,8 +2902,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M18 18V5H4a4 4 0 0 0-4 4v9h18zm0 0v13h14a4 4 0 0 0 4-4v-9H18z"></path>
           <path fill="#005293" d="M18 18v13H4a4 4 0 0 1-4-4v-9h18z"></path>
@@ -2917,8 +2922,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#CE1126" d="M34.618 30.002A3.975 3.975 0 0 0 36 27V9a4 4 0 0 0-4-4H4a3.965 3.965 0 0 0-2.618.998l33.236 24.004z"></path>
@@ -2936,8 +2941,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0038A8" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
@@ -2965,8 +2970,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D91023" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#EEE" d="M12 5h12v26H12z"></path>
@@ -2983,8 +2988,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#0038A8" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
@@ -3003,8 +3008,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#DC143C" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0v9z"></path>
@@ -3020,8 +3025,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#060" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#D52B1E" d="M32 5H15v26h17a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
@@ -3043,8 +3048,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#8D1B3D" d="M32 5H11v26h21a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M11 28.111l5.295-1.444L11 25.222l5.295-1.444L11 22.333l5.295-1.444L11 19.444L16.295 18L11 16.556l5.295-1.444L11 13.667l5.295-1.444L11 10.778l5.295-1.445L11 7.889l5.295-1.444L11 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h7l5.295-1.444L11 28.111z"></path>
@@ -3060,8 +3065,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#002B7F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FCD116" d="M12 5h12v26H12z"></path>
@@ -3078,8 +3083,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE2028" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"></path>
           <path fill="#22408C" d="M0 13h36v10H0z"></path>
@@ -3096,8 +3101,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#20603D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FAD201" d="M0 19h36v7H0z"></path>
@@ -3117,8 +3122,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009E49" d="M4 5a4 4 0 0 0-4 4v15.323L26.496 5H4z"></path>
           <path fill="#CE1126" d="M32 31a4 4 0 0 0 4-4V11.186L8.767 31H32z"></path>
@@ -3137,8 +3142,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#6CF" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFF" d="M9.333 28.747l2.346-2.909L18 10.2l6.321 15.638l2.346 2.909L18 7.34z"></path>
@@ -3156,8 +3161,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M32 5H19v13H0v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#002B7F" d="M19 5H4a4 4 0 0 0-4 4v9h19V5zM9.076 6.591l.341-1.049l.341 1.049h1.103l-.893.649l.341 1.049l-.892-.648l-.893.648l.341-1.049l-.893-.649h1.104zm-2.739 4.948l-.893-.649l-.893.649l.341-1.049L4 9.841h1.103l.341-1.049l.341 1.049h1.103l-.892.649l.341 1.049zm4.196 5.919l-1.116-.811l-1.116.811l.426-1.312l-1.116-.811H8.99l.426-1.312l.426 1.312h1.379l-1.116.811l.428 1.312zm1.428-4.152l-.558-.406l-.558.405l.213-.656l-.558-.405h.69l.213-.656l.213.656h.69l-.558.405l.213.657zm2.355-2.48l-.837-.608l-.837.608l.32-.984l-.837-.608h1.034l.32-.984l.32.984h1.034l-.837.608l.32.984z"></path>
@@ -3174,8 +3179,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#5EB6E4" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
           <path fill="#EEE" d="M32 5.041H4a4 4 0 0 0-4 4V18h36V9.041a4 4 0 0 0-4-4z"></path>
@@ -3202,8 +3207,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#12AD2B" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFCE00" d="M8.173 13.5H36v9H8.173z"></path>
@@ -3221,8 +3226,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006C35" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <g fill="#FFF">
@@ -3247,8 +3252,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00853F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
           <path fill="#FDEF42" d="M12 5h12v26H12z"></path>
@@ -3266,8 +3271,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0C4076" d="M0 13h36v10H0z"></path>
           <path fill="#EEE" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
@@ -3295,8 +3300,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D62828" d="M32 5h-7.833L1.129 29.785l.001.001c.152.157.317.301.493.431l.001.001L36 13.667V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FCD856" d="M.763 29.35c.112.154.235.299.367.435L24.167 5H12L.763 29.35c-.001-.001-.001-.001 0 0z"></path>
@@ -3315,8 +3320,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
           <path fill="#1EB53A" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
@@ -3333,8 +3338,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#ED2939" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
@@ -3352,8 +3357,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EE2024" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
           <path fill="#EEE" d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"></path>
@@ -3374,8 +3379,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#ED1C23" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
           <path fill="#EEE" d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"></path>
@@ -3396,8 +3401,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0051BA" d="M33.552 5.312A3.99 3.99 0 0 0 32 5H4a4 4 0 0 0-4 4v18c0 .806.239 1.556.649 2.184L33.552 5.312z"></path>
           <path fill="#215B33" d="M2.448 30.687l.006.003c.476.2.998.31 1.546.31h28a4 4 0 0 0 4-4V9c0-.806-.238-1.556-.649-2.184L2.448 30.687z"></path>
@@ -3422,8 +3427,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#4189DD" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFF" d="M19.405 16.066L18 11.741l-1.405 4.325h-4.548l3.679 2.673l-1.405 4.325L18 20.391l3.679 2.673l-1.405-4.325l3.679-2.673z"></path>
@@ -3439,8 +3444,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DE3830" d="M32 5H6.5L19 13.5h17V9a4 4 0 0 0-4-4z"></path>
           <path fill="#002395" d="M6.5 31H32a4 4 0 0 0 4-4v-4.5H19L6.5 31z"></path>
@@ -3460,8 +3465,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#C60C30" d="M21.441 13.085a6 6 0 0 0-8.356 1.474A3.001 3.001 0 0 0 18 18a3 3 0 0 1 4.915 3.442a6 6 0 0 0-1.474-8.357z"></path>
@@ -3479,8 +3484,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#078930" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-3H0v3z"></path>
@@ -3500,8 +3505,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C60A1D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFC400" d="M0 12h36v12H0z"></path>
@@ -3524,8 +3529,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#FFB700" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#8D2129" d="M32 6H10v24h22c1.654 0 3-1.346 3-3V9c0-1.654-1.346-3-3-3z"></path>
@@ -3544,8 +3549,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#009E60" d="M32 5h-5v26h5a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#0072C6" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"></path>
@@ -3563,8 +3568,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D21034" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#141414" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
@@ -3582,8 +3587,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#377E3F" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1H0v1z"></path>
           <path fill="#EEE" d="M0 23h36v3H0z"></path>
@@ -3603,8 +3608,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006AA7" d="M15.5 31H32c2.209 0 4-1.791 4-4.5v-6H15.5V31zM32 5H15.5v10.5H36V9a4 4 0 0 0-4-4zM10.5 5H4a4 4 0 0 0-4 3.997V15.5h10.5V5zM0 20.5v6.004C.002 29.211 1.792 31 4 31h6.5V20.5H0z"></path>
           <path fill="#FECC00" d="M15.5 5h-5v10.5H0v5h10.5V31h5V20.5H36v-5H15.5z"></path>
@@ -3620,8 +3625,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D32D27" d="M31 27a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h18a4 4 0 0 1 4 4v18z"></path>
           <path fill="#FFF" d="M25 16.063h-5v-5h-4v5h-5V20h5v5.063h4V20h5z"></path>
@@ -3637,8 +3642,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M0 13h36v10H0z"></path>
           <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
@@ -3656,8 +3661,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C00" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#060" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
@@ -3678,8 +3683,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#1EB53A" d="M4 5a4 4 0 0 0-4 4v15.627L26.456 5H4z"></path>
           <path fill="#00A3DD" d="M32 31a4 4 0 0 0 4-4V11.33L9.479 31H32z"></path>
@@ -3697,8 +3702,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#A7122D" d="M0 26.518V27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-.482H0z"></path>
           <path fill="#EEE" d="M0 22.181h36v4.485H0z"></path>
@@ -3717,8 +3722,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DC241F" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFC726" d="M16 18L1.296 29.947c.079.072.16.141.244.207L23.667 18L1.54 5.846a4.037 4.037 0 0 0-.244.207L16 18z"></path>
@@ -3736,8 +3741,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#006A4E" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1.2H0V27zm15.526-6.5H15.5l20.5.1v-5.2H15.526zM32 5H15.526v5.2H36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFCE00" d="M15.526 15.333v.067H36v-5.2H15.526zM.026 20.5L0 25.8h36v-5.2l-20.5-.1z"></path>
@@ -3755,8 +3760,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#C10000" d="M32 5H15v13H0v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEEDED" d="M15 5H4a4 4 0 0 0-4 4v9h15V5zm-3 8H9v3H6v-3H3v-3h3V7h3v3h3v3z"></path>
@@ -3773,8 +3778,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CE1126" d="M1.148 6.196A3.987 3.987 0 0 0 0 9v18a4 4 0 0 0 4 4h20.99L1.149 6.195l-.001.001zM32 5H11.01l23.841 24.805A3.984 3.984 0 0 0 36 27V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M2.23 5.412a4 4 0 0 0-1.081.783L24.99 31h1.835L2.23 5.412zM11.01 5H9.175l24.594 25.588c.404-.2.77-.465 1.082-.783L11.01 5z"></path>
@@ -3791,8 +3796,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E70013" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <circle fill="#FFF" cx="18" cy="18" r="6.5"></circle>
@@ -3810,8 +3815,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#E30917" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#EEE" d="M16 24a6 6 0 1 1 0-12c1.31 0 2.52.425 3.507 1.138A7.332 7.332 0 0 0 14 10.647A7.353 7.353 0 0 0 6.647 18A7.353 7.353 0 0 0 14 25.354c2.195 0 4.16-.967 5.507-2.492A5.963 5.963 0 0 1 16 24zm3.913-5.77l2.44.562l.22 2.493l1.288-2.146l2.44.561l-1.644-1.888l1.287-2.147l-2.303.98l-1.644-1.889l.22 2.494z"></path>
@@ -3827,8 +3832,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#29AE66" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"></path>
           <path fill="#CA3745" d="M4 5h7v26H4z"></path>
@@ -3861,8 +3866,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#5B97B1" d="M32 5H4c-.205 0-.407.015-.604.045l-.004 1.754l-2.73-.004A3.984 3.984 0 0 0 0 9v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFCE00" d="M13.598 27.772l-.487-1.499l-.487 1.499h-1.577l1.276.927l-.487 1.5l1.275-.927l1.276.927l-.487-1.5l1.275-.927zm6.485-1.166l.487-1.499l-1.276.926l-1.275-.926l.487 1.499l-1.276.927h1.577l.487 1.5l.487-1.5h1.577zm.487-6.785l-1.276.926l-1.275-.926l.487 1.499l-1.276.927h1.577l.487 1.5l.487-1.5h1.577l-1.275-.927zm4.473 5.449l.487-1.499l-1.276.926l-1.275-.926l.487 1.499l-1.276.927h1.577l.487 1.499l.488-1.499h1.576zm-1.276-10.574l.487 1.499l.488-1.499h1.576l-1.275-.927l.487-1.5l-1.276.927l-1.275-.927l.487 1.5l-1.276.927zm4.546 6.535l-.487-1.499l-.488 1.499h-1.576l1.275.927l-.487 1.5l1.276-.927l1.275.927l-.487-1.5l1.276-.927zm.043-8.104l.487 1.5l.488-1.5h1.576l-1.275-.926l.487-1.5l-1.276.927l-1.275-.927l.487 1.5l-1.276.926zm4.567 5.136l-.487-1.499l-.487 1.499h-1.577l1.276.927l-.488 1.5l1.276-.927l1.276.927l-.488-1.5l1.276-.927zm-1.275-9.216l-.488 1.5l1.276-.927l1.276.927l-.488-1.5L34.5 8.12h-1.577l-.487-1.499l-.487 1.499h-1.577z"></path>
@@ -3886,8 +3891,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D90001" d="M36 27v-1H0v1a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
           <path fill="#FCDC02" d="M0 22h36v4H0z"></path>
@@ -3915,8 +3920,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#005BBB" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FFD500" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"></path>
@@ -3932,8 +3937,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#068241" d="M32 5H9v9h27V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EEE" d="M9 14h27v8H9z"></path>
@@ -3951,8 +3956,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#00247D" d="M0 9.059V13h5.628zM4.664 31H13v-5.837zM23 25.164V31h8.335zM0 23v3.941L5.63 23zM31.337 5H23v5.837zM36 26.942V23h-5.631zM36 13V9.059L30.371 13zM13 5H4.664L13 10.837z"></path>
           <path fill="#CF1B2B" d="M25.14 23l9.712 6.801a3.977 3.977 0 0 0 .99-1.749L28.627 23H25.14zM13 23h-2.141l-9.711 6.8c.521.53 1.189.909 1.938 1.085L13 23.943V23zm10-10h2.141l9.711-6.8a3.988 3.988 0 0 0-1.937-1.085L23 12.057V13zm-12.141 0L1.148 6.2a3.994 3.994 0 0 0-.991 1.749L7.372 13h3.487z"></path>
@@ -3970,8 +3975,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#B22334" d="M35.445 7C34.752 5.809 33.477 5 32 5H18v2h17.445zM0 25h36v2H0zm18-8h18v2H18zm0-4h18v2H18zM0 21h36v2H0zm4 10h28c1.477 0 2.752-.809 3.445-2H.555c.693 1.191 1.968 2 3.445 2zM18 9h18v2H18z"></path>
           <path fill="#EEE" d="M.068 27.679c.017.093.036.186.059.277c.026.101.058.198.092.296c.089.259.197.509.333.743L.555 29h34.89l.002-.004a4.22 4.22 0 0 0 .332-.741a3.75 3.75 0 0 0 .152-.576c.041-.22.069-.446.069-.679H0c0 .233.028.458.068.679zM0 23h36v2H0zm0-4v2h36v-2H18zm18-4h18v2H18zm0-4h18v2H18zM0 9zm.555-2l-.003.005L.555 7zM.128 8.044c.025-.102.06-.199.092-.297a3.78 3.78 0 0 0-.092.297zM18 9h18c0-.233-.028-.459-.069-.68a3.606 3.606 0 0 0-.153-.576A4.21 4.21 0 0 0 35.445 7H18v2z"></path>
@@ -3989,8 +3994,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0038A8" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1H0v1zm0-8h36v4H0z"></path>
           <path fill="#EEE" d="M0 23h36v3H0z"></path>
@@ -4013,8 +4018,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#0099B5" d="M0 9v4h36V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4z"></path>
           <path fill="#1EB53A" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
@@ -4033,8 +4038,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#D21034" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
           <path fill="#009543" d="M4 31h28a4 4 0 0 0 4-4v-9H0v9a4 4 0 0 0 4 4z"></path>
@@ -4054,8 +4059,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#CF142B" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
           <path fill="#00247D" d="M0 23h36V13H0v10zm25.316-3.55l.269.74l.787-.027l-.62.485l.269.74l-.653-.44l-.62.485l.217-.757l-.653-.44l.787-.027l.217-.759zM24.1 17.785l.73-.295l-.417.667l.506.603l-.764-.19l-.417.667l-.055-.785l-.764-.19l.73-.295l-.055-.785l.506.603zm-2.9-2.145l.682.394l.585-.527l-.164.77l.682.394l-.783.082l-.164.77l-.32-.719l-.783.082l.585-.527l-.32-.719zm-2.002-.493l.37-.695l.11.779l.775.137l-.707.345l.11.779l-.547-.566l-.709.345l.37-.695l-.547-.566l.775.137zm-2.875.084l.11-.779l.37.695l.775-.137l-.547.566l.37.695l-.707-.345l-.547.566l.11-.779l-.707-.345l.773-.137zm-2.789.276l.585.527l.681-.394l-.32.719l.585.527l-.783-.082l-.32.719l-.164-.77l-.783-.082l.682-.394l-.163-.77zM11.17 17.49l.73.295l.506-.603l-.055.785l.73.295l-.764.19l-.055.785l-.417-.667l-.764.19l.506-.603l-.417-.667zm-.756 2.699l.269-.74l.217.757l.787.027l-.653.44l.217.757l-.62-.485l-.653.44l.269-.74l-.62-.485l.787.029z"></path>
@@ -4073,8 +4078,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#DA251D" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#FF0" d="M19.753 16.037L18 10.642l-1.753 5.395h-5.672l4.589 3.333l-1.753 5.395L18 21.431l4.589 3.334l-1.753-5.395l4.589-3.333z"></path>
@@ -4090,8 +4095,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#141414" d="M0 27.063C0 29.272 1.791 31 4 31h28c2.209 0 4-1.728 4-3.937V22H0v5.063z"></path>
           <path fill="#EEE" d="M0 14h36v8H0z"></path>
@@ -4108,8 +4113,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#1A8A00" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
           <path fill="#EF7D00" d="M31 31h1a4 4 0 0 0 4-4V15h-5v16z"></path>
@@ -4128,8 +4133,8 @@ const FlagIcon = (nationality: string) => {
           role="img"
           className="iconify iconify--twemoji"
           preserveAspectRatio="xMidYMid meet"
-          width={24}
-          height={24}
+          width={size}
+          height={size}
         >
           <path fill="#EEE" d="M10.154 12L1.833 5.637a4.121 4.121 0 0 0-.5.381v.001A3.992 3.992 0 0 0 0 9v18a3.992 3.992 0 0 0 1.834 3.363L18 18l-7.846-6z"></path>
           <path fill="#DE200F" d="M6.682 11.597l1.783 3.613l3.989.58l-2.887 2.813l.682 3.972l-3.567-1.876l-3.567 1.876l.681-3.972L.91 15.79l3.988-.58z"></path>
