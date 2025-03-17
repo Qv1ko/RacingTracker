@@ -11,10 +11,10 @@ export async function validateRequest(
     if (!parsedBody.success) {
       return res.status(400).json({ error: parsedBody.error.errors });
     }
-    req.body = parsedBody.data; // Sobrescribe el body con los datos validados
+    req.body = parsedBody.data;
   } catch (error) {
     return res
       .status(500)
-      .json({ error: `Error en la validación del request: ${error}` });
+      .json({ error: `Error in the validation of the request: ${error}` });
   }
 }
