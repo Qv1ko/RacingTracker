@@ -1,16 +1,23 @@
+import Footer from '@/components/footer';
+import Header from '@/components/header';
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+import { Roboto } from 'next/font/google';
 
-export default function App({ Component, pageProps }: AppProps) {
+const roboto = Roboto({
+  subsets: ['latin'],
+})
+
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Header />
-      <main>
+      <main className={roboto.className}>
         <Component {...pageProps} />
       </main>
       <Footer />
     </>
   );
 }
+
+export default App;
