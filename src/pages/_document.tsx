@@ -1,9 +1,11 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
-export default function Document() {
+function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <meta name="author" content="Qv1ko" />
+      </Head>
       <body className="antialiased">
         <Main />
         <NextScript />
@@ -11,3 +13,5 @@ export default function Document() {
     </Html>
   );
 }
+
+export default Document;
