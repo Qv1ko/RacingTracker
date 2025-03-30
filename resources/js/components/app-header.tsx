@@ -23,17 +23,17 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Seasons',
-        href: '#',
+        href: '/seasons',
         icon: CalendarFold,
     },
     {
         title: 'Races',
-        href: '#',
+        href: '/races',
         icon: Flag,
     },
     {
         title: 'Drivers',
-        href: '#',
+        href: '/drivers',
         icon: createLucideIcon(
             'DriverHelmet',
             [
@@ -44,7 +44,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Teams',
-        href: '#',
+        href: '/teams',
         icon: Users,
     },
 ];
