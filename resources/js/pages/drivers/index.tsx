@@ -1,7 +1,10 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { CreateButton } from '@/components/create-button';
+import { DataTable } from '@/components/data-table';
+import { columns as tableColumns } from '@/components/drivers/columns';
+import { SelectSeason } from '@/components/select-season';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { SharedData, type BreadcrumbItem, type DriverData } from '@/types';
+import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -10,25 +13,31 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Drivers() {
+export default function Drivers({ seasons, drivers }: { seasons: string[]; drivers: DriverData[] }) {
+    const page = usePage<SharedData>();
+    const { auth, season } = page.props;
+
+    let columns = [...tableColumns];
+
+    if (season === 'all') {
+        columns = columns.filter(
+            (column) => column.accessorKey !== 'teams' && column.accessorKey !== 'second_position' && column.accessorKey !== 'third_position',
+        );
+    }
+
+    if (!auth.user) {
+        columns = columns.filter((column) => column.accessorKey !== 'actions');
+    }
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Drivers" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+            <div className="container mx-auto py-10">
+                <div className="flex justify-between">
+                    <SelectSeason seasons={seasons} url={'/drivers'} />
+                    {auth.user && <CreateButton item="driver" url="/drivers/create" />}
                 </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+                <DataTable columns={columns} data={drivers} />
             </div>
         </AppLayout>
     );

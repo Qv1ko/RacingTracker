@@ -40,3 +40,16 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface DriverData {
+    id: number;
+    name: string;
+    surname: string;
+    nationality: string;
+    teams: string[];
+    races: number;
+    wins: number;
+    second_position: number;
+    third_position: number;
+    points: number;
+}
