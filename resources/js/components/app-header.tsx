@@ -34,13 +34,10 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Drivers',
         href: '/drivers',
-        icon: createLucideIcon(
-            'DriverHelmet',
-            [
-                ["path", { d: "M22 12.2a10 10 0 1 0-19.4 3.2c.2.5.8 1.1 1.3 1.3l13.2 5.1c.5.2 1.2 0 1.6-.3l2.6-2.6c.4-.4.7-1.2.7-1.7Z" }],
-                ["path", { d: "m21.8 18-10.5-4a2 2.06 0 0 1 .7-4h9.8" }]
-            ]
-        ),
+        icon: createLucideIcon('DriverHelmet', [
+            ['path', { d: 'M22 12.2a10 10 0 1 0-19.4 3.2c.2.5.8 1.1 1.3 1.3l13.2 5.1c.5.2 1.2 0 1.6-.3l2.6-2.6c.4-.4.7-1.2.7-1.7Z' }],
+            ['path', { d: 'm21.8 18-10.5-4a2 2.06 0 0 1 .7-4h9.8' }],
+        ]),
     },
     {
         title: 'Teams',
@@ -165,7 +162,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                     href={item.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="group text-accent-foreground ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring ml-1 inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                                    className="group text-accent-foreground ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring ml-1 inline-flex h-9 w-9 items-center justify-center rounded-sm bg-transparent p-0 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                                 >
                                                     <span className="sr-only">{item.title}</span>
                                                     {item.icon && <Icon iconNode={item.icon} className="size-5 opacity-80 group-hover:opacity-100" />}
@@ -185,7 +182,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                     <Button variant="ghost" className="size-10 rounded-full p-1">
                                         <Avatar className="size-8 overflow-hidden rounded-full">
                                             <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-                                            <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                            <AvatarFallback className="rounded-sm bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                                 {getInitials(auth.user.name)}
                                             </AvatarFallback>
                                         </Avatar>
@@ -199,7 +196,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                             <>
                                 <Link
                                     href={loginNavItem.href}
-                                    className='group text-accent-foreground ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring ml-1 inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50'
+                                    className="group text-accent-foreground ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring ml-1 inline-flex h-9 w-9 items-center justify-center rounded-sm bg-transparent p-0 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 >
                                     {loginNavItem.icon && <Icon iconNode={loginNavItem.icon} className="size-5 opacity-80 group-hover:opacity-100" />}
                                 </Link>
@@ -207,16 +204,14 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                         )}
                     </div>
                 </div>
-            </div >
-            {
-                breadcrumbs.length > 1 && (
-                    <div className="border-sidebar-border/70 flex w-full border-b">
-                        <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
-                            <Breadcrumbs breadcrumbs={breadcrumbs} />
-                        </div>
+            </div>
+            {breadcrumbs.length > 1 && (
+                <div className="border-sidebar-border/70 flex w-full border-b">
+                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                        <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
-                )
-            }
+                </div>
+            )}
         </>
     );
 }
