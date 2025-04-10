@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Driver\StoreRequest;
+use App\Http\Requests\Driver\UpdateRequest;
 use Carbon\Carbon;
 use App\Models\Driver;
 use App\Models\Race;
@@ -42,10 +44,10 @@ class DriverController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(string $id)
     {
         $driver = Driver::findOrFail($id);
-        return Inertia::render('drivers/show', [$driver]);
+        return Inertia::render('drivers/show', ['driver' => $driver]);
     }
 
     public function create()
@@ -53,23 +55,24 @@ class DriverController extends Controller
         return Inertia::render('drivers/create');
     }
 
-    public function store(Request $req)
+    public function store(StoreRequest $req)
     {
-        $req->validated();
-        $driver = Driver::create($req->all());
-        return to_route('drivers.index');
+        $driver = Driver::create($req->validated());
+        return Inertia::render('drivers/show', ['driver' => $driver]);
     }
 
-    public function edit(Request $req)
+    public function edit(Driver $driver)
     {
-        return Inertia::render('drivers/edit');
+        return Inertia::render('drivers/edit', [
+            'driver' => $driver,
+        ]);
     }
 
-    public function update(Request $req, $id)
+    public function update(UpdateRequest $req, $id)
     {
-        $req->validated();
-        Driver::findOrFail($id)->update($req->all());
-        return to_route('drivers.show', $req->id);
+        $driver = Driver::findOrFail($id);
+        $driver->update($req->validated());
+        return Inertia::render('drivers/show', ['driver' => $driver]);
     }
 
     public function destroy(string $id)

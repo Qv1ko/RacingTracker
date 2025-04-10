@@ -41,6 +41,20 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+export interface DriverForm {
+    id: number;
+    name: string;
+    surname: string;
+    nationality: string;
+}
+
+export interface DriverProfile {
+    id: number;
+    name: string;
+    surname: string;
+    nationality: string;
+}
+
 export interface DriverData {
     id: number;
     name: string;
