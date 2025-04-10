@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-sm p-4">
+            <div className="flex h-full flex-1 flex-col gap-4 rounded-sm px-4 py-8">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />

@@ -32,7 +32,7 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Drivers" />
-            <div className="container mx-auto py-10">
+            <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
                     <SelectSeason seasons={seasons} url={'/drivers'} />
                     {auth.user && <CreateButton item="driver" url="/drivers/create" />}
