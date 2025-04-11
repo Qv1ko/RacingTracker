@@ -75,7 +75,7 @@ export default function EditDriverForm({ driver }: { driver: DriverForm }) {
                             Cancel
                         </Button>
                         <Button type="submit" disabled={processing} className="flex-1 cursor-pointer">
-                            {processing ? 'Saving...' : 'Update Driver'}
+                            {processing ? 'Saving...' : 'Update driver'}
                         </Button>
                     </div>
                 </form>
