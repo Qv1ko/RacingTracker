@@ -67,3 +67,27 @@ export interface DriverData {
     third_position: number;
     points: number;
 }
+
+export interface TeamForm {
+    id: number;
+    name: string;
+    nationality: string;
+}
+
+export interface TeamProfile {
+    id: number;
+    name: string;
+    nationality: string;
+}
+
+export interface TeamData {
+    id: number;
+    name: string;
+    nationality: string;
+    drivers?: string[];
+    races: number;
+    wins: number;
+    second_position: number;
+    third_position: number;
+    points: number;
+}
