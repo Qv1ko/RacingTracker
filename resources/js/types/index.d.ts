@@ -60,7 +60,7 @@ export interface DriverData {
     name: string;
     surname: string;
     nationality: string;
-    teams: string[];
+    teams?: string[];
     races: number;
     wins: number;
     second_position: number;
