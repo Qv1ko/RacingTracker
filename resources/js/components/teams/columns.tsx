@@ -1,12 +1,12 @@
 'use client';
 
 import FlagIcon from '@/components/ui/flag-icon';
-import { type TeamData } from '@/types';
+import { type Team } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ActionsColumn } from './actionsColumn';
 
-export const columns: ColumnDef<TeamData>[] = [
+export const columns: ColumnDef<Team>[] = [
     {
         accessorKey: 'teams',
         header: () => <div className="text-bold">Team</div>,
@@ -44,19 +44,19 @@ export const columns: ColumnDef<TeamData>[] = [
         },
     },
     {
-        accessorKey: 'second_position',
+        accessorKey: 'second_positions',
         header: () => <div className="text-bold hidden md:table-cell">2nd</div>,
         cell: ({ row }) => {
-            const second_position = row.original.second_position || 0;
-            return <p className="hidden md:table-cell">{second_position}</p>;
+            const second_positions = row.original.second_positions || 0;
+            return <p className="hidden md:table-cell">{second_positions}</p>;
         },
     },
     {
-        accessorKey: 'third_position',
+        accessorKey: 'third_positions',
         header: () => <div className="text-bold hidden md:table-cell">3rd</div>,
         cell: ({ row }) => {
-            const third_position = row.original.third_position || 0;
-            return <p className="hidden md:table-cell">{third_position}</p>;
+            const third_positions = row.original.third_positions || 0;
+            return <p className="hidden md:table-cell">{third_positions}</p>;
         },
     },
     {

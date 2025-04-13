@@ -6,10 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { nationalities } from '@/lib/utils';
-import type { TeamForm } from '@/types';
+import type { Team } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 
-export default function EditTeamForm({ team }: { team: TeamForm }) {
+export default function EditTeamForm({ team }: { team: Team }) {
     const { data, setData, processing, put, errors } = useForm({
         id: team.id || '',
         name: team.name || '',

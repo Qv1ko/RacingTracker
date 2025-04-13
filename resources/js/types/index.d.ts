@@ -41,53 +41,43 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-export interface DriverForm {
+export interface Driver {
     id: number;
     name: string;
     surname: string;
-    nationality: string;
-}
-
-export interface DriverProfile {
-    id: number;
-    name: string;
-    surname: string;
-    nationality: string;
-}
-
-export interface DriverData {
-    id: number;
-    name: string;
-    surname: string;
-    nationality: string;
+    nationality?: string;
     teams?: string[];
-    races: number;
-    wins: number;
-    second_position: number;
-    third_position: number;
-    points: number;
+    races?: number;
+    wins?: number;
+    second_positions?: number;
+    third_positions?: number;
+    points?: number;
 }
 
-export interface TeamForm {
+export interface Race {
     id: number;
     name: string;
-    nationality: string;
+    date: Date;
+    winer?: Driver;
+    second?: Driver;
+    third?: Driver;
+    better?: Driver;
 }
 
-export interface TeamProfile {
-    id: number;
-    name: string;
-    nationality: string;
-}
-
-export interface TeamData {
+export interface Team {
     id: number;
     name: string;
     nationality: string;
     drivers?: string[];
-    races: number;
-    wins: number;
-    second_position: number;
-    third_position: number;
-    points: number;
+    races?: number;
+    wins?: number;
+    second_positions?: number;
+    third_positions?: number;
+    points?: number;
+}
+
+export interface Participation {
+    position: string;
+    driverId: number;
+    teamId: number;
 }

@@ -1,6 +1,6 @@
 import FlagIcon from '@/components/ui/flag-icon';
 import AppLayout from '@/layouts/app-layout';
-import { TeamProfile, type BreadcrumbItem } from '@/types';
+import { Team, type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-separator';
 import { User } from 'lucide-react';
@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Teams({ team }: { team: TeamProfile }) {
+export default function Teams({ team }: { team: Team }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Team" />

@@ -3,7 +3,7 @@ import { DataTable } from '@/components/data-table';
 import { columns as tableColumns } from '@/components/drivers/columns';
 import { SelectSeason } from '@/components/select-season';
 import AppLayout from '@/layouts/app-layout';
-import { SharedData, type BreadcrumbItem, type DriverData } from '@/types';
+import { SharedData, type BreadcrumbItem, type Driver } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -13,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Drivers({ seasons, drivers }: { seasons: string[]; drivers: DriverData[] }) {
+export default function Drivers({ seasons, drivers }: { seasons: string[]; drivers: Driver[] }) {
     const page = usePage<SharedData>();
     const { auth, season } = page.props;
 
@@ -21,11 +21,11 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
 
     if (season === 'all') {
         columns = columns.filter(
-            (column) => column.accessorKey !== 'teams' && column.accessorKey !== 'second_position' && column.accessorKey !== 'third_position',
+            (column) => column.accessorKey !== 'teams' && column.accessorKey !== 'second_positions' && column.accessorKey !== 'third_positions',
         );
     }
 
-    if (!auth.user) {
+    if (!auth.user || drivers.length === 0) {
         columns = columns.filter((column) => column.accessorKey !== 'actions');
     }
 

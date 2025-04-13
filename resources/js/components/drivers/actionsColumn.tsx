@@ -10,12 +10,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { type DriverData } from '@/types';
+import { type Driver } from '@/types';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
-export const ActionsColumn: ColumnDef<DriverData> = {
+export const ActionsColumn: ColumnDef<Driver> = {
     accessorKey: 'actions',
     header: () => <div className="text-bold"></div>,
     cell: ({ row }) => {

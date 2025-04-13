@@ -1,6 +1,6 @@
 import FlagIcon from '@/components/ui/flag-icon';
 import AppLayout from '@/layouts/app-layout';
-import { DriverProfile, type BreadcrumbItem } from '@/types';
+import { Driver, type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-separator';
 import { User } from 'lucide-react';
@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Drivers({ driver }: { driver: DriverProfile }) {
+export default function Drivers({ driver }: { driver: Driver }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Driver" />
@@ -26,7 +26,7 @@ export default function Drivers({ driver }: { driver: DriverProfile }) {
                             {driver.name} {driver.surname}
                         </h2>
                         <div className="flex items-center gap-2">
-                            <FlagIcon nationality={driver.nationality} size={24} />
+                            <FlagIcon nationality={driver.nationality ? driver.nationality.toString() : 'unknown'} size={24} />
                             <p className="text-slate-500">{driver.nationality}</p>
                         </div>
                     </div>

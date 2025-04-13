@@ -10,12 +10,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { type TeamData } from '@/types';
+import { type Team } from '@/types';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
-export const ActionsColumn: ColumnDef<TeamData> = {
+export const ActionsColumn: ColumnDef<Team> = {
     accessorKey: 'actions',
     header: () => <div className="text-bold"></div>,
     cell: ({ row }) => {

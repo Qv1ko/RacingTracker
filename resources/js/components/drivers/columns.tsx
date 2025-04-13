@@ -1,17 +1,17 @@
 'use client';
 
 import FlagIcon from '@/components/ui/flag-icon';
-import { type DriverData } from '@/types';
+import { type Driver } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ActionsColumn } from './actionsColumn';
 
-export const columns: ColumnDef<DriverData>[] = [
+export const columns: ColumnDef<Driver>[] = [
     {
         accessorKey: 'drivers',
         header: () => <div className="text-bold">Driver</div>,
         cell: ({ row }) => {
-            const { nationality, name, surname } = row.original;
+            const { name, surname, nationality } = row.original;
             return (
                 <Link href={`/drivers/${row.original.id}`} className="hover:text-primary flex items-center gap-2">
                     <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} /> {name} {surname}
@@ -44,19 +44,19 @@ export const columns: ColumnDef<DriverData>[] = [
         },
     },
     {
-        accessorKey: 'second_position',
+        accessorKey: 'second_positions',
         header: () => <div className="text-bold hidden md:table-cell">2nd</div>,
         cell: ({ row }) => {
-            const second_position = row.original.second_position || 0;
-            return <p className="hidden md:table-cell">{second_position}</p>;
+            const second_positions = row.original.second_positions || 0;
+            return <p className="hidden md:table-cell">{second_positions}</p>;
         },
     },
     {
-        accessorKey: 'third_position',
+        accessorKey: 'third_positions',
         header: () => <div className="text-bold hidden md:table-cell">3rd</div>,
         cell: ({ row }) => {
-            const third_position = row.original.third_position || 0;
-            return <p className="hidden md:table-cell">{third_position}</p>;
+            const third_positions = row.original.third_positions || 0;
+            return <p className="hidden md:table-cell">{third_positions}</p>;
         },
     },
     {
