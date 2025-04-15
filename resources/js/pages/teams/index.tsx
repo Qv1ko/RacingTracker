@@ -23,6 +23,8 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
         columns = columns.filter(
             (column) => column.accessorKey !== 'drivers' && column.accessorKey !== 'second_positions' && column.accessorKey !== 'third_positions',
         );
+    } else {
+        columns = columns.filter((column) => column.accessorKey !== 'status');
     }
 
     if (!auth.user || teams.length === 0) {

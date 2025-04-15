@@ -5,6 +5,16 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+interface Status {
+    type: string;
+    value: boolean;
+}
+
+export const statuses: Status[] = [
+    { type: 'Active', value: true },
+    { type: 'Inactive', value: false },
+];
+
 export const nationalities: string[] = [
     'Afghan',
     'Albanian',

@@ -25,7 +25,8 @@ class UpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
             'surname' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
-            'nationality' => ['string', 'max:255'],
+            'nationality' => ['max:255'],
+            'status' => ['boolean'],
         ];
     }
 

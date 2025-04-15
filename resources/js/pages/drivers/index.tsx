@@ -23,6 +23,8 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
         columns = columns.filter(
             (column) => column.accessorKey !== 'teams' && column.accessorKey !== 'second_positions' && column.accessorKey !== 'third_positions',
         );
+    } else {
+        columns = columns.filter((column) => column.accessorKey !== 'status');
     }
 
     if (!auth.user || drivers.length === 0) {

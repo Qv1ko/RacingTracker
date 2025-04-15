@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Team extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'nationality',
+        'status'
     ];
 
     public function participations(): HasMany

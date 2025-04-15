@@ -23,8 +23,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'regex:/^(?i)[A-Z0-9][A-Z0-9\s\-&]*[A-Z0-9]$/'],
-            'nationality' => ['string', 'max:255'],
+            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[A-Za-z0-9][A-Za-z0-9\s\-&]*[A-Za-z0-9]$/'],
+            'nationality' => ['max:255'],
+            'status' => ['boolean'],
         ];
     }
 

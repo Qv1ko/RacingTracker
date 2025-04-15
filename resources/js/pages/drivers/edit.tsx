@@ -5,7 +5,7 @@ import FlagIcon from '@/components/ui/flag-icon';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
-import { nationalities } from '@/lib/utils';
+import { nationalities, statuses } from '@/lib/utils';
 import type { Driver } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 
@@ -15,6 +15,7 @@ export default function EditDriverForm({ driver }: { driver: Driver }) {
         name: driver.name || '',
         surname: driver.surname || '',
         nationality: driver.nationality || '',
+        status: Boolean(driver.status),
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -47,27 +48,50 @@ export default function EditDriverForm({ driver }: { driver: Driver }) {
                         {errors.surname && <p className="text-destructive text-sm font-medium">{errors.surname}</p>}
                     </div>
 
-                    <div className="space-y-2">
-                        <label
-                            htmlFor="nationality"
-                            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            Nationality
-                        </label>
-                        <Select value={data.nationality} onValueChange={(value) => setData('nationality', value)}>
-                            <SelectTrigger id="nationality" className="w-full">
-                                <SelectValue placeholder="Select nationality" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {nationalities.sort().map((nationality) => (
-                                    <SelectItem key={nationality} value={nationality}>
-                                        <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} />
-                                        {nationality}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                        {errors.nationality && <p className="text-destructive text-sm font-medium">{errors.nationality}</p>}
+                    <div className="mt-6 flex gap-4">
+                        <div className="w-50 space-y-2">
+                            <label
+                                htmlFor="nationality"
+                                className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                Nationality
+                            </label>
+                            <Select value={data.nationality} onValueChange={(value) => setData('nationality', value)}>
+                                <SelectTrigger id="nationality" className="w-full">
+                                    <SelectValue placeholder="Select nationality" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {nationalities.sort().map((nationality) => (
+                                        <SelectItem key={nationality} value={nationality}>
+                                            <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} />
+                                            {nationality}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {errors.nationality && <p className="text-destructive text-sm font-medium">{errors.nationality}</p>}
+                        </div>
+                        <div className="w-50 space-y-2">
+                            <label
+                                htmlFor="status"
+                                className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                Driver status
+                            </label>
+                            <Select value={data.status.toString()} onValueChange={(value) => setData('status', value === 'true')}>
+                                <SelectTrigger id="status" className="w-full">
+                                    <SelectValue placeholder="Select status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {statuses.sort().map((status) => (
+                                        <SelectItem key={status.type} value={status.value.toString()}>
+                                            {status.type}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {errors.status && <p className="text-destructive text-sm font-medium">{errors.status}</p>}
+                        </div>
                     </div>
 
                     <div className="mt-6 flex gap-4">

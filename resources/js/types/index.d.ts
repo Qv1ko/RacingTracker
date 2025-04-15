@@ -46,6 +46,7 @@ export interface Driver {
     name: string;
     surname: string;
     nationality?: string;
+    status: boolean;
     teams?: string[];
     races?: number;
     wins?: number;
@@ -68,6 +69,7 @@ export interface Team {
     id: number;
     name: string;
     nationality: string;
+    status: boolean;
     drivers?: string[];
     races?: number;
     wins?: number;

@@ -1,5 +1,6 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
 import FlagIcon from '@/components/ui/flag-icon';
 import { type Team } from '@/types';
 import { Link } from '@inertiajs/react';
@@ -17,6 +18,13 @@ export const columns: ColumnDef<Team>[] = [
                     <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} /> {name}
                 </Link>
             );
+        },
+    },
+    {
+        accessorKey: 'status',
+        header: () => <div className="text-bold hidden sm:table-cell">Status</div>,
+        cell: ({ row }) => {
+            return <Badge variant="secondary">{row.original.status ? 'Active' : 'Inactive'}</Badge>;
         },
     },
     {

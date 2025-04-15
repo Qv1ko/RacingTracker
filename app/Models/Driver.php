@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Driver extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'surname',
         'nationality',
+        'status'
     ];
 
     public function participations(): HasMany
