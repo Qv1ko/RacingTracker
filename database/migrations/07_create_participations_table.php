@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('status', 10);
             $table->double('driverPoints');
             $table->double('uncertainty');
-            $table->double('teamPoints')->nullable();
 
             $table->unique(['driver_id', 'team_id', 'race_id']);
             $table->index('driver_id');
