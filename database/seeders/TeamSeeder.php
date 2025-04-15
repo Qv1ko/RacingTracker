@@ -14,17 +14,17 @@ class TeamSeeder extends Seeder
     public function run(): void
     {
         Team::insert([
-            ['name' => 'Arrows', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'BAR', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Benetton', 'nationality' => 'Italian', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Ferrari', 'nationality' => 'Italian', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Jaguar', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Jordan', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'McLaren', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Minardi', 'nationality' => 'Italian', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Prost', 'nationality' => 'French', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Sauber', 'nationality' => 'Swiss', 'updated_at' => now(), 'created_at' => now()],
-            ['name' => 'Williams', 'nationality' => 'British', 'updated_at' => now(), 'created_at' => now()],
+            ['name' => 'Arrows', 'nationality' => 'British', 'status' => false],
+            ['name' => 'BAR', 'nationality' => 'British', 'status' => false],
+            ['name' => 'Benetton', 'nationality' => 'Italian', 'status' => false],
+            ['name' => 'Ferrari', 'nationality' => 'Italian', 'status' => true],
+            ['name' => 'Jaguar', 'nationality' => 'British', 'status' => false],
+            ['name' => 'Jordan', 'nationality' => 'British', 'status' => false],
+            ['name' => 'McLaren', 'nationality' => 'British', 'status' => true],
+            ['name' => 'Minardi', 'nationality' => 'Italian', 'status' => false],
+            ['name' => 'Prost', 'nationality' => 'French', 'status' => false],
+            ['name' => 'Sauber', 'nationality' => 'Swiss', 'status' => false],
+            ['name' => 'Williams', 'nationality' => 'British', 'status' => true],
         ]);
     }
 }
