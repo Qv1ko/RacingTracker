@@ -23,10 +23,12 @@ export default function Teams({ team }: { team: Team }) {
                     </div>
                     <div className="text-center sm:text-left">
                         <h2 className="text-2xl font-bold">{team.name}</h2>
-                        <div className="flex items-center gap-2">
-                            <FlagIcon nationality={team.nationality} size={24} />
-                            <p className="text-slate-500">{team.nationality}</p>
-                        </div>
+                        {team.nationality && (
+                            <div className="flex items-center gap-2">
+                                <FlagIcon nationality={team.nationality.toString()} size={24} />
+                                <p className="text-slate-500">{team.nationality}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 

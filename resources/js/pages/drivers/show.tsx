@@ -25,10 +25,12 @@ export default function Drivers({ driver }: { driver: Driver }) {
                         <h2 className="text-2xl font-bold">
                             {driver.name} {driver.surname}
                         </h2>
-                        <div className="flex items-center gap-2">
-                            <FlagIcon nationality={driver.nationality ? driver.nationality.toString() : 'unknown'} size={24} />
-                            <p className="text-slate-500">{driver.nationality}</p>
-                        </div>
+                        {driver.nationality && (
+                            <div className="flex items-center gap-2">
+                                <FlagIcon nationality={driver.nationality.toString()} size={24} />
+                                <p className="text-slate-500">{driver.nationality}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
