@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[A-Za-z0-9][A-Za-z0-9\s\-&]*[A-Za-z0-9]$/'],
+            'name' => ['required', 'unique:teams', 'string', 'min:3', 'max:255', 'regex:/^[A-Za-z0-9][A-Za-z0-9\s\-&]*[A-Za-z0-9]$/'],
             'nationality' => ['max:255'],
             'status' => ['boolean'],
         ];
@@ -33,6 +33,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name.regex' => 'The name may only contain letters, numbers, spaces, hyphens and ampersands.',
+            'name.unique' => 'The team already exists.',
         ];
     }
 }

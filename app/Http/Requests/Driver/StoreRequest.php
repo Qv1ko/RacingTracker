@@ -4,6 +4,7 @@ namespace App\Http\Requests\Driver;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,7 +24,15 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\'\.\- ]+$/u',
+                Rule::unique('drivers')->where(function ($query) {
+                    return $query->where('surname', request('surname'));
+                })
+            ],
             'surname' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
             'nationality' => ['max:255'],
             'status' => ['boolean'],
@@ -34,6 +43,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name.regex' => 'The name may only contain letters, spaces, apostrophes, and hyphens.',
+            'name.unique' => 'The driver already exists.',
             'surname.regex' => 'The surname may only contain letters, spaces, apostrophes, and hyphens.',
         ];
     }
