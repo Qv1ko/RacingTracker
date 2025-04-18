@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
                 'string',
                 'max:255',
                 'regex:/^[A-Za-z0-9 ]*$/',
-                Rule::unique('races')->where(function ($query) {
+                Rule::unique('races')->ignore($this->id)->where(function ($query) {
                     return $query->where('date', request('date'));
                 })
             ],
