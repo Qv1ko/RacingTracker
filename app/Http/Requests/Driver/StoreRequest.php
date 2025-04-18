@@ -34,7 +34,7 @@ class StoreRequest extends FormRequest
                 })
             ],
             'surname' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
-            'nationality' => ['max:255'],
+            'nationality' => ['nullable', 'max:255'],
             'status' => ['boolean'],
         ];
     }
