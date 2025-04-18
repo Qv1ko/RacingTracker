@@ -15,14 +15,14 @@ class DriverSeeder extends Seeder
     {
         Driver::insert([
             ['name' => 'Jean', 'surname' => 'Alesi', 'nationality' => 'French', 'status' => false],
-            ['name' => 'Rubens', 'surname' => 'Barrichello', 'nationality' => 'Brazilian', 'status' => false],
+            ['name' => 'Rubens', 'surname' => 'Barrichello', 'nationality' => 'Brazilian', 'status' => true],
             ['name' => 'Luciano', 'surname' => 'Burti', 'nationality' => 'Brazilian', 'status' => false],
-            ['name' => 'Jenson', 'surname' => 'Button', 'nationality' => 'British', 'status' => false],
+            ['name' => 'Jenson', 'surname' => 'Button', 'nationality' => 'British', 'status' => true],
             ['name' => 'David', 'surname' => 'Coulthard', 'nationality' => 'British', 'status' => false],
             ['name' => 'Pedro', 'surname' => 'de la Rosa', 'nationality' => 'Spanish', 'status' => false],
             ['name' => 'Giancarlo', 'surname' => 'Fisichella', 'nationality' => 'Italian', 'status' => false],
             ['name' => 'Heinz-Harald', 'surname' => 'Frentzen', 'nationality' => 'German', 'status' => false],
-            ['name' => 'Marc', 'surname' => 'Gené', 'nationality' => 'Spanish', 'status' => false],
+            ['name' => 'Marc', 'surname' => 'Gené', 'nationality' => 'Spanish', 'status' => true],
             ['name' => 'Mika', 'surname' => 'Häkkinen', 'nationality' => 'Finnish', 'status' => false],
             ['name' => 'Nick', 'surname' => 'Heidfeld', 'nationality' => 'German', 'status' => false],
             ['name' => 'Johnny', 'surname' => 'Herbert', 'nationality' => 'British', 'status' => false],
