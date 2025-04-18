@@ -211,3 +211,19 @@ export const nationalities: string[] = [
     'Zambian',
     'Zimbabwean',
 ];
+
+interface Position {
+    type: string;
+    description: string;
+}
+
+export const otherPositionTypes: Position[] = [
+    { type: 'DNF', description: 'Did Not Finish' },
+    { type: 'DNQ', description: 'Did Not Qualify' },
+    { type: 'DNS', description: 'Did Not Start' },
+    { type: 'DQ', description: 'Disqualified' },
+    { type: 'EXC', description: 'Excluded' },
+    { type: 'NC', description: 'Not Classified' },
+    { type: 'OTL', description: 'Outside Time Limit' },
+    { type: 'RET', description: 'Retired' },
+];

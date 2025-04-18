@@ -59,7 +59,7 @@ export interface Race {
     id: number;
     name: string;
     date: Date;
-    winer?: Driver;
+    winner?: Driver;
     second?: Driver;
     third?: Driver;
     better?: Driver;
@@ -76,10 +76,4 @@ export interface Team {
     second_positions?: number;
     third_positions?: number;
     points?: number;
-}
-
-export interface Participation {
-    position: string;
-    driverId: number;
-    teamId: number;
 }
