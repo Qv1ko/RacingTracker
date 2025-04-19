@@ -20,18 +20,37 @@ class RaceController extends Controller
 
         if ($season) {
             if ($season === 'all') {
-                $data = Race::orderBy('name', 'asc')->get();
+                $data = Race::orderBy('name', 'asc')
+                    ->with([
+                        'winner',
+                        'better',
+                    ])->get();
             } else {
-                $data = Race::where('date', '>=', Carbon::parse($season)->startOfYear())
-                    ->where('date', '<=', Carbon::parse($season)->endOfYear())
-                    ->get();
+                $data = Race::whereBetween('date', [
+                    "$season-01-01",
+                    "$season-12-31",
+                ])->orderBy('date', 'asc')
+                    ->with([
+                        'winner',
+                        'second',
+                        'third',
+                        'better',
+                    ])->get();
             }
         } else {
             $data = Race::whereYear('date', Carbon::now()->year)
-                ->get();
+                ->orderBy('date', 'asc')
+                ->with([
+                    'winner',
+                    'second',
+                    'third',
+                    'better',
+                ])->get();
         }
 
-        $seasons = Race::select('date')->distinct();
+        $seasons = Race::pluck('date')
+            ->map(fn($date) => Carbon::parse($date)->format('Y'))
+            ->unique();
 
         return Inertia::render('races/index', [
             'seasons' => $seasons,
