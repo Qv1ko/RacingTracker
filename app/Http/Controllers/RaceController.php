@@ -9,6 +9,7 @@ use App\Models\Race;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\Race\StoreRequest;
 use App\Http\Requests\Race\UpdateRequest;
+use App\Models\Participation;
 use Inertia\Inertia;
 
 class RaceController extends Controller
@@ -55,10 +56,40 @@ class RaceController extends Controller
 
     public function store(StoreRequest $req)
     {
-        foreach ($req->result as $participant) {
-            dd($participant);
-        }
         $race = Race::create($req->validated());
+
+        foreach ($req->result as $participant) {
+            Participation::create([
+                'driver_id' => $participant['driver'],
+                'team_id' => $participant['team'],
+                'race_id' => $race->id,
+                'position' => intval($participant['position']) ? intval($participant['position']) : null,
+                'status' => $participant['position'],
+                'points' => Participation::where('driver_id', $participant['driver'])
+                    ->whereHas('race', function ($query) use ($race) {
+                        $query->where('date', '<', $race->date);
+                    })
+                    ->orderByDesc(Race::select('date')
+                        ->whereColumn('id', 'participations.race_id')
+                        ->limit(1))
+                    ->first()
+                    ?->points ?? Participation::$MU,
+                'uncertainty' => Participation::where('driver_id', $participant['driver'])
+                    ->whereHas('race', function ($query) use ($race) {
+                        $query->where('date', '<', $race->date);
+                    })
+                    ->orderByDesc(Race::select('date')
+                        ->whereColumn('id', 'participations.race_id')
+                        ->limit(1))
+                    ->first()
+                    ?->uncertainty ?? Participation::$SIGMA,
+            ]);
+        }
+
+        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+            $query->where('date', '>=', $race->date);
+        })->get());
+
         return Inertia::render('races/show', ['race' => $race]);
     }
 
