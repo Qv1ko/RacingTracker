@@ -55,6 +55,17 @@ export interface Driver {
     points?: number;
 }
 
+export interface Participation {
+    id: number;
+    driver_id: number;
+    team_id: number;
+    race_id: number;
+    position: number;
+    status: string;
+    points: number;
+    uncertainty: number;
+}
+
 export interface Race {
     id: number;
     name: string;

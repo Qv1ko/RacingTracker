@@ -58,14 +58,14 @@ class RaceController extends Controller
     {
         $race = Race::create($req->validated());
 
-        foreach ($req->result as $participant) {
+        foreach ($req->result as $participation) {
             Participation::create([
-                'driver_id' => $participant['driver'],
-                'team_id' => $participant['team'],
+                'driver_id' => $participation['driver'],
+                'team_id' => $participation['team'],
                 'race_id' => $race->id,
-                'position' => intval($participant['position']) ? intval($participant['position']) : null,
-                'status' => $participant['position'],
-                'points' => Participation::where('driver_id', $participant['driver'])
+                'position' => intval($participation['position']) ? intval($participation['position']) : null,
+                'status' => $participation['position'],
+                'points' => Participation::where('driver_id', $participation['driver'])
                     ->whereHas('race', function ($query) use ($race) {
                         $query->where('date', '<', $race->date);
                     })
@@ -74,7 +74,7 @@ class RaceController extends Controller
                         ->limit(1))
                     ->first()
                     ?->points ?? Participation::$MU,
-                'uncertainty' => Participation::where('driver_id', $participant['driver'])
+                'uncertainty' => Participation::where('driver_id', $participation['driver'])
                     ->whereHas('race', function ($query) use ($race) {
                         $query->where('date', '<', $race->date);
                     })
@@ -95,8 +95,14 @@ class RaceController extends Controller
 
     public function edit(Race $race)
     {
+        $drivers = Driver::where('status', true)->get();
+        $teams = Team::where('status', true)->get();
+
         return Inertia::render('races/edit', [
             'race' => $race,
+            'participations' => $race->participations,
+            'drivers' => $drivers,
+            'teams' => $teams
         ]);
     }
 
@@ -104,12 +110,81 @@ class RaceController extends Controller
     {
         $race = Race::findOrFail($id);
         $race->update($req->validated());
+
+        foreach ($req->result as $participationData) {
+            $participation = Participation::where('driver_id', $participationData['driver'])
+                ->where('race_id', $race->id);
+
+            if ($participation) {
+                $participation->update([
+                    'team_id' => $participationData['team'],
+                    'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
+                    'status' => $participationData['position'],
+                    'points' => Participation::where('driver_id', $participationData['driver'])
+                        ->whereHas('race', function ($query) use ($race) {
+                            $query->where('date', '<', $race->date);
+                        })
+                        ->orderByDesc(Race::select('date')
+                            ->whereColumn('id', 'participations.race_id')
+                            ->limit(1))
+                        ->first()
+                        ?->points ?? Participation::$MU,
+                    'uncertainty' => Participation::where('driver_id', $participationData['driver'])
+                        ->whereHas('race', function ($query) use ($race) {
+                            $query->where('date', '<', $race->date);
+                        })
+                        ->orderByDesc(Race::select('date')
+                            ->whereColumn('id', 'participations.race_id')
+                            ->limit(1))
+                        ->first()
+                        ?->uncertainty ?? Participation::$SIGMA,
+                ]);
+            } else {
+                Participation::create([
+                    'driver_id' => $participationData['driver'],
+                    'team_id' => $participationData['team'],
+                    'race_id' => $race->id,
+                    'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
+                    'status' => $participationData['position'],
+                    'points' => Participation::where('driver_id', $participationData['driver'])
+                        ->whereHas('race', function ($query) use ($race) {
+                            $query->where('date', '<', $race->date);
+                        })
+                        ->orderByDesc(Race::select('date')
+                            ->whereColumn('id', 'participations.race_id')
+                            ->limit(1))
+                        ->first()
+                        ?->points ?? Participation::$MU,
+                    'uncertainty' => Participation::where('driver_id', $participationData['driver'])
+                        ->whereHas('race', function ($query) use ($race) {
+                            $query->where('date', '<', $race->date);
+                        })
+                        ->orderByDesc(Race::select('date')
+                            ->whereColumn('id', 'participations.race_id')
+                            ->limit(1))
+                        ->first()
+                        ?->uncertainty ?? Participation::$SIGMA,
+                ]);
+            }
+        }
+
+        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+            $query->where('date', '>=', $race->date);
+        })->get());
+
         return Inertia::render('races/show', ['race' => $race]);
     }
 
     public function destroy(string $id)
     {
-        Race::findOrFail($id)->delete();
+        $race = Race::findOrFail($id);
+
+        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+            $query->where('date', '>=', $race->date);
+        })->get());
+
+        $race->delete();
+
         return back();
     }
 }
