@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->integer('position')->nullable();
             $table->string('status', 10);
-            $table->double('driverPoints');
+            $table->double('points');
             $table->double('uncertainty');
 
             $table->unique(['driver_id', 'team_id', 'race_id']);
