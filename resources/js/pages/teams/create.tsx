@@ -24,7 +24,7 @@ export default function CreateTeamForm() {
     return (
         <AppLayout>
             <Head title="Create team" />
-            <div className="bg-card mx-auto my-auto mt-16 w-full max-w-md rounded-sm border p-6 shadow-sm">
+            <div className="bg-card mx-auto my-8 w-full max-w-md rounded-sm border p-6 shadow-sm">
                 <h2 className="mb-6 text-2xl font-semibold tracking-tight">Create new team</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
