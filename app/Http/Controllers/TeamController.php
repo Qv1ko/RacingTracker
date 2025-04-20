@@ -35,7 +35,9 @@ class TeamController extends Controller
                 ->get();
         }
 
-        $seasons = Race::select('date')->distinct();
+        $seasons = Race::pluck('date')
+            ->map(fn($date) => Carbon::parse($date)->format('Y'))
+            ->unique();;
 
         return Inertia::render('teams/index', [
             'seasons' => $seasons,
