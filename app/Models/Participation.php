@@ -85,9 +85,9 @@ class Participation extends Model
     private static function updateRating(float $mu, float $sigma, float $position, int $participantsCount, float $avg = 0): array
     {
         // Performance deviation
-        $beta = self::$MU / 6.0;
+        $beta = $mu / 6.0;
         // Dynamic factor
-        $tau = self::$MU / 300.0;
+        $tau = $mu / 300.0;
 
         // Dynamic sigma
         $sd = sqrt($sigma * $sigma + $tau * $tau);
