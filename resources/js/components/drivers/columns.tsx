@@ -24,15 +24,27 @@ export const columns: ColumnDef<Driver>[] = [
         accessorKey: 'status',
         header: () => <div className="text-bold hidden sm:table-cell">Status</div>,
         cell: ({ row }) => {
-            return <Badge variant="secondary">{row.original.status ? 'Active' : 'Inactive'}</Badge>;
+            return (
+                <Badge variant="secondary" className="hidden sm:table-cell">
+                    {row.original.status ? 'Active' : 'Inactive'}
+                </Badge>
+            );
         },
     },
     {
         accessorKey: 'teams',
         header: () => <div className="text-bold hidden sm:table-cell">Teams</div>,
         cell: ({ row }) => {
-            const teams = row.original.teams || [];
-            return <p className="hidden sm:table-cell">{teams.join(', ')}</p>;
+            const teams = row.original.teams
+                ? row.original.teams
+                      .filter((team) => team)
+                      .map((team) => (
+                          <Link key={team.id} href={`/teams/${team.id}`} className="hover:text-primary flex items-center gap-2">
+                              <FlagIcon nationality={team.nationality ? team.nationality.toString() : 'unknown'} size={16} /> {team.name}
+                          </Link>
+                      ))
+                : [];
+            return <p className="hidden sm:table-cell">{teams}</p>;
         },
     },
     {
@@ -71,7 +83,7 @@ export const columns: ColumnDef<Driver>[] = [
         accessorKey: 'points',
         header: () => <div className="text-bold">Points</div>,
         cell: ({ row }) => {
-            const points = row.original.points || 0;
+            const points = row.original.points || '';
             return <p>{points}</p>;
         },
     },

@@ -36,8 +36,8 @@ export default function EditTeamForm({ team }: { team: Team }) {
                         {errors.name && <p className="text-destructive text-sm font-medium">{errors.name}</p>}
                     </div>
 
-                    <div className="mt-6 flex gap-4">
-                        <div className="w-50 space-y-2">
+                    <div className="flex flex-col gap-4 space-y-2 sm:flex-row">
+                        <div className="m-0 w-full sm:w-50">
                             <label
                                 htmlFor="nationality"
                                 className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -59,7 +59,7 @@ export default function EditTeamForm({ team }: { team: Team }) {
                             </Select>
                             {errors.nationality && <p className="text-destructive text-sm font-medium">{errors.nationality}</p>}
                         </div>
-                        <div className="w-50 space-y-2">
+                        <div className="w-full sm:w-50">
                             <label
                                 htmlFor="status"
                                 className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

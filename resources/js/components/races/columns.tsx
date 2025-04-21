@@ -39,7 +39,7 @@ export const columns: ColumnDef<Race>[] = [
                 winner && (
                     <Link href={winner.id ? `/drivers/${winner.id}` : ''} className="hover:text-primary flex items-center gap-2">
                         {winner.nationality ? <FlagIcon nationality={winner.nationality} size={16} /> : null}
-                        {winner.name[0].toUpperCase()} {winner.surname}
+                        {winner.name[0].toUpperCase()}. {winner.surname}
                     </Link>
                 )
             );
@@ -52,9 +52,9 @@ export const columns: ColumnDef<Race>[] = [
             const second = row.original.second ? row.original.second : undefined;
             return (
                 second && (
-                    <Link href={second.id ? `/drivers/${second.id}` : ''} className="hover:text-primary flex items-center gap-2">
+                    <Link href={second.id ? `/drivers/${second.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
                         {second.nationality ? <FlagIcon nationality={second.nationality} size={16} /> : null}
-                        {second.name[0].toUpperCase()} {second.surname}
+                        {second.name[0].toUpperCase()}. {second.surname}
                     </Link>
                 )
             );
@@ -67,9 +67,9 @@ export const columns: ColumnDef<Race>[] = [
             const third = row.original.third ? row.original.third : undefined;
             return (
                 third && (
-                    <Link href={third.id ? `/drivers/${third.id}` : ''} className="hover:text-primary flex items-center gap-2">
+                    <Link href={third.id ? `/drivers/${third.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
                         {third.nationality ? <FlagIcon nationality={third.nationality} size={16} /> : null}
-                        {third.name[0].toUpperCase()} {third.surname}
+                        {third.name[0].toUpperCase()}. {third.surname}
                     </Link>
                 )
             );
@@ -77,14 +77,14 @@ export const columns: ColumnDef<Race>[] = [
     },
     {
         accessorKey: 'betters',
-        header: () => <div className="text-bold">Better driver</div>,
+        header: () => <div className="text-bold hidden sm:table-cell">Better driver</div>,
         cell: ({ row }) => {
             const better = row.original.better ? row.original.better : null;
             return (
                 better && (
-                    <Link href={better.id ? `/drivers/${better.id}` : ''} className="hover:text-primary flex items-center gap-2">
+                    <Link href={better.id ? `/drivers/${better.id}` : ''} className="hover:text-primary hidden items-center gap-2 sm:flex">
                         {better.nationality ? <FlagIcon nationality={better.nationality} size={16} /> : null}
-                        {better.name[0].toUpperCase()} {better.surname}
+                        {better.name[0].toUpperCase()}. {better.surname}
                     </Link>
                 )
             );

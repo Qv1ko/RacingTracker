@@ -147,14 +147,15 @@ export default function CreateRaceForm({ drivers, teams }: { drivers: Driver[]; 
                         <thead>
                             <tr>
                                 <th className="text-sm leading-none font-medium">Pos</th>
-                                <th className="text-sm leading-none font-medium">Driver</th>
-                                <th className="text-sm leading-none font-medium">Team</th>
+                                <th className="hidden text-sm leading-none font-medium sm:table-cell">Driver</th>
+                                <th className="hidden text-sm leading-none font-medium sm:table-cell">Team</th>
+                                <th className="table-cell text-sm leading-none font-medium sm:hidden">Participant</th>
                                 <th className="w-0"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {data.result.map((participation, i) => (
-                                <tr key={'participation-' + i} className="mt-2">
+                                <tr key={'participation-' + i} className="hover:bg-muted/50 mt-2 transition-colors">
                                     <td className="w-8 text-center">
                                         {isNumericPosition(participation.position) ? (
                                             <>{participation.position}</>
@@ -184,7 +185,7 @@ export default function CreateRaceForm({ drivers, teams }: { drivers: Driver[]; 
                                             <p className="text-destructive text-sm font-medium">{errors['result.' + i + '.position']}</p>
                                         )}
                                     </td>
-                                    <td className="p-2">
+                                    <td className="block p-2 sm:table-cell">
                                         <Select
                                             value={participation.driver}
                                             onValueChange={(value) =>
@@ -220,7 +221,7 @@ export default function CreateRaceForm({ drivers, teams }: { drivers: Driver[]; 
                                             <p className="text-destructive text-sm font-medium">{errors['result.' + i + '.driver']}</p>
                                         )}
                                     </td>
-                                    <td className="p-2">
+                                    <td className="block p-2 sm:table-cell">
                                         <Select
                                             value={participation.team}
                                             onValueChange={(value) =>
