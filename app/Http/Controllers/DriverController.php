@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\Race;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class DriverController extends Controller
 {
@@ -20,18 +21,19 @@ class DriverController extends Controller
             if ($season === 'all') {
                 $data = Driver::orderBy('surname', 'asc')->get();
             } else {
-                $data = Driver::join('participations', 'drivers.id', '=', 'participations.driver_id')
-                    ->join('races', 'participations.race_id', '=', 'races.id')
-                    ->where('races.date', '>=', Carbon::parse($season)->startOfYear())
-                    ->where('races.date', '<=', Carbon::parse($season)->endOfYear())
-                    ->select('drivers.*')
+                $data = Driver::whereHas('participations.race', function ($query) use ($season) {
+                    $query->whereYear('date', $season);
+                })
+                    ->orderBy('surname', 'asc')
                     ->get();
             }
         } else {
-            $data = Driver::join('participations', 'drivers.id', '=', 'participations.driver_id')
-                ->join('races', 'participations.race_id', '=', 'races.id')
-                ->whereYear('races.date', Carbon::now()->year)
-                ->select('drivers.*')
+            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
+
+            $data = Driver::whereHas('participations.race', function ($query) use ($latestYear) {
+                $query->whereYear('date', $latestYear);
+            })
+                ->orderBy('surname', 'asc')
                 ->get();
         }
 

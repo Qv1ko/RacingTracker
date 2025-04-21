@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Models\Participation;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Driver extends Model
 {
@@ -16,36 +16,78 @@ class Driver extends Model
         'nationality',
         'status'
     ];
+    protected $appends = ['races', 'wins', 'second_positions', 'third_positions', 'points'];
 
     public function participations(): HasMany
     {
         return $this->hasMany(Participation::class);
     }
 
-    public function fullName(): Attribute
+    protected function races(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                return $this->name . ' ' . $this->surname;
-            }
+            get: fn() => $this->participations()
+                ->toBase()
+                ->distinct('race_id')
+                ->count('race_id'),
         );
     }
 
-    public function sortName(): Attribute
+    protected function wins(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                return substr($this->name, 0, 1) . '. ' . $this->surname;
-            }
+            get: fn() => $this->participations()
+                ->toBase()
+                ->where('position', 1)
+                ->distinct('race_id')
+                ->count('race_id'),
         );
     }
 
-    public function seasonTeams(): Attribute
+    protected function secondPositions(): Attribute
     {
         return Attribute::make(
-            get: function ($season) {
-                // return $this->participations()->where('season', '==', $season)->get();
-            }
+            get: fn() => $this->participations()
+                ->toBase()
+                ->where('position', 2)
+                ->distinct('race_id')
+                ->count('race_id'),
         );
+    }
+
+    protected function thirdPositions(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->participations()
+                ->toBase()
+                ->where('position', 3)
+                ->distinct('race_id')
+                ->count('race_id'),
+        );
+    }
+
+    protected function points(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $points = $this->participations()
+                    ->select('participations.points')
+                    ->join('races', 'participations.race_id', '=', 'races.id')
+                    ->orderBy('races.date', 'desc')
+                    ->limit(1)
+                    ->value('points') ?? null;
+
+                return $points !== null ? number_format((float)$points, 3) : null;
+            },
+        );
+    }
+
+    public function latestParticipation()
+    {
+        return $this->hasOne(Participation::class)
+            ->join('races', 'participations.race_id', '=', 'races.id')
+            ->select('participations.*')
+            ->latest('races.date')
+            ->limit(1);
     }
 }
