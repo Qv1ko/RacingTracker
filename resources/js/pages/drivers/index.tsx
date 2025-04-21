@@ -36,7 +36,7 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
             <Head title="Drivers" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason seasons={seasons} url={'/drivers'} />
+                    <SelectSeason seasons={seasons} selectedValue={season ? season.toString() : ''} url={'/drivers'} />
                     {auth.user && <CreateButton item="driver" createRoute="drivers.create" />}
                 </div>
                 <DataTable columns={columns} data={drivers} />

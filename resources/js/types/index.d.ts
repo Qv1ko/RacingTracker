@@ -47,7 +47,7 @@ export interface Driver {
     surname: string;
     nationality?: string;
     status: boolean;
-    teams?: string[];
+    teams?: Team[];
     races?: number;
     wins?: number;
     second_positions?: number;

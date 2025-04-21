@@ -36,7 +36,7 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
             <Head title="Teams" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason seasons={seasons} url={'/teams'} />
+                    <SelectSeason seasons={seasons} selectedValue={season ? season.toString() : ''} url={'/teams'} />
                     {auth.user && <CreateButton item="team" createRoute="teams.create" />}
                 </div>
                 <DataTable columns={columns} data={teams} />

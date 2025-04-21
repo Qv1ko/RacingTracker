@@ -34,7 +34,7 @@ export default function Races({ seasons, races }: { seasons: string[]; races: Ra
             <Head title="Races" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason seasons={seasons} url={'/races'} />
+                    <SelectSeason seasons={seasons} selectedValue={season ? season.toString() : ''} url={'/races'} />
                     {auth.user && <CreateButton item="race" createRoute="races.create" />}
                 </div>
                 <DataTable columns={columns} data={races} />
