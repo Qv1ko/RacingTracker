@@ -42,6 +42,17 @@ class Driver extends Model
                     })
                     ->pluck('team')
                     ->unique('id')
+                    ->map(function ($team) {
+                        if (!$team) {
+                            return null;
+                        }
+
+                        return (object) [
+                            'id' => $team->id,
+                            'name' => $team->name,
+                            'nationality' => $team->nationality
+                        ];
+                    })
                     ->values();
             },
         );
