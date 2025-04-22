@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -20,18 +21,19 @@ class TeamController extends Controller
             if ($season === 'all') {
                 $data = Team::orderBy('name', 'asc')->get();
             } else {
-                $data = Team::join('participations', 'teams.id', '=', 'participations.team_id')
-                    ->join('races', 'participations.race_id', '=', 'races.id')
-                    ->where('races.date', '>=', Carbon::parse($season)->startOfYear())
-                    ->where('races.date', '<=', Carbon::parse($season)->endOfYear())
-                    ->select('teams.*')
+                $data = Team::whereHas('participations.race', function ($query) use ($season) {
+                    $query->whereYear('date', $season);
+                })
+                    ->orderBy('name', 'asc')
                     ->get();
             }
         } else {
-            $data = Team::join('participations', 'teams.id', '=', 'participations.team_id')
-                ->join('races', 'participations.race_id', '=', 'races.id')
-                ->whereYear('races.date', Carbon::now()->year)
-                ->select('teams.*')
+            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
+
+            $data = Team::whereHas('participations.race', function ($query) use ($latestYear) {
+                $query->whereYear('date', $latestYear);
+            })
+                ->orderBy('name', 'asc')
                 ->get();
         }
 

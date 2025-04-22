@@ -81,7 +81,7 @@ export interface Team {
     name: string;
     nationality: string;
     status: boolean;
-    drivers?: string[];
+    drivers?: Driver[];
     races?: number;
     wins?: number;
     second_positions?: number;
