@@ -7,24 +7,24 @@ import { ActionsColumn } from './actionsColumn';
 export const columns: ColumnDef<Race>[] = [
     {
         accessorKey: 'dates',
-        header: () => <div className="text-bold">Date</div>,
+        header: () => <div className="font-bold">Date</div>,
         cell: ({ row }) => {
             return new Date(row.original.date).toLocaleDateString('en-GB', { month: 'short', day: '2-digit' });
         },
     },
     {
         accessorKey: 'datesWY',
-        header: () => <div className="text-bold">Date</div>,
+        header: () => <div className="font-bold">Date</div>,
         cell: ({ row }) => {
             return new Date(row.original.date).toLocaleDateString('en-GB', { month: 'short', day: '2-digit', year: 'numeric' });
         },
     },
     {
         accessorKey: 'races',
-        header: () => <div className="text-bold">Race</div>,
+        header: () => <div className="font-bold">Race</div>,
         cell: ({ row }) => {
             return (
-                <Link href={`/races/${row.original.id}`} className="hover:text-primary flex items-center gap-2">
+                <Link href={`/races/${row.original.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
                     {row.original.name}
                 </Link>
             );
@@ -32,7 +32,7 @@ export const columns: ColumnDef<Race>[] = [
     },
     {
         accessorKey: 'winners',
-        header: () => <div className="text-bold">Winner</div>,
+        header: () => <div className="font-bold">Winner</div>,
         cell: ({ row }) => {
             const winner = row.original.winner ? row.original.winner : null;
             return (
@@ -47,7 +47,7 @@ export const columns: ColumnDef<Race>[] = [
     },
     {
         accessorKey: 'seconds',
-        header: () => <div className="text-bold hidden md:table-cell">2nd</div>,
+        header: () => <div className="hidden font-bold md:table-cell">2nd</div>,
         cell: ({ row }) => {
             const second = row.original.second ? row.original.second : undefined;
             return (
@@ -62,7 +62,7 @@ export const columns: ColumnDef<Race>[] = [
     },
     {
         accessorKey: 'thirds',
-        header: () => <div className="text-bold hidden md:table-cell">3rd</div>,
+        header: () => <div className="hidden font-bold md:table-cell">3rd</div>,
         cell: ({ row }) => {
             const third = row.original.third ? row.original.third : undefined;
             return (
@@ -77,7 +77,7 @@ export const columns: ColumnDef<Race>[] = [
     },
     {
         accessorKey: 'betters',
-        header: () => <div className="text-bold hidden sm:table-cell">Better driver</div>,
+        header: () => <div className="hidden font-bold sm:table-cell">Better driver</div>,
         cell: ({ row }) => {
             const better = row.original.better ? row.original.better : null;
             return (

@@ -10,11 +10,11 @@ import { ActionsColumn } from './actionsColumn';
 export const columns: ColumnDef<Driver>[] = [
     {
         accessorKey: 'drivers',
-        header: () => <div className="text-bold">Driver</div>,
+        header: () => <div className="font-bold">Driver</div>,
         cell: ({ row }) => {
             const { name, surname, nationality } = row.original;
             return (
-                <Link href={`/drivers/${row.original.id}`} className="hover:text-primary flex items-center gap-2">
+                <Link href={`/drivers/${row.original.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
                     <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} /> {name} {surname}
                 </Link>
             );
@@ -22,7 +22,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'status',
-        header: () => <div className="text-bold hidden sm:table-cell">Status</div>,
+        header: () => <div className="hidden font-bold sm:table-cell">Status</div>,
         cell: ({ row }) => {
             return (
                 <Badge variant="secondary" className="hidden sm:table-cell">
@@ -33,7 +33,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'teams',
-        header: () => <div className="text-bold hidden sm:table-cell">Teams</div>,
+        header: () => <div className="hidden font-bold sm:table-cell">Teams</div>,
         cell: ({ row }) => {
             const teams = row.original.teams
                 ? row.original.teams
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'races',
-        header: () => <div className="text-bold hidden sm:table-cell">Races</div>,
+        header: () => <div className="hidden font-bold sm:table-cell">Races</div>,
         cell: ({ row }) => {
             const races = row.original.races || 0;
             return <p className="hidden sm:table-cell">{races}</p>;
@@ -57,7 +57,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'wins',
-        header: () => <div className="text-bold hidden sm:table-cell">Wins</div>,
+        header: () => <div className="hidden font-bold sm:table-cell">Wins</div>,
         cell: ({ row }) => {
             const wins = row.original.wins || 0;
             return <p className="hidden sm:table-cell">{wins}</p>;
@@ -65,7 +65,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'second_positions',
-        header: () => <div className="text-bold hidden md:table-cell">2nd</div>,
+        header: () => <div className="hidden font-bold md:table-cell">2nd</div>,
         cell: ({ row }) => {
             const second_positions = row.original.second_positions || 0;
             return <p className="hidden md:table-cell">{second_positions}</p>;
@@ -73,7 +73,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'third_positions',
-        header: () => <div className="text-bold hidden md:table-cell">3rd</div>,
+        header: () => <div className="hidden font-bold md:table-cell">3rd</div>,
         cell: ({ row }) => {
             const third_positions = row.original.third_positions || 0;
             return <p className="hidden md:table-cell">{third_positions}</p>;
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Driver>[] = [
     },
     {
         accessorKey: 'points',
-        header: () => <div className="text-bold">Points</div>,
+        header: () => <div className="font-bold">Points</div>,
         cell: ({ row }) => {
             const points = row.original.points || '';
             return <p>{points}</p>;

@@ -17,7 +17,7 @@ import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
 export const ActionsColumn: ColumnDef<Team> = {
     accessorKey: 'actions',
-    header: () => <div className="text-bold"></div>,
+    header: () => <div className="font-bold"></div>,
     cell: ({ row }) => {
         const handleEdit = (id: number) => {
             router.get(route('teams.edit', id));
