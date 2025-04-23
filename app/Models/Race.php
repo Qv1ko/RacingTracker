@@ -114,9 +114,15 @@ class Race extends Model
                                 points - (
                                     SELECT p2.points 
                                     FROM participations p2 
+                                    INNER JOIN races r2 ON p2.race_id = r2.id
                                     WHERE p2.driver_id = participations.driver_id 
-                                    AND p2.race_id < participations.race_id 
-                                    ORDER BY p2.race_id DESC 
+                                    AND r2.date < (
+                                        SELECT r.date 
+                                        FROM races r 
+                                        WHERE r.id = participations.race_id
+                                        LIMIT 1
+                                    )
+                                    ORDER BY r2.date DESC 
                                     LIMIT 1
                                 )
                             ELSE NULL
