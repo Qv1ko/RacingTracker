@@ -39,13 +39,7 @@ class Participation extends Model
 
     public static function clacRaceResult($results): void
     {
-        $finishedParticipations = 0;
-
-        foreach ($results as $participation) {
-            if ($participation->position) {
-                $finishedParticipations++;
-            }
-        }
+        $finishedParticipations = $results->where('position', '>', 0)->count();
 
         foreach ($results as $participation) {
             $position = $participation->position ? $participation->position : $finishedParticipations + 1;
