@@ -11,6 +11,7 @@ use App\Http\Requests\Race\StoreRequest;
 use App\Http\Requests\Race\UpdateRequest;
 use App\Models\Participation;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class RaceController extends Controller
 {
@@ -20,32 +21,17 @@ class RaceController extends Controller
 
         if ($season) {
             if ($season === 'all') {
-                $data = Race::orderBy('name', 'asc')
-                    ->with([
-                        'winner',
-                        'better',
-                    ])->get();
+                $data = Race::orderBy('name', 'asc')->get();
             } else {
-                $data = Race::whereBetween('date', [
-                    "$season-01-01",
-                    "$season-12-31",
-                ])->orderBy('date', 'asc')
-                    ->with([
-                        'winner',
-                        'second',
-                        'third',
-                        'better',
-                    ])->get();
+                $data = Race::whereYear('date', $season)
+                    ->orderBy('date', 'asc')
+                    ->get();
             }
         } else {
-            $data = Race::whereYear('date', Carbon::now()->year)
+            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
+            $data = Race::whereYear('date', $latestYear)
                 ->orderBy('date', 'asc')
-                ->with([
-                    'winner',
-                    'second',
-                    'third',
-                    'better',
-                ])->get();
+                ->get();
         }
 
         $seasons = Race::pluck('date')

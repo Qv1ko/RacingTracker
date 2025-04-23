@@ -70,10 +70,10 @@ export interface Race {
     id: number;
     name: string;
     date: Date;
-    winner?: Driver;
+    winner?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
     second?: Driver;
     third?: Driver;
-    better?: Driver;
+    better?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
 }
 
 export interface Team {
