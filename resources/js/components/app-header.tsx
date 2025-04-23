@@ -8,10 +8,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
-import { cn } from '@/lib/utils';
+import { cn, HelmetIconNode } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { CalendarFold, createLucideIcon, Flag, FolderCode, LayoutGrid, Menu, Search, User, Users } from 'lucide-react';
+import { CalendarFold, Flag, FolderCode, LayoutGrid, Menu, Search, User, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -34,16 +34,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Drivers',
         href: '/drivers',
-        icon: createLucideIcon('DriverHelmet', [
-            [
-                'path',
-                {
-                    d: 'M22 12.2a10 10 0 1 0-19.4 3.2c.2.5.8 1.1 1.3 1.3l13.2 5.1c.5.2 1.2 0 1.6-.3l2.6-2.6c.4-.4.7-1.2.7-1.7Z',
-                    key: 'helmet-outline',
-                },
-            ],
-            ['path', { d: 'm21.8 18-10.5-4a2 2.06 0 0 1 .7-4h9.8', key: 'visor-detail' }],
-        ]),
+        icon: HelmetIconNode,
     },
     {
         title: 'Teams',
