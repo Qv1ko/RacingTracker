@@ -35,12 +35,21 @@ export const columns: ColumnDef<Race>[] = [
         header: () => <div className="font-bold">Winner</div>,
         cell: ({ row }) => {
             const winner = row.original.winner ? row.original.winner : null;
+            const winnerTeam = winner?.team ? winner.team : null;
             return (
                 winner && (
-                    <Link href={winner.id ? `/drivers/${winner.id}` : ''} className="hover:text-primary flex items-center gap-2">
-                        {winner.nationality ? <FlagIcon nationality={winner.nationality} size={16} /> : null}
-                        {winner.name[0].toUpperCase()}. {winner.surname}
-                    </Link>
+                    <div>
+                        <Link href={winner.id ? `/drivers/${winner.id}` : ''} className="hover:text-primary flex items-center gap-2">
+                            {winner.nationality ? <FlagIcon nationality={winner.nationality} size={16} /> : null}
+                            {winner.name[0].toUpperCase()}. {winner.surname}
+                        </Link>
+                        {winnerTeam && (
+                            <Link href={`/teams/${winnerTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                                {winnerTeam.nationality ? <FlagIcon nationality={winnerTeam.nationality} size={16} /> : null}
+                                {winnerTeam.name}
+                            </Link>
+                        )}
+                    </div>
                 )
             );
         },
@@ -80,12 +89,21 @@ export const columns: ColumnDef<Race>[] = [
         header: () => <div className="hidden font-bold sm:table-cell">Better driver</div>,
         cell: ({ row }) => {
             const better = row.original.better ? row.original.better : null;
+            const betterTeam = better?.team ? better.team : null;
             return (
                 better && (
-                    <Link href={better.id ? `/drivers/${better.id}` : ''} className="hover:text-primary hidden items-center gap-2 sm:flex">
-                        {better.nationality ? <FlagIcon nationality={better.nationality} size={16} /> : null}
-                        {better.name[0].toUpperCase()}. {better.surname}
-                    </Link>
+                    <div>
+                        <Link href={better.id ? `/drivers/${better.id}` : ''} className="hover:text-primary hidden items-center gap-2 sm:flex">
+                            {better.nationality ? <FlagIcon nationality={better.nationality} size={16} /> : null}
+                            {better.name[0].toUpperCase()}. {better.surname}
+                        </Link>
+                        {betterTeam && (
+                            <Link href={`/teams/${betterTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                                {betterTeam.nationality ? <FlagIcon nationality={betterTeam.nationality} size={16} /> : null}
+                                {betterTeam.name}
+                            </Link>
+                        )}
+                    </div>
                 )
             );
         },
