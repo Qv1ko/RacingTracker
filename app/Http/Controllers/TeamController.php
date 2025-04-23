@@ -29,7 +29,6 @@ class TeamController extends Controller
             }
         } else {
             $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
-
             $data = Team::whereHas('participations.race', function ($query) use ($latestYear) {
                 $query->whereYear('date', $latestYear);
             })

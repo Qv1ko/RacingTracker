@@ -29,7 +29,6 @@ class DriverController extends Controller
             }
         } else {
             $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
-
             $data = Driver::whereHas('participations.race', function ($query) use ($latestYear) {
                 $query->whereYear('date', $latestYear);
             })

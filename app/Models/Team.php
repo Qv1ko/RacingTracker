@@ -42,9 +42,7 @@ class Team extends Model
                     ->pluck('driver')
                     ->unique('id')
                     ->map(function ($driver) {
-                        if (!$driver) {
-                            return null;
-                        }
+                        if (!$driver) return null;
 
                         return (object) [
                             'id' => $driver->id,
