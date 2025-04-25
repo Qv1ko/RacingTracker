@@ -32,23 +32,26 @@ export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
     };
 
     return (
-        <div className="flex gap-1 rounded-sm border p-4">
-            {data.activity.map((activity, index) => (
-                <TooltipProvider key={index}>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="16" height="16" fill={getColorFromStatus(activity.position)} />
-                            </svg>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>
-                                {activity.position} - {activity.name} ({formatDate(activity.date)})
-                            </p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            ))}
+        <div className="rounded-sm border">
+            <h3 className="mt-4 text-center">Activity history</h3>
+            <div className="m-8 mt-4 flex gap-1">
+                {data.activity.map((activity, index) => (
+                    <TooltipProvider key={index}>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="16" height="16" fill={getColorFromStatus(activity.position)} />
+                                </svg>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>
+                                    {activity.position} - {activity.name} ({formatDate(activity.date)})
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ))}
+            </div>
         </div>
     );
 };
