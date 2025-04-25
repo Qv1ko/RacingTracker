@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@/components/ui/badge';
 import FlagIcon from '@/components/ui/flag-icon';
 import { type Driver } from '@/types';
