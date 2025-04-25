@@ -47,12 +47,22 @@ export interface Driver {
     surname: string;
     nationality?: string;
     status: boolean;
+    // index
     teams?: Team[];
     races?: number;
     wins?: number;
     second_positions?: number;
     third_positions?: number;
     points?: number;
+    // show
+    primaryStats?: DriverStat[];
+    secondaryStats?: DriverStat[];
+    activity?: { status: string; race_id: number; name: string; date: string }[];
+    seasons?: string[];
+    positionsHistory?: { position: string; times: number }[];
+    racesWon?: number[];
+    pointsHistory?: { race: string; points: number }[];
+    teammates?: Driver[];
 }
 
 export interface Participation {

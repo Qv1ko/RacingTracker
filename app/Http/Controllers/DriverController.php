@@ -64,6 +64,28 @@ class DriverController extends Controller
     public function show(string $id)
     {
         $driver = Driver::findOrFail($id);
+
+        $driver =  [
+            'id' => $driver->id,
+            'name' => $driver->name,
+            'surname' => $driver->surname,
+            'nationality' => $driver->nationality,
+            'status' => $driver->status,
+            'teams' => $driver->teams(),
+            'races' => $driver->races(),
+            'wins' => $driver->wins(),
+            'second_positions' => $driver->secondPositions(),
+            'third_positions' => $driver->thirdPositions(),
+            'primaryStats' => [],
+            'secondaryStats' => [],
+            'activity' => $driver->activity(),
+            'seasons' => [],
+            'racesWon' => [],
+            'pointsHistory' => $driver->pointsHistory(),
+            'positionsHistory' => $driver->countForPosition(),
+            'teammates' => $driver->teammates(),
+        ];
+
         return Inertia::render('drivers/show', ['driver' => $driver]);
     }
 

@@ -1,0 +1,54 @@
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import React from 'react';
+
+type Activity = {
+    position: string;
+    name: string;
+    date: string; // ISO format: "YYYY-MM-DDTHH:mm:ss"
+};
+
+type ActivityChartProps = {
+    data: {
+        activity: Activity[];
+    };
+};
+
+export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
+    const getColorFromStatus = (position: string): string => {
+        switch (position) {
+            case '1':
+                return 'gold';
+            case '2':
+                return 'silver';
+            case '3':
+                return '#CD7F32';
+            default:
+                return parseInt(position) ? '#007BFF' : 'red';
+        }
+    };
+
+    const formatDate = (isoDate: string): string => {
+        return isoDate.split('T')[0].split('-').reverse().join('/');
+    };
+
+    return (
+        <div className="flex gap-1 rounded-sm border p-4">
+            {data.activity.map((activity, index) => (
+                <TooltipProvider key={index}>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="16" height="16" fill={getColorFromStatus(activity.position)} />
+                            </svg>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>
+                                {activity.position} - {activity.name} ({formatDate(activity.date)})
+                            </p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            ))}
+        </div>
+    );
+};
