@@ -10,37 +10,49 @@ use App\Models\Race;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Models\Participation;
 
 class DriverController extends Controller
 {
     public function index(Request $req)
     {
-        $season = $req->query('season');
-
-        if ($season) {
-            if ($season === 'all') {
-                $data = Driver::orderBy('surname', 'asc')->get();
-            } else {
-                $data = Driver::whereHas('participations.race', function ($query) use ($season) {
-                    $query->whereYear('date', $season);
-                })
-                    ->orderBy('surname', 'asc')
-                    ->get();
-            }
-        } else {
-            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
-            $data = Driver::whereHas('participations.race', function ($query) use ($latestYear) {
-                $query->whereYear('date', $latestYear);
-            })
-                ->orderBy('surname', 'asc')
-                ->get();
-        }
-
         $seasons = Race::pluck('date')
             ->map(fn($date) => Carbon::parse($date)->format('Y'))
             ->unique()
             ->sortDesc()
             ->values();
+
+        $season = $req->query('season');
+
+        if (!$season) {
+            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
+        }
+
+        if ($season === 'all') {
+            $drivers = Driver::orderBy('surname', 'asc')->get();
+        } else {
+            $drivers = Driver::whereHas('participations.race', function ($query) use ($season) {
+                $query->whereYear('date', $season);
+            })
+                ->orderBy('surname', 'asc')
+                ->get();
+        }
+
+        $data = $drivers->map(function ($driver) use ($season) {
+            return [
+                'id' => $driver->id,
+                'name' => $driver->name,
+                'surname' => $driver->surname,
+                'nationality' => $driver->nationality,
+                'status' => $driver->status,
+                'teams' => $driver->teams($season),
+                'races' => $driver->races($season),
+                'wins' => $driver->wins($season),
+                'second_positions' => $driver->secondPositions($season),
+                'third_positions' => $driver->thirdPositions($season),
+                'points' => $driver->lastPoints($season),
+            ];
+        });
 
         return Inertia::render('drivers/index', [
             'seasons' => $seasons,
