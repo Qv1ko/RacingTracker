@@ -1,5 +1,3 @@
-'use client';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
@@ -26,14 +24,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({ title = 'P
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig} className="h-[360px] w-full">
-                    <LineChart
-                        accessibilityLayer
-                        data={data}
-                        margin={{
-                            left: 12,
-                            right: 12,
-                        }}
-                    >
+                    <LineChart accessibilityLayer data={data}>
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="race" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} />
                         <YAxis orientation="left" tickLine={false} axisLine={false} tickMargin={8} />
