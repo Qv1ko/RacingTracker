@@ -15,32 +15,27 @@ class TeamController extends Controller
 {
     public function index(Request $req)
     {
-        $season = $req->query('season');
-
-        if ($season) {
-            if ($season === 'all') {
-                $data = Team::orderBy('name', 'asc')->get();
-            } else {
-                $data = Team::whereHas('participations.race', function ($query) use ($season) {
-                    $query->whereYear('date', $season);
-                })
-                    ->orderBy('name', 'asc')
-                    ->get();
-            }
-        } else {
-            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
-            $data = Team::whereHas('participations.race', function ($query) use ($latestYear) {
-                $query->whereYear('date', $latestYear);
-            })
-                ->orderBy('name', 'asc')
-                ->get();
-        }
-
         $seasons = Race::pluck('date')
             ->map(fn($date) => Carbon::parse($date)->format('Y'))
             ->unique()
             ->sortDesc()
             ->values();
+
+        $season = $req->query('season');
+
+        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
+        }
+
+        if ($season === 'all') {
+            $data = Team::orderBy('name', 'asc')->get();
+        } else {
+            $data = Team::whereHas('participations.race', function ($query) use ($season) {
+                $query->whereYear('date', $season);
+            })
+                ->orderBy('name', 'asc')
+                ->get();
+        }
 
         return Inertia::render('teams/index', [
             'seasons' => $seasons,

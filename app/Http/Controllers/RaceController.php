@@ -17,28 +17,25 @@ class RaceController extends Controller
 {
     public function index(Request $req)
     {
-        $season = $req->query('season');
-
-        if ($season) {
-            if ($season === 'all') {
-                $data = Race::orderBy('name', 'asc')->get();
-            } else {
-                $data = Race::whereYear('date', $season)
-                    ->orderBy('date', 'asc')
-                    ->get();
-            }
-        } else {
-            $latestYear = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
-            $data = Race::whereYear('date', $latestYear)
-                ->orderBy('date', 'asc')
-                ->get();
-        }
-
         $seasons = Race::pluck('date')
             ->map(fn($date) => Carbon::parse($date)->format('Y'))
             ->unique()
             ->sortDesc()
             ->values();
+
+        $season = $req->query('season');
+
+        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
+        }
+
+        if ($season === 'all') {
+            $data = Race::orderBy('name', 'asc')->get();
+        } else {
+            $data = Race::whereYear('date', $season)
+                ->orderBy('date', 'asc')
+                ->get();
+        }
 
         return Inertia::render('races/index', [
             'seasons' => $seasons,
@@ -93,7 +90,7 @@ class RaceController extends Controller
             ]);
         }
 
-        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
             $query->where('date', '>=', $race->date);
         })->get());
 
@@ -175,7 +172,7 @@ class RaceController extends Controller
             }
         }
 
-        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
             $query->where('date', '>=', $race->date);
         })->get());
 
@@ -186,7 +183,7 @@ class RaceController extends Controller
     {
         $race = Race::findOrFail($id);
 
-        Participation::clacRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
             $query->where('date', '>=', $race->date);
         })->get());
 

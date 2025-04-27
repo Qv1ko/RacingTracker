@@ -10,7 +10,6 @@ use App\Models\Race;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use App\Models\Participation;
 
 class DriverController extends Controller
 {
@@ -24,8 +23,8 @@ class DriverController extends Controller
 
         $season = $req->query('season');
 
-        if (!$season) {
-            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)"));
+        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
         }
 
         if ($season === 'all') {
