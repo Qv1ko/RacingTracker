@@ -37,12 +37,29 @@ class Participation extends Model
         return $this->belongsTo(Race::class);
     }
 
-    public static function clacRaceResult($results): void
+    public static function calcRaceResult($results): void
     {
-        $finishedParticipations = $results->where('position', '>', 0)->count();
-
         foreach ($results as $participation) {
+            $latestParticipation = Participation::select('points', 'uncertainty')
+                ->with(['race' => function ($query) use ($participation) {
+                    $query->where('date', '<', $participation->race->date);
+                }])
+                ->where('driver_id', $participation->driver_id)
+                ->whereHas('race', function ($query) use ($participation) {
+                    $query->where('date', '<', $participation->race->date);
+                })
+                ->join('races', 'races.id', '=', 'participations.race_id')
+                ->orderByDesc('races.date')
+                ->first();
+
+            $points = $latestParticipation->points ?? self::$MU;
+            $uncertainty = $latestParticipation->uncertainty ?? self::$SIGMA;
+
+            $finishedParticipations = $results->where('race_id', $participation->race_id)->where('position', '>', 0)->count();
+
             $position = $participation->position ? $participation->position : $finishedParticipations + 1;
+
+            $raceParticipantsCount = $results->where('race_id', $participation->race_id)->count();
 
             $avgPosition = Participation::where('driver_id', $participation->driver_id)->whereHas('race', function ($query) use ($participation) {
                 $query->where('date', '<', $participation->race->date);
@@ -62,10 +79,10 @@ class Participation extends Model
                 ->avg('participants') ?? 0;
 
             $newRating = self::updateRating(
-                $participation->points,
-                $participation->uncertainty,
+                $points,
+                $uncertainty,
                 $position,
-                count($results),
+                $raceParticipantsCount,
                 $avgPosition === 0 || $avgRaceParticipants === 0 ? 0 : $avgPosition / $avgRaceParticipants
             );
 
