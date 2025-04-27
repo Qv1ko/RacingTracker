@@ -95,23 +95,33 @@ class Participation extends Model
 
     private static function updateRating(float $mu, float $sigma, float $position, int $participantsCount, float $avg = 0): array
     {
-        // Performance deviation
-        $beta = $mu / 6.0;
-        // Dynamic factor
-        $tau = $mu / 300.0;
+        $beta = $mu / 6.0; // Performance deviation
+        $tau = $mu / 300.0; // Dynamic factor
 
-        // Dynamic sigma
-        $sd = sqrt($sigma * $sigma + $tau * $tau);
+        $C = $sigma * $sigma + $beta * $beta; // Performance variance
+        $K = ($sigma * $sigma) / $C; // Update factor
 
-        // Profit
-        $c2 = $sd * $sd + $beta * $beta;
-        $K = ($sd * $sd) / $c2;
+        $expectedPosition = $avg * $participantsCount;
 
-        // Diff
-        $error = $avg * $participantsCount - $position;
+        // Difference between expected and actual
+        $error = $expectedPosition - $position;
 
         $newMu  = $mu + $K * $error;
-        $newSigma = sqrt(($sigma * $sigma * $beta * $beta) / $c2);
+
+        // Adjust sigma depending on how surprising the result was
+        $errorImpact = abs($error) / $participantsCount;
+
+        // More error -> increase sigma; Less error -> decrease sigma
+        $sigmaChange = $tau * (0.5 - $errorImpact);
+        $maxChange = $sigma * 0.15;
+
+        if ($sigmaChange > 0) {
+            $sigmaChange = min($sigmaChange, $maxChange);
+        } else {
+            $sigmaChange = max($sigmaChange, -$maxChange);
+        }
+
+        $newSigma = max(0.001, ($sigma + $sigmaChange)); // Prevent sigma from reaching zero
 
         return ['mu' => $newMu, 'sigma' => $newSigma];
     }

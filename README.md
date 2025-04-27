@@ -37,7 +37,69 @@ In motor racing, the predominant scoring system is based exclusively on the fina
 
 These limitations raise a fundamental question: is a scoring system that only considers final position without assessing context and relative performance really equitable? The answer, from my perspective, is no. I therefore propose the development of a fairer and more dynamic ranking system, capable of more accurately reflecting the true merit of each driver and team.
 
-## Deploying RacingTracker locally
+### Points calculation
+
+#### Variables:
+
+- `μ`: current driver points
+- `σ`: current driver uncertainty
+- `F`: final position in the race
+- `A`: expected average position
+- `P`: number of race participants
+- `β`: performance deviation
+- `τ`: dynamic factor of change
+
+Operations:
+
+Performance deviation:
+
+$`β=μ/6.0`$
+
+Dynamic factor of change:
+
+$`τ=μ/300.0`$
+
+Combined variance of performance:
+
+$`C=σ^2+β^2`$
+
+Updating factor:
+
+$`K=σ^2/C`$
+
+Error between expected and actual position:
+
+$`E=A-F`$
+
+Updating `μ`:
+
+$`μ_{new}=μ+KE`$
+
+Impact of error in `σ`:
+
+$`I=∣E∣/P`$
+
+Proposed change in `σ`:
+
+$`σ_{change}=τ(0.5−I)`$
+
+`σ` maximum change limit (15%):
+
+$`M_{change}=σ(0.15)`$
+
+Application of limits to `σ` change if $`σ_{change}>0`$:
+
+$`σ_{change}=min⁡(σ_{change}, M_{change})`$
+
+Application of limits to `σ` change if $`σ_{change}<0`$:
+
+$`σ_{change}=max⁡(σ_{change}, -M_{change})`$
+
+`σ` update (with minimum 0.001):
+
+$`σ_{new}=max⁡(0.001, σ+σ_{change})`$
+
+## Deployment locally
 
 ### Prerequisites
 
