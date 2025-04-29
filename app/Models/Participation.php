@@ -109,7 +109,7 @@ class Participation extends Model
         $newMu  = $mu + $K * $error;
 
         // Adjust sigma depending on how surprising the result was
-        $errorImpact = abs($error) / $participantsCount;
+        $errorImpact = $error == 0 || $participantsCount == 0 ? 0 : abs($error) / $participantsCount;
 
         // More error -> increase sigma; Less error -> decrease sigma
         $sigmaChange = $tau * (0.5 - $errorImpact);
