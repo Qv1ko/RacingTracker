@@ -28,12 +28,12 @@ class DriverController extends Controller
         }
 
         if ($season === 'all') {
-            $drivers = Driver::orderBy('surname', 'asc')->get();
+            $drivers = Driver::orderByRaw('LOWER(surname) asc')->get();
         } else {
             $drivers = Driver::whereHas('participations.race', function ($query) use ($season) {
                 $query->whereYear('date', $season);
             })
-                ->orderBy('surname', 'asc')
+                ->orderByRaw('LOWER(surname) asc')
                 ->get();
         }
 

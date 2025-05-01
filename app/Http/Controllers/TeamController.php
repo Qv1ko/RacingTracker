@@ -28,12 +28,12 @@ class TeamController extends Controller
         }
 
         if ($season === 'all') {
-            $data = Team::orderBy('name', 'asc')->get();
+            $data = Team::orderByRaw('LOWER(name) asc')->get();
         } else {
             $data = Team::whereHas('participations.race', function ($query) use ($season) {
                 $query->whereYear('date', $season);
             })
-                ->orderBy('name', 'asc')
+                ->orderByRaw('LOWER(name) asc')
                 ->get();
         }
 
