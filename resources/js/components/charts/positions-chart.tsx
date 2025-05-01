@@ -23,7 +23,7 @@ export const PositionsChart: React.FC<PositionsChartProps> = ({ title = 'Positio
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[480px] w-full">
+                <ChartContainer config={chartConfig} className="h-[180px] w-full md:h-[320px] lg:h-[400px]">
                     <BarChart
                         accessibilityLayer
                         data={data}

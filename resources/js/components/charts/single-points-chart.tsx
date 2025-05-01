@@ -23,7 +23,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({ title = 'P
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[360px] w-full">
+                <ChartContainer config={chartConfig} className="h-[120px] w-full md:h-[240px] lg:h-[360px]">
                     <LineChart accessibilityLayer data={data}>
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="race" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} />
