@@ -98,14 +98,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                         return (
                                             <div
                                                 className={
-                                                    'grid justify-items-center gap-4 ' +
-                                                    (teams.length > 3
-                                                        ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                                                        : teams.length > 2
-                                                          ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
-                                                          : teams.length > 1
-                                                            ? 'grid-cols-1 sm:grid-cols-2'
-                                                            : 'grid-cols-1')
+                                                    'grid w-full grid-cols-[repeat(auto-fit,_minmax(150px,_max-content))] justify-center gap-4'
                                                 }
                                             >
                                                 {teams.map(
@@ -114,7 +107,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                                             <div key={`team-${index}`} className="rounded-sm border px-4 py-2">
                                                                 <Link
                                                                     href={`/teams/${team.id}`}
-                                                                    className="hover:text-primary flex items-center gap-2"
+                                                                    className="hover:text-primary flex items-center justify-center gap-2"
                                                                 >
                                                                     <FlagIcon nationality={team.nationality || 'unknown'} size={16} /> {team.name}
                                                                 </Link>
@@ -136,23 +129,14 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     (() => {
                                         const teammates = driver.teammates;
                                         return (
-                                            <div
-                                                className={
-                                                    'grid justify-items-center gap-4 ' +
-                                                    (teammates.length > 2
-                                                        ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                                                        : teammates.length > 1
-                                                          ? 'grid-cols-1 md:grid-cols-2'
-                                                          : 'grid-cols-1')
-                                                }
-                                            >
+                                            <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(150px,_max-content))] justify-center gap-4">
                                                 {teammates.map(
                                                     (teammates, index) =>
                                                         teammates && (
                                                             <div key={`team-${index}`} className="rounded-sm border px-4 py-2">
                                                                 <Link
                                                                     href={`/drivers/${teammates.id}`}
-                                                                    className="hover:text-primary flex items-center gap-2"
+                                                                    className="hover:text-primary flex items-center justify-center gap-2"
                                                                 >
                                                                     <FlagIcon nationality={teammates.nationality || 'unknown'} size={16} />{' '}
                                                                     {teammates.name} {teammates.surname}

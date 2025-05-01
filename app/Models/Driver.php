@@ -132,9 +132,14 @@ class Driver extends Model
                 is_null($b['position_numeric']) => -1,
                 default => $a['position_numeric'] <=> $b['position_numeric']
             }
-        ])->values();
+        ])->map(function ($item) {
+            return [
+                'position' => $item['position'],
+                'times' => $item['times']
+            ];
+        })
+            ->values();
     }
-
 
     public function wins(string $season = 'all'): int
     {
