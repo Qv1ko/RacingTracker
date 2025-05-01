@@ -115,7 +115,7 @@ class Driver extends Model
             ->when($season !== 'all', function ($query) use ($season) {
                 $query->whereHas('race', fn($q) => $q->whereYear('date', $season));
             })
-            ->select('position', DB::raw('count(*) as times'))
+            ->select('status as position', DB::raw('count(*) as times'))
             ->groupBy('position')
             ->orderBy('position', 'asc')
             ->get();
