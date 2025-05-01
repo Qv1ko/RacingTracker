@@ -94,7 +94,7 @@ class RaceController extends Controller
             $query->where('date', '>=', $race->date);
         })->get());
 
-        return Inertia::render('races/show', ['race' => $race]);
+        return redirect()->route('races.show', $race->id);
     }
 
     public function edit(Race $race)
@@ -176,7 +176,7 @@ class RaceController extends Controller
             $query->where('date', '>=', $race->date);
         })->get());
 
-        return Inertia::render('races/show', ['race' => $race]);
+        return redirect()->route('races.show', $race->id);
     }
 
     public function destroy(string $id)

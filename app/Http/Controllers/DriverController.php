@@ -96,7 +96,7 @@ class DriverController extends Controller
     public function store(StoreRequest $req)
     {
         $driver = Driver::create($req->validated());
-        return Inertia::render('drivers/show', ['driver' => $driver]);
+        return redirect()->route('drivers.show', $driver->id);
     }
 
     public function edit(Driver $driver)
@@ -110,7 +110,7 @@ class DriverController extends Controller
     {
         $driver = Driver::findOrFail($id);
         $driver->update($req->validated());
-        return Inertia::render('drivers/show', ['driver' => $driver]);
+        return redirect()->route('drivers.show', $driver->id);
     }
 
     public function destroy(string $id)

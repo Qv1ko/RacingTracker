@@ -58,7 +58,7 @@ class TeamController extends Controller
     public function store(StoreRequest $req)
     {
         $team = Team::create($req->validated());
-        return Inertia::render('teams/show', ['team' => $team]);
+        return redirect()->route('teams.show', $team->id);
     }
 
     public function edit(Team $team)
@@ -72,7 +72,7 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
         $team->update($req->validated());
-        return Inertia::render('teams/show', ['team' => $team]);
+        return redirect()->route('teams.show', $team->id);
     }
 
     public function destroy(string $id)
