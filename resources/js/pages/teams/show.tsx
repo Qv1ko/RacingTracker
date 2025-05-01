@@ -91,8 +91,8 @@ export default function Teams({ team }: { team: Team }) {
                                                                 href={`/drivers/${driver.id}`}
                                                                 className="hover:text-primary flex items-center justify-center gap-2"
                                                             >
-                                                                <FlagIcon nationality={driver.nationality || 'unknown'} size={16} /> {driver.name}{' '}
-                                                                {driver.surname}
+                                                                <FlagIcon nationality={driver.nationality || 'unknown'} size={16} />{' '}
+                                                                {driver.name[0].toUpperCase()}. {driver.surname}
                                                             </Link>
                                                         </div>
                                                     ),

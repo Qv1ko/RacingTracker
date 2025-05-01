@@ -139,7 +139,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                                                     className="hover:text-primary flex items-center justify-center gap-2"
                                                                 >
                                                                     <FlagIcon nationality={teammates.nationality || 'unknown'} size={16} />{' '}
-                                                                    {teammates.name} {teammates.surname}
+                                                                    {teammates.name[0].toUpperCase()}. {teammates.surname}
                                                                 </Link>
                                                             </div>
                                                         ),
