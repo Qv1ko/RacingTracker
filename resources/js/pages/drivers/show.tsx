@@ -18,8 +18,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Drivers({ driver }: { driver: Driver }) {
-    console.log(driver);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={driver.name + ' ' + driver.surname} />
@@ -36,7 +34,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             {driver.nationality && (
                                 <div className="flex items-center gap-2">
                                     <FlagIcon nationality={driver.nationality.toString()} size={24} />
-                                    <p className="text-slate-500">{driver.nationality}</p>
+                                    <p>{driver.nationality}</p>
                                 </div>
                             )}
                         </div>
@@ -85,7 +83,6 @@ export default function Drivers({ driver }: { driver: Driver }) {
                     {driver.pointsHistory && <SinglePointsChart data={driver.pointsHistory} />}
                     <table key="seasons"></table>
                     {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}
-                    {/* Solo optiene los teams del ultimo año */}
                     {((driver.teams?.length || 0) > 0 || driver.teammates) && (
                         <div className="grid auto-rows-min grid-cols-2 gap-4">
                             <div className="grid auto-rows-min justify-items-center gap-4">
@@ -143,9 +140,9 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                                 className={
                                                     'grid justify-items-center gap-4 ' +
                                                     (teammates.length > 2
-                                                        ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
+                                                        ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
                                                         : teammates.length > 1
-                                                          ? 'grid-cols-1 sm:grid-cols-2'
+                                                          ? 'grid-cols-1 md:grid-cols-2'
                                                           : 'grid-cols-1')
                                                 }
                                             >
