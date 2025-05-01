@@ -110,15 +110,29 @@ class Driver extends Model
 
     public function countForPosition(string $season = 'all'): Collection
     {
-        return $this->participations()
+        $results = $this->participations()
             ->toBase()
             ->when($season !== 'all', function ($query) use ($season) {
                 $query->whereHas('race', fn($q) => $q->whereYear('date', $season));
             })
             ->select('status as position', DB::raw('count(*) as times'))
             ->groupBy('status')
-            ->orderBy('status', 'asc')
+            ->orderBy('position', 'asc')
             ->get();
+
+        return $results->map(function ($item) {
+            return [
+                'position' => $item->position,
+                'times' => $item->times,
+                'position_numeric' => is_numeric($item->position) ? (int)$item->position : null
+            ];
+        })->sortBy([
+            fn($a, $b) => match (true) {
+                is_null($a['position_numeric']) => 1,
+                is_null($b['position_numeric']) => -1,
+                default => $a['position_numeric'] <=> $b['position_numeric']
+            }
+        ])->values();
     }
 
 
