@@ -15,15 +15,21 @@ type ActivityChartProps = {
 
 export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
     const getColorFromStatus = (position: string): string => {
+        const gold = 'gold';
+        const silver = 'silver';
+        const bronze = '#CD7F32';
+        const blue = '#007BFF';
+        const red = 'red';
+
         switch (position) {
             case '1':
-                return 'gold';
+                return gold;
             case '2':
-                return 'silver';
+                return silver;
             case '3':
-                return '#CD7F32';
+                return bronze;
             default:
-                return parseInt(position) ? '#007BFF' : 'red';
+                return parseInt(position) ? blue : red;
         }
     };
 
