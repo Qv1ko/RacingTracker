@@ -27,14 +27,14 @@ class UpdateRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:25',
                 'regex:/^[\p{L}\'\.\- ]+$/u',
                 Rule::unique('drivers')->ignore($this->id)->where(function ($query) {
                     return $query->where('surname', request('surname'));
                 }),
             ],
-            'surname' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\'\.\- ]+$/u'],
-            'nationality' => ['nullable', 'max:255'],
+            'surname' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\'\.\- ]+$/u'],
+            'nationality' => ['nullable', 'max:25'],
             'status' => ['boolean'],
         ];
     }

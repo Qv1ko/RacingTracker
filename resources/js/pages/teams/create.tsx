@@ -29,7 +29,14 @@ export default function CreateTeamForm() {
                         <label htmlFor="name" className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                             Name
                         </label>
-                        <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="w-full" required />
+                        <Input
+                            id="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            className="w-full"
+                            maxLength={50}
+                            required
+                        />
                         {errors.name && <p className="text-destructive text-sm font-medium">{errors.name}</p>}
                     </div>
 
