@@ -28,14 +28,29 @@ class TeamController extends Controller
         }
 
         if ($season === 'all') {
-            $data = Team::orderByRaw('LOWER(name) asc')->get();
+            $teams = Team::orderByRaw('LOWER(name) asc')->get();
         } else {
-            $data = Team::whereHas('participations.race', function ($query) use ($season) {
+            $teams = Team::whereHas('participations.race', function ($query) use ($season) {
                 $query->whereYear('date', $season);
             })
                 ->orderByRaw('LOWER(name) asc')
                 ->get();
         }
+
+        $data = $teams->map(function ($team) use ($season) {
+            return [
+                'id' => $team->id,
+                'name' => $team->name,
+                'nationality' => $team->nationality,
+                'status' => $team->status,
+                'drivers' => $team->drivers($season),
+                'races' => $team->races($season),
+                'wins' => $team->wins($season),
+                'second_positions' => $team->secondPositions($season),
+                'third_positions' => $team->thirdPositions($season),
+                'points' => $team->lastPoints($season),
+            ];
+        });
 
         return Inertia::render('teams/index', [
             'seasons' => $seasons,
