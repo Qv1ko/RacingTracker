@@ -59,9 +59,9 @@ export interface Driver {
     secondaryStats?: DriverStat[];
     activity?: { status: string; race_id: number; name: string; date: string }[];
     seasons?: string[];
-    positionsHistory?: { position: string; times: number }[];
     racesWon?: number[];
     pointsHistory?: { race: string; points: number }[];
+    positionsHistory?: { position: string; times: number }[];
     teammates?: Driver[];
 }
 
@@ -91,10 +91,14 @@ export interface Team {
     name: string;
     nationality: string;
     status: boolean;
+    // index
     drivers?: Driver[];
     races?: number;
     wins?: number;
     second_positions?: number;
     third_positions?: number;
     points?: number;
+    // show
+    pointsHistory?: { race: string; points: number }[];
+    positionsHistory?: { position: string; times: number }[];
 }

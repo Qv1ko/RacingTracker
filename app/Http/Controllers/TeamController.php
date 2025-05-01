@@ -62,6 +62,21 @@ class TeamController extends Controller
     public function show(string $id)
     {
         $team = Team::findOrFail($id);
+
+        $team = [
+            'id' => $team->id,
+            'name' => $team->name,
+            'nationality' => $team->nationality,
+            'status' => $team->status,
+            'races' => $team->races(),
+            'wins' => $team->wins(),
+            'second_positions' => $team->secondPositions(),
+            'third_positions' => $team->thirdPositions(),
+            'pointsHistory' => $team->pointsHistory(),
+            'positionsHistory' => $team->countForPosition(),
+            'drivers' => $team->drivers(),
+        ];
+
         return Inertia::render('teams/show', ['team' => $team]);
     }
 
