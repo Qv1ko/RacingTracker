@@ -519,6 +519,8 @@ sudo nginx -t && sudo systemctl reload nginx
 
 Distributed under the MIT License. See [LICENSE](https://github.com/Qv1ko/RacingTracker/blob/main/LICENSE) for more information.
 
-## Acknowledgments
+## 📚 References
 
-...
+- [Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII)
+- [TrueSkill System](https://en.wikipedia.org/wiki/TrueSkill)
+- [Pitwall App](https://pitwall.app)
