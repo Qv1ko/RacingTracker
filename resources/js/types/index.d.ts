@@ -86,6 +86,15 @@ export interface Race {
     better?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
 }
 
+export interface Season {
+    season: string;
+    driverResults: { position: number; driver: Driver; pointsDiff: number; points: number; startingPoints: number }[];
+    teamResults?: { position: number; team: Team; pointsDiff: number; points: number; startingPoints: number }[];
+    races: number;
+    drivers: number;
+    teams: number;
+}
+
 export interface Team {
     id: number;
     name: string;

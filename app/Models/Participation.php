@@ -168,7 +168,7 @@ class Participation extends Model
                     'points' => $item['points'],
                     'startingPoints' => $item['startingPoints']
                 ];
-            });;
+            });
     }
 
     public static function seasonTeamsClasification(string $season): Collection
