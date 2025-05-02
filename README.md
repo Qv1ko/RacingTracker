@@ -392,11 +392,124 @@ listen.group = deploy-user
 sudo service php8.2-fpm restart
 ```
 
-17. You can now access the application at [http://ec2-public-ip-address](http://ec2-public-ip-address)
+17. You can now access the application at [http://ec2-public-ip-address](http://ec2-public-ip-address).
 
-#### DNS configuration and installation of TLS/SSL certificates
+#### Installing a self-signed SSL/TLS certificate
 
-...
+1. Install the necessary dependencies:
+
+```bash
+sudo apt install openssl -y
+```
+
+2. Create a new directory for the SSL/TLS certificate:
+
+```bash
+sudo su deploy-user
+```
+
+```bash
+mkdir ~/.ssl && cd ~/.ssl
+```
+
+3. Create a config file in a new directory:
+
+```bash
+nano san.cnf
+```
+
+```bash
+[req]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[dn]
+C  = # Country
+ST = # State
+L  = # Locality
+O  = # Organization
+OU = # Organizational Unit
+CN = XX.XX.XX.XX # EC2 instance public IP address
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+IP.1 = XX.XX.XX.XX # EC2 instance public IP address
+```
+
+4. Generate a RSA key pair:
+
+```bash
+openssl genrsa -out server.key 2048
+```
+
+5. Generate the certificate signing request (CSR):
+
+```bash
+openssl req -x509 -nodes -newkey rsa:2048 \
+  -keyout server.key \
+  -out server.crt \
+  -days 365 \
+  -subj "/CN=XX.XX.XX.XX"
+```
+
+6. Edit nginx configuration file:
+
+```bash
+exit
+```
+
+```bash
+sudo nano /etc/nginx/sites-available/racingtracker.conf
+```
+
+```bash
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    listen 443 ssl;
+    server_name XX.XX.XX.XX; # EC2 instance public IP address
+    root /home/deploy-user/code/public; # Change deploy-user to your username
+    index index.html index.htm index.php;
+
+    ssl_certificate     /home/deploy-user/.ssl/server.crt; # Change deploy-user to your username
+    ssl_certificate_key /home/deploy-user/.ssl/server.key; # Change deploy-user to your username
+
+    # Redirect HTTP to HTTPS
+    if ($scheme != "https") {
+      return 301 https://$server_name$request_uri;
+    }
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+```
+
+7. Check if the configuration is correct and reload the nginx service:
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+8. You can now access the application at [https://ec2-public-ip-address](https://ec2-public-ip-address).
 
 ## Usage
 
