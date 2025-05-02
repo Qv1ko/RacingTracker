@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\Race;
-use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
@@ -15,12 +14,7 @@ class TeamController extends Controller
 {
     public function index(Request $req)
     {
-        $seasons = Race::pluck('date')
-            ->map(fn($date) => Carbon::parse($date)->format('Y'))
-            ->unique()
-            ->sortDesc()
-            ->values();
-
+        $seasons = Race::seasons();
         $season = $req->query('season');
 
         if ($season !== 'all' && !in_array($season, $seasons->all())) {
