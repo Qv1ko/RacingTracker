@@ -84,7 +84,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                     <table key="seasons"></table>
                     {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}
                     {((driver.teams?.length || 0) > 0 || driver.teammates) && (
-                        <div className="grid auto-rows-min grid-cols-2 gap-4">
+                        <div className="grid auto-rows-min grid-cols-1 gap-4 md:grid-cols-2">
                             <div className="grid auto-rows-min justify-items-center gap-4">
                                 <div className="flex items-center justify-center gap-2">
                                     <div className="flex h-12 w-12 items-center justify-center rounded-full">
