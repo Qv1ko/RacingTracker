@@ -15,7 +15,7 @@
 [![Vite 6.2](https://img.shields.io/badge/Vite_6.2-646CFF?style=for-the-badge&logo=vite&logoColor=E3E3E3&labelColor=333333)](https://vitejs.dev)
 
   <p align="center">
-    <a href="#">Demo</a>
+    <a href="https://51.20.249.113">Demo</a>
     &middot;
     <a href="https://github.com/Qv1ko/RacingTracker/tree/main/documents">🇪🇸 Docs</a> 
     &middot;
@@ -24,7 +24,7 @@
 
 </div>
 
-## About
+## ℹ️ About
 
 RacingTracker is a free and open source web application that allows you to manage races in the world of motor racing with an innovative scoring system.
 
@@ -38,19 +38,57 @@ In motor racing, the predominant scoring system is based exclusively on the fina
 
 These limitations raise a fundamental question: is a scoring system that only considers final position without assessing context and relative performance really equitable? The answer, from my perspective, is no. I therefore propose the development of a fairer and more dynamic ranking system, capable of more accurately reflecting the true merit of each driver and team.
 
-### Points calculation
+### 📁 Project structure
 
-#### Variables
+```bash
+📁 root/
+|-- app/                         # Application core
+|   |-- Http/
+|   |   |-- Controllers          # Route controllers
+|   |   |-- Middleware           # HTTP middleware
+|   |   \-- Requests             # Form request validation
+|   |-- Models                   # Eloquent models
+|   \-- Providers                # Service providers
+|
+|-- database/                    # Database files
+|   |-- factories                # Model factories for seeding
+|   |-- migrations               # Database schema migrations
+|   |-- seeders                  # Database seeders
+|   \-- database.sqlite          # SQLite database
+|
+|-- documents/                   # Project documentation
+|   |-- resources                # Images, diagrams, etc.
+|   \-- memoria.docx             # Project document
+|
+|-- public/                      # Publicly accessible files
+|
+|-- resources/                   # Frontend resources
+|   |-- css                      # CSS styles
+|   |-- js/                      # TypeScript frontend code
+|   |   |-- components           # Reusable components
+|   |   |-- hooks                # Custom React hooks
+|   |   |-- layouts              # Layout components
+|   |   |-- lib                  # Utility functions
+|   |   |-- pages                # Page-level components
+|   |   \-- types                # TypeScript types/interfaces
+|   \-- views                    # Blade views
+|
+\-- routes/                      # Route definitions
+```
 
-- `β`: performance deviation # μ/6.0
-- `μ`: current driver points # 25.0
-- `τ`: dynamic factor of change # μ/300.0
-- `σ`: current driver uncertainty # μ/3.0
+## 📊 Points calculation
+
+### Variables
+
+- `β`: performance deviation (μ/6.0)
+- `μ`: current driver points (25.0)
+- `τ`: dynamic factor of change (μ/300.0)
+- `σ`: current driver uncertainty (μ/3.0)
 - `A`: expected average position
 - `F`: final position in the race
 - `P`: number of race participants
 
-#### Operations
+### Operations
 
 **Performance deviation:**
 
@@ -100,7 +138,7 @@ $`σ_{change}=max⁡(σ_{change}, -M_{change})`$
 
 $`σ_{new}=max⁡(0.001, σ+σ_{change})`$
 
-## Deployment locally
+## 🚀 Deployment locally
 
 ### Prerequisites
 
@@ -160,7 +198,7 @@ npm run build && php artisan serve
 
 9. Open [http://localhost:8000](http://0.0.0.0:8000) in your browser.
 
-## Deployment on AWS
+## ☁️ Deployment on AWS
 
 ### Prerequisites
 
@@ -511,11 +549,11 @@ sudo nginx -t && sudo systemctl reload nginx
 
 8. You can now access the application at [https://ec2-public-ip-address](https://ec2-public-ip-address).
 
-## Usage
+## 🌐 Usage
 
 ...
 
-## License
+## 📄 License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/Qv1ko/RacingTracker/blob/main/LICENSE) for more information.
 
