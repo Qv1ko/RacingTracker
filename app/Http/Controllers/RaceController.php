@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Driver;
 use App\Models\Team;
 use App\Models\Race;
-use Illuminate\Support\Carbon;
 use App\Http\Requests\Race\StoreRequest;
 use App\Http\Requests\Race\UpdateRequest;
 use App\Models\Participation;
@@ -17,12 +16,7 @@ class RaceController extends Controller
 {
     public function index(Request $req)
     {
-        $seasons = Race::pluck('date')
-            ->map(fn($date) => Carbon::parse($date)->format('Y'))
-            ->unique()
-            ->sortDesc()
-            ->values();
-
+        $seasons = Race::seasons();
         $season = $req->query('season');
 
         if ($season !== 'all' && !in_array($season, $seasons->all())) {

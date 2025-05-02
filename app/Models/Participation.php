@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Carbon\Carbon;
 
 class Participation extends Model
 {
@@ -124,5 +126,115 @@ class Participation extends Model
         $newSigma = max(0.001, ($sigma + $sigmaChange)); // Prevent sigma from reaching zero
 
         return ['mu' => $newMu, 'sigma' => $newSigma];
+    }
+
+    public static function seasonDriversClasification(string $season): Collection
+    {
+        $drivers = Driver::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->get();
+
+        return $drivers->map(function ($driver) use ($season) {
+            $lastParticipationBeforeSeason = $driver->participations()
+                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->orderByDesc(
+                    Race::select('date')
+                        ->whereColumn('races.id', 'participations.race_id')
+                        ->orderByDesc('date')
+                        ->limit(1)
+                )
+                ->first();
+
+            $previousSeason = $lastParticipationBeforeSeason ? Carbon::parse($lastParticipationBeforeSeason?->race?->date)->format('Y') : null;
+
+            $points = (float)($driver->lastPoints($season) ?? self::$MU);
+            $startingPoints = (float)($previousSeason ? ($driver->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
+
+            return [
+                'driver' => $driver,
+                'pointsDiff' => $points - $startingPoints,
+                'points' => $points,
+                'startingPoints' => $startingPoints
+            ];
+        })->sortByDesc('pointsDiff')
+            ->values()
+            ->map(function ($item, $index) {
+                return [
+                    'position' => $index + 1,
+                    'driver' => $item['driver'],
+                    'pointsDiff' => $item['pointsDiff'],
+                    'points' => $item['points'],
+                    'startingPoints' => $item['startingPoints']
+                ];
+            });;
+    }
+
+    public static function seasonTeamsClasification(string $season): Collection
+    {
+        $teams = Team::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->get();
+
+        return $teams->map(function ($team) use ($season) {
+            $lastParticipationBeforeSeason = $team->participations()
+                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->orderByDesc(
+                    Race::select('date')
+                        ->whereColumn('races.id', 'participations.race_id')
+                        ->orderByDesc('date')
+                        ->limit(1)
+                )
+                ->first();
+
+            $previousSeason = $lastParticipationBeforeSeason ? Carbon::parse($lastParticipationBeforeSeason?->race?->date)->format('Y') : null;
+
+            $points = (float)($team->lastPoints($season) ?? self::$MU);
+            $startingPoints = (float)($previousSeason ? ($team->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
+
+            return [
+                'team' => $team,
+                'pointsDiff' => $points - $startingPoints,
+                'points' => $points,
+                'startingPoints' => $startingPoints
+            ];
+        })->sortByDesc('pointsDiff')
+            ->values()
+            ->map(function ($item, $index) {
+                return [
+                    'position' => $index + 1,
+                    'team' => $item['team'],
+                    'pointsDiff' => $item['pointsDiff'],
+                    'points' => $item['points'],
+                    'startingPoints' => $item['startingPoints']
+                ];
+            });;
+    }
+
+    public static function seasonDrivers(string $season): int
+    {
+        return Driver::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->count();
+    }
+
+    public static function seasonRaces(string $season): int
+    {
+        return Race::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->count();
+    }
+
+    public static function seasonTeams(string $season): int
+    {
+        return Team::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->count();
     }
 }

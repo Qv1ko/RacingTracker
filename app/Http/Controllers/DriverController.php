@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Driver\StoreRequest;
 use App\Http\Requests\Driver\UpdateRequest;
-use Carbon\Carbon;
 use App\Models\Driver;
 use App\Models\Race;
 use Illuminate\Http\Request;
@@ -15,12 +14,7 @@ class DriverController extends Controller
 {
     public function index(Request $req)
     {
-        $seasons = Race::pluck('date')
-            ->map(fn($date) => Carbon::parse($date)->format('Y'))
-            ->unique()
-            ->sortDesc()
-            ->values();
-
+        $seasons = Race::seasons();
         $season = $req->query('season');
 
         if ($season !== 'all' && !in_array($season, $seasons->all())) {

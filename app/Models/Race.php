@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Participation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Race extends Model
@@ -20,6 +22,15 @@ class Race extends Model
     public function participations(): HasMany
     {
         return $this->hasMany(Participation::class);
+    }
+
+    public static function seasons(): Collection
+    {
+        return Race::pluck('date')
+            ->map(fn($date) => Carbon::parse($date)->format('Y'))
+            ->unique()
+            ->sortDesc()
+            ->values();
     }
 
     protected function winner(): Attribute
