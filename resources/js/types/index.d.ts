@@ -89,7 +89,9 @@ export interface Race {
 export interface Season {
     season: string;
     driverResults: { position: number; driver: Driver; pointsDiff: number; points: number; startingPoints: number }[];
+    driversPoints: { driver: Driver; pointsHistory: { race: string; date: string; points: number }[] }[];
     teamResults?: { position: number; team: Team; pointsDiff: number; points: number; startingPoints: number }[];
+    teamsPoints?: { team: Team; pointsHistory: { race: string; date: string; points: number }[] }[];
     races: number;
     drivers: number;
     teams: number;

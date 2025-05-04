@@ -128,7 +128,7 @@ class Team extends Model
     public function pointsHistory(string $season = 'all'): Collection
     {
         return $this->participations()
-            ->selectRaw('races.name as race, AVG(participations.points) as points')
+            ->selectRaw('races.name as race, races.date as date, AVG(participations.points) as points')
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->groupBy('races.id')

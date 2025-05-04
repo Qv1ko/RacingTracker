@@ -178,7 +178,7 @@ class Driver extends Model
     {
         return $this->participations()
             ->toBase()
-            ->select('participations.points', 'races.name as race')
+            ->select('participations.points', 'races.name as race', 'races.date as date')
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
