@@ -22,7 +22,16 @@ export default function Seasons({ season }: { season: Season }) {
     );
 
     const driversPointsChartData = Object.values(
-        driversPointsData.reduce<Record<string, any>>((acc, { race, date, id, points }) => {
+        driversPointsData.reduce<
+            Record<
+                string,
+                {
+                    race: string;
+                    date: string;
+                    [id: string]: number | string;
+                }
+            >
+        >((acc, { race, date, id, points }) => {
             if (!acc[race]) {
                 acc[race] = { race, date };
             }
@@ -42,7 +51,16 @@ export default function Seasons({ season }: { season: Season }) {
 
     const teamsPointsChartData = teamsPointsData
         ? Object.values(
-              teamsPointsData.reduce<Record<string, any>>((acc, { race, date, id, points }) => {
+              teamsPointsData.reduce<
+                  Record<
+                      string,
+                      {
+                          race: string;
+                          date: string;
+                          [id: string]: number | string;
+                      }
+                  >
+              >((acc, { race, date, id, points }) => {
                   if (!acc[race]) {
                       acc[race] = { race, date };
                   }
