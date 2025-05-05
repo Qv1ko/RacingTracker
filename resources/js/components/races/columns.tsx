@@ -98,7 +98,7 @@ export const columns: ColumnDef<Race>[] = [
                             {better.name[0].toUpperCase()}. {better.surname}
                         </Link>
                         {betterTeam && (
-                            <Link href={`/teams/${betterTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                            <Link href={`/teams/${betterTeam.id}`} className="hover:text-primary hidden items-center gap-2 sm:flex">
                                 {betterTeam.nationality ? <FlagIcon nationality={betterTeam.nationality} size={16} /> : null}
                                 {betterTeam.name}
                             </Link>
