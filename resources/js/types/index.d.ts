@@ -84,6 +84,17 @@ export interface Race {
     second?: Driver;
     third?: Driver;
     better?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
+    result?: {
+        position: string;
+        driver: Driver;
+        points: number;
+        pointsDiff: number;
+        pointsGap: number;
+        team: Team;
+        teamPoints: number;
+        teamPointsDiff: number;
+        teamPointsGap: number;
+    }[];
 }
 
 export interface Season {

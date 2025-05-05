@@ -41,7 +41,15 @@ class RaceController extends Controller
     public function show(string $id)
     {
         $race = Race::findOrFail($id);
-        return Inertia::render('races/show', ['race' => $race]);
+
+        $data = [
+            'id' => $race->id,
+            'name' => $race->name,
+            'date' => $race->date,
+            'result' => Participation::raceResult($race->id),
+        ];
+
+        return Inertia::render('races/show', ['race' => $data]);
     }
 
     public function create()
