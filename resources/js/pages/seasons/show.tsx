@@ -15,8 +15,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Seasons({ season }: { season: Season }) {
-    // console.log(season);
-
     const driversPointsData = season.driversPoints.flatMap(({ driver: { id }, pointsHistory }) =>
         pointsHistory.map(({ race, date, points }) => ({ race, date, id, points })),
     );

@@ -12,8 +12,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Seasons({ seasons }: { seasons: Season[] }) {
-    console.log(seasons);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Seasons" />
