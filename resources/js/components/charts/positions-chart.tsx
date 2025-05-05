@@ -35,7 +35,7 @@ export const PositionsChart: React.FC<PositionsChartProps> = ({ title = 'Positio
                         <XAxis dataKey="position" tickLine={false} tickMargin={8} axisLine={false} />
                         <YAxis orientation="left" tickLine={false} axisLine={false} tickMargin={8} />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                        <Bar dataKey="times" fill="var(--chart-1)">
+                        <Bar dataKey="times" fill="var(--color-primary)">
                             <LabelList position="top" offset={12} className="fill-foreground" fontSize={12} />
                         </Bar>
                     </BarChart>
