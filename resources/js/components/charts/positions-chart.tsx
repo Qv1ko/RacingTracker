@@ -23,17 +23,18 @@ export const PositionsChart: React.FC<PositionsChartProps> = ({ title = 'Positio
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[180px] w-full md:h-[320px] lg:h-[400px]">
+                <ChartContainer config={chartConfig} className="h-[360px] w-full">
                     <BarChart
                         accessibilityLayer
                         data={data}
                         margin={{
                             top: 12,
+                            left: -22,
                         }}
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="position" tickLine={false} tickMargin={8} axisLine={false} />
-                        <YAxis orientation="left" tickLine={false} axisLine={false} tickMargin={8} />
+                        <YAxis tickLine={false} axisLine={false} tickMargin={8} />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                         <Bar dataKey="times" fill="var(--color-primary)">
                             <LabelList position="top" offset={12} className="fill-foreground" fontSize={12} />

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { ChartConfig, ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 
 const chartConfig = {
     points: {
@@ -23,12 +23,25 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({ title = 'P
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[120px] w-full md:h-[240px] lg:h-[360px]">
-                    <LineChart accessibilityLayer data={data}>
+                <ChartContainer config={chartConfig} className="h-[360px] w-full">
+                    <LineChart accessibilityLayer data={data} margin={{ top: 12, left: -22 }}>
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="race" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} />
-                        <YAxis orientation="left" tickLine={false} axisLine={false} tickMargin={8} />
-                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                        <YAxis
+                            domain={([dataMin, dataMax]) => [dataMin - 1, dataMax + 1]}
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            tickFormatter={(value) => value.toFixed(0).toString()}
+                        />
+                        <Tooltip
+                            cursor={{ strokeDasharray: '3 3' }}
+                            content={({ payload, label, active, coordinate, offset }) => {
+                                return (
+                                    <ChartTooltipContent active={active} payload={payload} label={label} coordinate={coordinate} offset={offset} />
+                                );
+                            }}
+                        />
                         <Line dataKey="points" type="linear" stroke="var(--color-primary)" strokeWidth={2} dot={false} />
                     </LineChart>
                 </ChartContainer>

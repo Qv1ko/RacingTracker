@@ -53,8 +53,8 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig} className="h-[120px] w-full md:h-[240px] lg:h-[360px]">
-                    <LineChart data={sortedData} margin={{ top: 16, right: 12, left: 12, bottom: 16 }}>
+                <ChartContainer config={chartConfig} className="h-[360px] w-full">
+                    <LineChart data={sortedData} margin={{ top: 12, left: -22 }}>
                         <CartesianGrid vertical={false} />
                         <XAxis
                             dataKey="race"
@@ -63,7 +63,13 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                             tickMargin={8}
                             tickFormatter={(val) => (typeof val === 'string' ? val.slice(0, 3) : String(val))}
                         />
-                        <YAxis domain={['dataMin', 'dataMax']} tickFormatter={(value) => value.toFixed(0).toString()} />
+                        <YAxis
+                            domain={([dataMin, dataMax]) => [dataMin - 1, dataMax + 1]}
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            tickFormatter={(value) => value.toFixed(0).toString()}
+                        />
                         <Tooltip
                             cursor={{ strokeDasharray: '3 3' }}
                             content={({ payload, label, active, coordinate, offset }) => {
