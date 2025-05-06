@@ -15,7 +15,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
-                pageSize: 64,
+                pageSize: 32,
             },
         },
     });
