@@ -41,71 +41,81 @@ class Participation extends Model
 
     public static function raceResult(string $raceId): Collection
     {
-        $maxPoints = Participation::where('race_id', $raceId)
-            ->select('points')
-            ->max('points');
+        $race = Race::with('participations')->findOrFail($raceId);
+        $season = $race->season();
+        $raceDate = $race->date;
 
-        $maxTeamPoints = Participation::where('race_id', $raceId)
-            ->get()
-            ->groupBy('team_id')
-            ->map(function ($items, $teamId) {
-                return [
-                    'team_id'    => $teamId,
-                    'avg_points' => $items->avg('points'),
-                ];
-            })
-            ->values()
-            ->max('avg_points');
-
-        return Participation::where('race_id', $raceId)
+        $allTeamParticipations = Participation::whereHas('race', function ($query) use ($season, $raceDate) {
+            $query->whereYear('date', $season)
+                ->where('date', '<=', $raceDate);
+        })
+            ->whereNotNull('team_id')
             ->with(['driver', 'team', 'race'])
-            ->get()
-            ->map(function ($participation) use ($maxPoints, $maxTeamPoints) {
-                $previousParticipation = Participation::where('driver_id', $participation->driver_id)
-                    ->whereHas('race', function ($query) use ($participation) {
-                        $query->where('date', '<', $participation->race->date);
-                    })
-                    ->orderByDesc(
-                        Race::select('date')
-                            ->whereColumn('races.id', 'participations.race_id')
-                            ->limit(1)
-                    )
-                    ->first();
+            ->get();
 
-                $previousPoints = $previousParticipation ? $previousParticipation->points : self::$MU;
+        $teamPointsByTeam = $allTeamParticipations
+            ->groupBy('team_id')
+            ->map(function ($teamGroup) {
+                $lastParticipations = $teamGroup
+                    ->sortByDesc('race.date')
+                    ->unique('driver_id');
+                return $lastParticipations->avg('points');
+            });
 
-                $teamPoints = Participation::where('race_id', $participation->race_id)
+        $raceParticipations = Participation::where('race_id', $raceId)
+            ->with(['driver', 'team', 'race'])
+            ->get();
+
+        return $raceParticipations->map(function ($participation) use ($race, $season, $teamPointsByTeam) {
+            $previousParticipation = Participation::where('driver_id', $participation->driver_id)
+                ->whereHas('race', function ($query) use ($season, $race) {
+                    $query->whereYear('date', $season)
+                        ->where('date', '<', $race->date);
+                })
+                ->orderByDesc(
+                    Race::select('date')
+                        ->whereColumn('races.id', 'participations.race_id')
+                        ->limit(1)
+                )
+                ->first();
+
+            $previousPoints = $previousParticipation ? $previousParticipation->points : self::$MU;
+
+            $currentTeamPoints = $teamPointsByTeam[$participation->team_id] ?? 0;
+
+            $previousRace = Race::whereYear('date', $season)
+                ->where('date', '<', $race->date)
+                ->orderByDesc('date')
+                ->first();
+
+            $previousTeamPoints = self::$MU;
+            if ($previousRace) {
+                $previousTeamParticipations = Participation::whereHas('race', function ($query) use ($season, $previousRace) {
+                    $query->whereYear('date', $season)
+                        ->where('date', '<=', $previousRace->date);
+                })
                     ->where('team_id', $participation->team_id)
-                    ->avg('points');
+                    ->with(['driver', 'race'])
+                    ->get();
 
-                $previousTeamParticipation = Participation::where('team_id', $participation->team_id)
-                    ->whereHas('race', function ($query) use ($participation) {
-                        $query->where('date', '<', $participation->race->date);
-                    })
-                    ->orderByDesc(
-                        Race::select('date')
-                            ->whereColumn('races.id', 'participations.race_id')
-                            ->limit(1)
-                    )
-                    ->first();
+                $lastPrevTeamParticipations = $previousTeamParticipations
+                    ->sortByDesc('race.date')
+                    ->unique('driver_id');
 
-                $previousTeamPoints = Participation::where('race_id', $previousTeamParticipation->race_id)
-                    ->where('team_id', $participation->team_id)
-                    ->avg('points') ?: self::$MU;
+                $previousTeamPoints = $lastPrevTeamParticipations->avg('points') ?? self::$MU;
+            }
 
-                return [
-                    'sort_position' => $participation->position,
-                    'position' => $participation->status,
-                    'driver' => $participation->driver,
-                    'points' => $participation->points,
-                    'pointsDiff' => $participation->points - $previousPoints,
-                    'pointsGap' => $maxPoints - $participation->points,
-                    'team' => $participation->team,
-                    'teamPoints' => $teamPoints,
-                    'teamPointsDiff' => $teamPoints - $previousTeamPoints,
-                    'teamPointsGap' => $maxTeamPoints - $teamPoints,
-                ];
-            })
+            return [
+                'sort_position' => $participation->position,
+                'position' => $participation->status,
+                'driver' => $participation->driver,
+                'points' => $participation->points,
+                'pointsDiff' => $participation->points - $previousPoints,
+                'team' => $participation->team,
+                'teamPoints' => $currentTeamPoints,
+                'teamPointsDiff' => $currentTeamPoints - $previousTeamPoints,
+            ];
+        })
             ->sort(function ($a, $b) {
                 $aPos = $a['sort_position'];
                 $bPos = $b['sort_position'];

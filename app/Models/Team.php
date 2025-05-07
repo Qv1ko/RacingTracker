@@ -127,29 +127,108 @@ class Team extends Model
 
     public function pointsHistory(string $season = 'all'): Collection
     {
-        return $this->participations()
-            ->selectRaw('races.name as race, races.date as date, AVG(participations.points) as points')
-            ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
-            ->groupBy('races.id')
-            ->orderBy('races.date', 'asc')
-            ->get();
+        if ($season === 'all') {
+            $participations = $this->participations()->with('race')->get();
+            $seasons = $participations
+                ->pluck('race')
+                ->map(fn($race) => $race->season())
+                ->unique()
+                ->sort()
+                ->values();
+
+            return $seasons->flatMap(function ($season) use ($participations) {
+                $seasonParticipations = $participations->filter(function ($p) use ($season) {
+                    return $p->race->season() == $season;
+                });
+
+                $races = $seasonParticipations->pluck('race')->unique('id')->sortBy('date')->values();
+
+                return $races->map(function ($race) use ($seasonParticipations) {
+                    $participationsUpToRace = $seasonParticipations->filter(function ($p) use ($race) {
+                        return $p->race->date <= $race->date;
+                    });
+
+                    $latestPerDriver = $participationsUpToRace
+                        ->groupBy('driver_id')
+                        ->map(function ($driverGroup) {
+                            return $driverGroup->sortByDesc('race.date')->first();
+                        });
+
+                    $averagePoints = $latestPerDriver->avg('points');
+
+                    return [
+                        'race_id' => $race->id,
+                        'race' => $race->name,
+                        'date' => $race->date,
+                        'points' => $averagePoints,
+                    ];
+                });
+            })->values();
+        } else {
+            $participations = $this->participations()
+                ->with('race')
+                ->whereHas('race', function ($q) use ($season) {
+                    $q->whereYear('date', $season);
+                })
+                ->get();
+
+            $races = $participations->pluck('race')->unique('id')->sortBy('date')->values();
+
+            return $races->map(function ($race) use ($participations) {
+                $participationsUpToRace = $participations->filter(function ($p) use ($race) {
+                    return $p->race->date <= $race->date;
+                });
+
+                $latestPerDriver = $participationsUpToRace
+                    ->groupBy('driver_id')
+                    ->map(function ($driverGroup) {
+                        return $driverGroup->sortByDesc('race.date')->first();
+                    });
+
+                $averagePoints = $latestPerDriver->avg('points');
+
+                return [
+                    'race_id' => $race->id,
+                    'race' => $race->name,
+                    'date' => $race->date,
+                    'points' => $averagePoints,
+                ];
+            });
+        }
     }
 
     public function lastPoints(string $season = 'all'): string | null
     {
-        $lastRaceId = $this->participations()
-            ->toBase()
-            ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
-            ->orderBy('races.date', 'desc')
-            ->limit(1)
-            ->value('races.id');
+        $participations = $this->participations()->with('race')->get();
 
-        $points = $this->participations()
-            ->toBase()
-            ->where('race_id', $lastRaceId)
-            ->avg('points');
+        if ($season === 'all') {
+            $latestSeason = $participations
+                ->pluck('race')
+                ->map(fn($race) => $race->season())
+                ->unique()
+                ->sortDesc()
+                ->first();
+
+            if (!$latestSeason) {
+                return null;
+            }
+
+            $seasonParticipations = $participations->filter(function ($p) use ($latestSeason) {
+                return $p->race->season() == $latestSeason;
+            });
+        } else {
+            $seasonParticipations = $participations->filter(function ($p) use ($season) {
+                return $p->race->season() == $season;
+            });
+        }
+
+        $latestParticipations = $seasonParticipations
+            ->groupBy('driver_id')
+            ->map(function ($driverGroup) {
+                return $driverGroup->sortByDesc('race.date')->first();
+            });
+
+        $points = $latestParticipations->avg('points');
 
         return $points !== null ? number_format((float)$points, 3) : null;
     }
