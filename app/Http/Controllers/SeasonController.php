@@ -34,6 +34,10 @@ class SeasonController extends Controller
     {
         abort_if(!Race::seasons()->contains($season), 404);
 
+        $lastRace = Race::whereYear('date', $season)
+            ->orderBy('date', 'desc')
+            ->first();
+
         $driverSeasonPointsHistory = Driver::whereHas('participations.race', function ($query) use ($season) {
             $query->whereYear('date', $season);
         })
@@ -58,8 +62,10 @@ class SeasonController extends Controller
 
         $data =  [
             'season' => $season,
+            'driverStandings' => Participation::raceDriverStandings($lastRace->id),
             'driverResults' => Participation::seasonDriversClasification($season),
             'driversPoints' => $driverSeasonPointsHistory,
+            'teamStandings' => Participation::raceTeamStandings($lastRace->id),
             'teamResults' => Participation::seasonTeamsClasification($season),
             'teamsPoints' => $teamSeasonPointsHistory,
         ];

@@ -1,5 +1,8 @@
 import { MultiPointsChart } from '@/components/charts/multi-points-chart';
+import { DataTable } from '@/components/data-table';
 import { Icon } from '@/components/icon';
+import { columns as driverStandingsColumns } from '@/components/races/driver-standings-columns';
+import { columns as teamStandingsColumns } from '@/components/races/team-standings-columns';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { HelmetIconNode } from '@/lib/utils';
@@ -104,6 +107,7 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Drivers</h3>
                     </div>
+                    {season.driverStandings && <DataTable columns={driverStandingsColumns} data={season.driverStandings} />}
                     <MultiPointsChart title="Drivers points" data={driversPointsChartData} chartConfig={driversPointsChartConfig} />
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
@@ -111,6 +115,7 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Teams</h3>
                     </div>
+                    {season.teamStandings && <DataTable columns={teamStandingsColumns} data={season.teamStandings} />}
                     {season.teamsPoints && <MultiPointsChart title="Teams points" data={teamsPointsChartData} chartConfig={teamsPointsChartConfig} />}
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
