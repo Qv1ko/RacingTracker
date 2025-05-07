@@ -24,12 +24,24 @@ class RaceController extends Controller
         }
 
         if ($season === 'all') {
-            $data = Race::orderBy('name', 'asc')->get();
+            $races = Race::orderBy('name', 'asc')->get();
         } else {
-            $data = Race::whereYear('date', $season)
+            $races = Race::whereYear('date', $season)
                 ->orderBy('date', 'asc')
                 ->get();
         }
+
+        $data = $races->map(function ($race) {
+            return [
+                'id' => $race->id,
+                'name' => $race->name,
+                'date' => $race->date,
+                'winner' => $race->participant(1),
+                'second' => $race->participant(2),
+                'third' => $race->participant(3),
+                'better' => $race->better(),
+            ];
+        });
 
         return Inertia::render('races/index', [
             'seasons' => $seasons,
@@ -47,6 +59,8 @@ class RaceController extends Controller
             'name' => $race->name,
             'date' => $race->date,
             'result' => Participation::raceResult($race->id),
+            'driverStandings' => Participation::raceDriverStandings($race->id),
+            'teamStandings' => Participation::raceTeamStandings($race->id),
         ];
 
         return Inertia::render('races/show', ['race' => $data]);
