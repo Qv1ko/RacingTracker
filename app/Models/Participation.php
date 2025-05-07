@@ -122,6 +122,83 @@ class Participation extends Model
             });
     }
 
+
+    public static function raceDriverStandings(string $raceId): Collection
+    {
+        $race = Race::findOrFail($raceId);
+
+        $season = $race->season();
+        $date = $race->date;
+
+        $participations = Participation::whereHas('race', function ($query) use ($season, $date) {
+            $query->whereYear('date', $season)
+                ->where('date', '<=', $date);
+        })
+            ->with(['driver', 'race'])
+            ->get()
+            ->groupBy('driver_id')
+            ->map(function ($group) {
+                return $group->sortByDesc('race.date')->first();
+            })
+            ->sortByDesc('points');
+
+        $maxPoints = $participations->max('points');
+
+        return $participations->values()
+            ->map(function ($participation, $index) use ($maxPoints) {
+                return [
+                    'posicion' => $index + 1,
+                    'driver' => $participation->driver,
+                    'points' => $participation->points,
+                    'gap' => $participation->points - $maxPoints
+                ];
+            });
+    }
+
+    public static function raceTeamStandings(string $raceId): Collection
+    {
+        $race = Race::findOrFail($raceId);
+
+        $season = $race->season();
+        $date = $race->date;
+
+        $participations = Participation::whereHas('race', function ($query) use ($season, $date) {
+            $query->whereYear('date', $season)
+                ->where('date', '<=', $date);
+        })
+            ->whereNotNull('team_id')
+            ->with(['driver', 'team', 'race'])
+            ->get();
+
+        $teams = $participations
+            ->groupBy('team_id')
+            ->map(function ($teamGroup) {
+                $lastParticipations = $teamGroup
+                    ->sortByDesc('race.date')
+                    ->unique('driver_id');
+
+                $pointsAvg = $lastParticipations->avg('points');
+
+                return [
+                    'team' => $teamGroup->first()->team,
+                    'points' => $pointsAvg,
+                ];
+            })
+            ->sortByDesc('points')
+            ->values();
+
+        $maxPoints = $teams->max('points');
+
+        return $teams->map(function ($team, $index) use ($maxPoints) {
+            return [
+                'posicion' => $index + 1,
+                'team' => $team['team'],
+                'points' => $team['points'],
+                'gap' => $team['points'] - $maxPoints,
+            ];
+        });
+    }
+
     public static function calcRaceResult($results): void
     {
         foreach ($results as $participation) {
@@ -258,6 +335,72 @@ class Participation extends Model
     {
         $teams = Team::whereHas('participations.race', function ($query) use ($season) {
             $query->whereYear('date', $season);
+        })->with(['participations.race', 'participations.driver'])->get();
+
+        return $teams->map(function ($team) use ($season) {
+            $seasonParticipations = $team->participations
+                ->filter(function ($p) use ($season) {
+                    return $p->race && $p->race->date && $p->race->season() == $season;
+                });
+
+            $latestDriverParticipations = $seasonParticipations
+                ->sortByDesc(function ($p) {
+                    return $p->race->date;
+                })
+                ->unique('driver_id');
+
+            $points = $latestDriverParticipations->avg('points') ?? self::$MU;
+
+            $lastParticipationBeforeSeason = $team->participations()
+                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->orderByDesc(
+                    Race::select('date')
+                        ->whereColumn('races.id', 'participations.race_id')
+                        ->orderByDesc('date')
+                        ->limit(1)
+                )
+                ->first();
+
+            $previousSeason = $lastParticipationBeforeSeason
+                ? $lastParticipationBeforeSeason?->race?->season()
+                : null;
+
+            if ($previousSeason) {
+                $prevSeasonParticipations = $team->participations
+                    ->filter(function ($p) use ($previousSeason) {
+                        return $p->race && $p->race->date && $p->race->season() == $previousSeason;
+                    })
+                    ->sortByDesc(function ($p) {
+                        return $p->race->date;
+                    })
+                    ->unique('driver_id');
+                $startingPoints = $prevSeasonParticipations->avg('points') ?? self::$MU;
+            } else {
+                $startingPoints = self::$MU;
+            }
+
+            return [
+                'team' => $team,
+                'points' => $points,
+                'pointsDiff' => $points - $startingPoints,
+                'startingPoints' => $startingPoints,
+            ];
+        })
+            ->sortByDesc('pointsDiff')
+            ->values()
+            ->map(function ($item, $index) {
+                return [
+                    'position' => $index + 1,
+                    'team' => $item['team'],
+                    'pointsDiff' => $item['pointsDiff'],
+                    'points' => $item['points'],
+                    'startingPoints' => $item['startingPoints'],
+                ];
+            });
+
+        $teams = Team::whereHas('participations.race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
         })
             ->get();
 
@@ -294,7 +437,7 @@ class Participation extends Model
                     'points' => $item['points'],
                     'startingPoints' => $item['startingPoints']
                 ];
-            });;
+            });
     }
 
     public static function seasonDrivers(string $season): int

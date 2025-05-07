@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import FlagIcon from '../ui/flag-icon';
 
-export const columns: ColumnDef<NonNullable<Race['result']>[number]>[] = [
+export const columns: ColumnDef<NonNullable<Race['teamStandings']>[number]>[] = [
     {
         accessorKey: 'positions',
         header: () => <div className="font-bold">Pos.</div>,
@@ -29,14 +29,14 @@ export const columns: ColumnDef<NonNullable<Race['result']>[number]>[] = [
         accessorKey: 'points',
         header: () => <div className="font-bold">Points</div>,
         cell: ({ row }) => {
-            return row.original.team && <p className="flex items-center gap-2">{row.original.teamPoints.toFixed(3)}</p>;
+            return row.original.team && <p className="flex items-center gap-2">{row.original.points.toFixed(3)}</p>;
         },
     },
     {
         accessorKey: 'gaps',
         header: () => <div className="font-bold">Gap</div>,
         cell: ({ row }) => {
-            return row.original.team && row.original.teamPointsGap !== 0 && <p>-{row.original.teamPointsGap.toFixed(3)}</p>;
+            return row.original.team && row.original.gap !== 0 && <p>{row.original.gap.toFixed(3)}</p>;
         },
     },
 ];

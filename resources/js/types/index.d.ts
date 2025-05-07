@@ -80,21 +80,23 @@ export interface Race {
     id: number;
     name: string;
     date: Date;
-    winner?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
-    second?: Driver;
-    third?: Driver;
-    better?: { id: number; name: string; surname: string; nationality?: string; team?: { id: number; name: string; nationality: string } };
+    // index
+    winner?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    second?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    third?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    better?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    // show
     result?: {
         position: string;
         driver: Driver;
         points: number;
         pointsDiff: number;
-        pointsGap: number;
         team: Team;
         teamPoints: number;
         teamPointsDiff: number;
-        teamPointsGap: number;
     }[];
+    driverStandings?: { position: string; driver: Driver; points: number; gap: number }[];
+    teamStandings?: { position: string; team: Team; points: number; gap: number }[];
 }
 
 export interface Season {
