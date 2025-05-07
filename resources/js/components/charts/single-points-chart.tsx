@@ -36,12 +36,22 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({ title = 'P
                         />
                         <Tooltip
                             cursor={{ strokeDasharray: '3 3' }}
-                            content={({ payload, label, active, coordinate, offset }) => {
+                            content={({ payload = [], label, active, coordinate, offset }) => {
+                                const sorted = payload.slice().sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
+                                const formatted = sorted.map((entry) => ({
+                                    ...entry,
+                                    value: Number(entry.value).toLocaleString('en-US', {
+                                        maximumFractionDigits: 3,
+                                        useGrouping: false,
+                                    }),
+                                }));
+
                                 return (
-                                    <ChartTooltipContent active={active} payload={payload} label={label} coordinate={coordinate} offset={offset} />
+                                    <ChartTooltipContent active={active} payload={formatted} label={label} coordinate={coordinate} offset={offset} />
                                 );
                             }}
                         />
+
                         <Line dataKey="points" type="linear" stroke="var(--color-primary)" strokeWidth={2} dot={false} />
                     </LineChart>
                 </ChartContainer>

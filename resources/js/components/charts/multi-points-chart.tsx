@@ -72,9 +72,19 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                         />
                         <Tooltip
                             cursor={{ strokeDasharray: '3 3' }}
-                            content={({ payload, label, active, coordinate, offset }) => {
-                                const sorted = (payload ?? []).slice().sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
-                                return <ChartTooltipContent active={active} payload={sorted} label={label} coordinate={coordinate} offset={offset} />;
+                            content={({ payload = [], label, active, coordinate, offset }) => {
+                                const sorted = payload.slice().sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
+                                const formatted = sorted.map((entry) => ({
+                                    ...entry,
+                                    value: Number(entry.value).toLocaleString('en-US', {
+                                        maximumFractionDigits: 3,
+                                        useGrouping: false,
+                                    }),
+                                }));
+
+                                return (
+                                    <ChartTooltipContent active={active} payload={formatted} label={label} coordinate={coordinate} offset={offset} />
+                                );
                             }}
                         />
                         {driverKeys.map((key, i) => (
