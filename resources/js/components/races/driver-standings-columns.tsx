@@ -15,10 +15,16 @@ export const columns: ColumnDef<NonNullable<Race['driverStandings']>[number]>[] 
         accessorKey: 'drivers',
         header: () => <div className="font-bold">Driver</div>,
         cell: ({ row }) => {
+            const driver = row.original.driver;
             return (
-                <Link href={`/drivers/${row.original.driver.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
-                    <FlagIcon nationality={row.original.driver.nationality ? row.original.driver.nationality : 'unknown'} size={16} />{' '}
-                    {row.original.driver.name} {row.original.driver.surname}
+                <Link href={`/drivers/${driver.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
+                    <FlagIcon nationality={driver.nationality ? driver.nationality : 'unknown'} size={16} />{' '}
+                    <span className="hidden md:block">
+                        {driver.name} {driver.surname}
+                    </span>
+                    <span className="block md:hidden">
+                        {driver.name[0].toUpperCase()}. {driver.surname}
+                    </span>{' '}
                 </Link>
             );
         },

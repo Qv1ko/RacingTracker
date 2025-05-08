@@ -13,7 +13,13 @@ export const columns: ColumnDef<Driver>[] = [
             const { name, surname, nationality } = row.original;
             return (
                 <Link href={`/drivers/${row.original.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
-                    <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} /> {name} {surname}
+                    <FlagIcon nationality={nationality ? nationality.toString() : 'unknown'} size={16} />{' '}
+                    <span className="hidden md:block">
+                        {name} {surname}
+                    </span>
+                    <span className="block md:hidden">
+                        {name[0].toUpperCase()}. {surname}
+                    </span>
                 </Link>
             );
         },
