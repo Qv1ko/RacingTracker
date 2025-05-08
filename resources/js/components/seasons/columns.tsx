@@ -20,12 +20,19 @@ export const columns: ColumnDef<Season>[] = [
         header: () => <div className="font-bold">Champion driver</div>,
         cell: ({ row }) => {
             const drivers = row.original.driverResults;
-            const champion = drivers.filter((driver) => driver.position === 1)[0]?.driver;
+            const champion = drivers?.filter((driver) => driver.position === 1)[0]?.driver;
             return (
-                <Link href={champion.id ? `/drivers/${champion.id}` : ''} className="hover:text-primary flex items-center gap-2">
-                    {champion.nationality ? <FlagIcon nationality={champion.nationality} size={16} /> : null}
-                    {champion.name} {champion.surname}
-                </Link>
+                champion && (
+                    <Link href={champion.id ? `/drivers/${champion.id}` : ''} className="hover:text-primary flex items-center gap-2">
+                        {champion.nationality ? <FlagIcon nationality={champion.nationality} size={16} /> : null}
+                        <span className="hidden md:block">
+                            {champion.name} {champion.surname}
+                        </span>
+                        <span className="block md:hidden">
+                            {champion.name[0].toUpperCase()}. {champion.surname}
+                        </span>
+                    </Link>
+                )
             );
         },
     },

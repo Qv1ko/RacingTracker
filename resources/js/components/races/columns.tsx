@@ -59,12 +59,21 @@ export const columns: ColumnDef<Race>[] = [
         header: () => <div className="hidden font-bold md:table-cell">2nd</div>,
         cell: ({ row }) => {
             const second = row.original.second ? row.original.second : undefined;
+            const secondTeam = second?.team ? second.team : null;
             return (
                 second && (
-                    <Link href={second.id ? `/drivers/${second.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
-                        {second.nationality ? <FlagIcon nationality={second.nationality} size={16} /> : null}
-                        {second.name[0].toUpperCase()}. {second.surname}
-                    </Link>
+                    <div>
+                        <Link href={second.id ? `/drivers/${second.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
+                            {second.nationality ? <FlagIcon nationality={second.nationality} size={16} /> : null}
+                            {second.name[0].toUpperCase()}. {second.surname}
+                        </Link>
+                        {secondTeam && (
+                            <Link href={`/teams/${secondTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                                {secondTeam.nationality ? <FlagIcon nationality={secondTeam.nationality} size={16} /> : null}
+                                {secondTeam.name}
+                            </Link>
+                        )}
+                    </div>
                 )
             );
         },
@@ -74,12 +83,21 @@ export const columns: ColumnDef<Race>[] = [
         header: () => <div className="hidden font-bold md:table-cell">3rd</div>,
         cell: ({ row }) => {
             const third = row.original.third ? row.original.third : undefined;
+            const thirdTeam = third?.team ? third.team : null;
             return (
                 third && (
-                    <Link href={third.id ? `/drivers/${third.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
-                        {third.nationality ? <FlagIcon nationality={third.nationality} size={16} /> : null}
-                        {third.name[0].toUpperCase()}. {third.surname}
-                    </Link>
+                    <div>
+                        <Link href={third.id ? `/drivers/${third.id}` : ''} className="hover:text-primary hidden items-center gap-2 md:flex">
+                            {third.nationality ? <FlagIcon nationality={third.nationality} size={16} /> : null}
+                            {third.name[0].toUpperCase()}. {third.surname}
+                        </Link>
+                        {thirdTeam && (
+                            <Link href={`/teams/${thirdTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                                {thirdTeam.nationality ? <FlagIcon nationality={thirdTeam.nationality} size={16} /> : null}
+                                {thirdTeam.name}
+                            </Link>
+                        )}
+                    </div>
                 )
             );
         },
