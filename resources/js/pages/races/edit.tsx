@@ -217,19 +217,23 @@ export default function CreateRaceForm({
                                                 <SelectValue placeholder="Select driver" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {drivers.sort().map((driver) => (
-                                                    <SelectItem
-                                                        key={driver.id}
-                                                        value={driver.id.toString()}
-                                                        disabled={isDriverDisabled(driver.id.toString())}
-                                                    >
-                                                        <FlagIcon
-                                                            nationality={driver.nationality ? driver.nationality.toString() : 'unknown'}
-                                                            size={16}
-                                                        />{' '}
-                                                        {driver.name[0].toUpperCase()}. {driver.surname}
-                                                    </SelectItem>
-                                                ))}
+                                                {drivers
+                                                    .sort((driverA, driverB) =>
+                                                        driverA.surname.toLowerCase().localeCompare(driverB.surname.toLowerCase()),
+                                                    )
+                                                    .map((driver) => (
+                                                        <SelectItem
+                                                            key={driver.id}
+                                                            value={driver.id.toString()}
+                                                            disabled={isDriverDisabled(driver.id.toString())}
+                                                        >
+                                                            <FlagIcon
+                                                                nationality={driver.nationality ? driver.nationality.toString() : 'unknown'}
+                                                                size={16}
+                                                            />{' '}
+                                                            {driver.name[0].toUpperCase()}. {driver.surname}
+                                                        </SelectItem>
+                                                    ))}
                                             </SelectContent>
                                         </Select>
                                         {errors['result.' + i + '.driver'] && (
@@ -253,15 +257,17 @@ export default function CreateRaceForm({
                                                 <SelectValue placeholder="Select team" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {teams.sort().map((team) => (
-                                                    <SelectItem key={team.id} value={team.id.toString()}>
-                                                        <FlagIcon
-                                                            nationality={team.nationality ? team.nationality.toString() : 'unknown'}
-                                                            size={16}
-                                                        />{' '}
-                                                        {team.name}
-                                                    </SelectItem>
-                                                ))}
+                                                {teams
+                                                    .sort((teamA, teamB) => teamA.name.toLowerCase().localeCompare(teamB.name.toLowerCase()))
+                                                    .map((team) => (
+                                                        <SelectItem key={team.id} value={team.id.toString()}>
+                                                            <FlagIcon
+                                                                nationality={team.nationality ? team.nationality.toString() : 'unknown'}
+                                                                size={16}
+                                                            />{' '}
+                                                            {team.name}
+                                                        </SelectItem>
+                                                    ))}
                                             </SelectContent>
                                         </Select>
                                         {errors['result.' + i + '.team'] && (
