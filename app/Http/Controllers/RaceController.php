@@ -131,61 +131,34 @@ class RaceController extends Controller
         $race = Race::findOrFail($id);
         $race->update($req->validated());
 
-        foreach ($req->result as $participationData) {
-            $participation = Participation::where('driver_id', $participationData['driver'])
-                ->where('race_id', $race->id);
+        $race->participations()->delete();
 
-            if ($participation) {
-                $participation->update([
-                    'team_id' => $participationData['team'],
-                    'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
-                    'status' => $participationData['position'],
-                    'points' => Participation::where('driver_id', $participationData['driver'])
-                        ->whereHas('race', function ($query) use ($race) {
-                            $query->where('date', '<', $race->date);
-                        })
-                        ->orderByDesc(Race::select('date')
-                            ->whereColumn('id', 'participations.race_id')
-                            ->limit(1))
-                        ->first()
-                        ?->points ?? Participation::$MU,
-                    'uncertainty' => Participation::where('driver_id', $participationData['driver'])
-                        ->whereHas('race', function ($query) use ($race) {
-                            $query->where('date', '<', $race->date);
-                        })
-                        ->orderByDesc(Race::select('date')
-                            ->whereColumn('id', 'participations.race_id')
-                            ->limit(1))
-                        ->first()
-                        ?->uncertainty ?? Participation::$SIGMA,
-                ]);
-            } else {
-                Participation::create([
-                    'driver_id' => $participationData['driver'],
-                    'team_id' => $participationData['team'],
-                    'race_id' => $race->id,
-                    'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
-                    'status' => $participationData['position'],
-                    'points' => Participation::where('driver_id', $participationData['driver'])
-                        ->whereHas('race', function ($query) use ($race) {
-                            $query->where('date', '<', $race->date);
-                        })
-                        ->orderByDesc(Race::select('date')
-                            ->whereColumn('id', 'participations.race_id')
-                            ->limit(1))
-                        ->first()
-                        ?->points ?? Participation::$MU,
-                    'uncertainty' => Participation::where('driver_id', $participationData['driver'])
-                        ->whereHas('race', function ($query) use ($race) {
-                            $query->where('date', '<', $race->date);
-                        })
-                        ->orderByDesc(Race::select('date')
-                            ->whereColumn('id', 'participations.race_id')
-                            ->limit(1))
-                        ->first()
-                        ?->uncertainty ?? Participation::$SIGMA,
-                ]);
-            }
+        foreach ($req->result as $participationData) {
+            Participation::create([
+                'driver_id' => $participationData['driver'],
+                'team_id' => $participationData['team'],
+                'race_id' => $race->id,
+                'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
+                'status' => $participationData['position'],
+                'points' => Participation::where('driver_id', $participationData['driver'])
+                    ->whereHas('race', function ($query) use ($race) {
+                        $query->where('date', '<', $race->date);
+                    })
+                    ->orderByDesc(Race::select('date')
+                        ->whereColumn('id', 'participations.race_id')
+                        ->limit(1))
+                    ->first()
+                    ?->points ?? Participation::$MU,
+                'uncertainty' => Participation::where('driver_id', $participationData['driver'])
+                    ->whereHas('race', function ($query) use ($race) {
+                        $query->where('date', '<', $race->date);
+                    })
+                    ->orderByDesc(Race::select('date')
+                        ->whereColumn('id', 'participations.race_id')
+                        ->limit(1))
+                    ->first()
+                    ?->uncertainty ?? Participation::$SIGMA,
+            ]);
         }
 
         Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
