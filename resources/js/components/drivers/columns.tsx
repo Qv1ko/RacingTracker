@@ -1,9 +1,9 @@
+import { ActionsColumn } from '@/components/drivers/actions-column';
 import { Badge } from '@/components/ui/badge';
 import FlagIcon from '@/components/ui/flag-icon';
 import { type Driver } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ActionsColumn } from './actionsColumn';
 
 export const columns: ColumnDef<Driver>[] = [
     {

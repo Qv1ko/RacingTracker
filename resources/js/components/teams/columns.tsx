@@ -1,9 +1,9 @@
+import { ActionsColumn } from '@/components/teams/actions-column';
 import { Badge } from '@/components/ui/badge';
 import FlagIcon from '@/components/ui/flag-icon';
 import { type Team } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ActionsColumn } from './actionsColumn';
 
 export const columns: ColumnDef<Team>[] = [
     {
