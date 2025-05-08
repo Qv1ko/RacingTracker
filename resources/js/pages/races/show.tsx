@@ -10,7 +10,7 @@ import { Flag } from 'lucide-react';
 export default function Races({ race }: { race: Race }) {
     return (
         <AppLayout>
-            <Head title="Race" />
+            <Head title={`${race.name} (${new Date(race.date).toLocaleDateString('en-GB')})`} />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-center">
                     <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start">
@@ -20,7 +20,7 @@ export default function Races({ race }: { race: Race }) {
                         <div className="t ext-center sm:text-left">
                             <h2 className="text-2xl font-bold">{race.name}</h2>
                             <div className="flex items-center gap-2">
-                                <p>{new Date(race.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                <p>{new Date(race.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })}</p>
                             </div>
                         </div>
                     </div>

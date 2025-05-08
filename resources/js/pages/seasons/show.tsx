@@ -80,7 +80,7 @@ export default function Seasons({ season }: { season: Season }) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={'Season' + season.season} />
+            <Head title={'Season ' + season.season} />
             <div className="px-4 py-8">
                 <div className="flex justify-center">
                     <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start">
