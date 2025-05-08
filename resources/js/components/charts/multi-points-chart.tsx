@@ -86,6 +86,7 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                                     <ChartTooltipContent active={active} payload={formatted} label={label} coordinate={coordinate} offset={offset} />
                                 );
                             }}
+                            wrapperStyle={{ zIndex: 9999, pointerEvents: 'none' }}
                         />
                         {driverKeys.map((key, i) => (
                             <Line

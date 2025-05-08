@@ -50,6 +50,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({ title = 'P
                                     <ChartTooltipContent active={active} payload={formatted} label={label} coordinate={coordinate} offset={offset} />
                                 );
                             }}
+                            wrapperStyle={{ zIndex: 9999, pointerEvents: 'none' }}
                         />
 
                         <Line dataKey="points" type="linear" stroke="var(--color-primary)" strokeWidth={2} dot={false} />
