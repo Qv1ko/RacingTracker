@@ -87,14 +87,14 @@ class Driver extends Model
             });
     }
 
-    public function races(string $season = 'all'): int
+    public function races(string $season = 'all'): Collection
     {
-        return $this->participations()
-            ->toBase()
-            ->join('races', 'participations.race_id', '=', 'races.id')
+        return Race::join('participations', 'participations.race_id', '=', 'races.id')
+            ->where('participations.driver_id', $this->id)
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
-            ->distinct('participations.race_id')
-            ->count('participations.race_id');
+            ->orderBy('races.date', 'asc')
+            ->distinct('races.id')
+            ->get(['races.*']);
     }
 
     public function activity(string $season = 'all'): Collection
@@ -141,37 +141,51 @@ class Driver extends Model
             ->values();
     }
 
-    public function wins(string $season = 'all'): int
+    public function wins(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 1)
+            ->orderBy('races.date', 'asc')
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
     }
 
-    public function secondPositions(string $season = 'all'): int
+    public function secondPositions(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 2)
+            ->orderBy('races.date', 'asc')
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
     }
 
-    public function thirdPositions(string $season = 'all'): int
+    public function thirdPositions(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 3)
+            ->orderBy('races.date', 'asc')
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
+    }
+
+    public function podiums(string $season = 'all'): Collection
+    {
+        return $this->participations()
+            ->join('races', 'participations.race_id', '=', 'races.id')
+            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->where('position', '<=', 3)
+            ->orderBy('races.date', 'asc')
+            ->distinct('participations.race_id')
+            ->get();
     }
 
     public function pointsHistory(string $season = 'all'): Collection
@@ -185,7 +199,7 @@ class Driver extends Model
             ->get();
     }
 
-    public function lastPoints(string $season = 'all'): string | null
+    public function lastPoints(string $season = 'all'): float | null
     {
         $points = $this->participations()
             ->toBase()

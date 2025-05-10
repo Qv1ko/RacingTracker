@@ -39,10 +39,10 @@ class DriverController extends Controller
                 'nationality' => $driver->nationality,
                 'status' => $driver->status,
                 'teams' => $driver->teams($season),
-                'races' => $driver->races($season),
-                'wins' => $driver->wins($season),
-                'second_positions' => $driver->secondPositions($season),
-                'third_positions' => $driver->thirdPositions($season),
+                'races' => $driver->races($season)->count(),
+                'wins' => $driver->wins($season)->count(),
+                'second_positions' => $driver->secondPositions($season)->count(),
+                'third_positions' => $driver->thirdPositions($season)->count(),
                 'points' => $driver->lastPoints($season),
             ];
         });
