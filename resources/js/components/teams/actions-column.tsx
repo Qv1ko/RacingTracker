@@ -22,7 +22,7 @@ export const ActionsColumn: ColumnDef<Team> = {
         };
 
         const handleDestroy = (id: number) => {
-            if (confirm('Are you sure you want to delete this team?')) {
+            if (confirm(`Are you sure you want to delete the ${row.original.name} team?`)) {
                 router.delete(route('teams.destroy', id));
             }
         };

@@ -22,7 +22,7 @@ export const ActionsColumn: ColumnDef<Driver> = {
         };
 
         const handleDestroy = (id: number) => {
-            if (confirm('Are you sure you want to delete this driver?')) {
+            if (confirm(`Are you sure you want to delete the driver ${row.original.name} ${row.original.surname}?`)) {
                 router.delete(route('drivers.destroy', id));
             }
         };
@@ -40,7 +40,7 @@ export const ActionsColumn: ColumnDef<Driver> = {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem onClick={() => handleEdit(row.original.id)} className="cursor-pointer">
-                            <Pencil /> Update
+                            <Pencil /> Update {row.original.name}
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleDestroy(row.original.id)} className="cursor-pointer">
                             <Trash /> Delete
