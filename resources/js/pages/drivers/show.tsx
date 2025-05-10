@@ -2,13 +2,14 @@ import { ActivityChart } from '@/components/charts/activity-chart';
 import { PositionsChart } from '@/components/charts/positions-chart';
 import { SinglePointsChart } from '@/components/charts/single-points-chart';
 import { Icon } from '@/components/icon';
+import InfoGrid from '@/components/info-grid';
+import StatCard from '@/components/stat-card';
 import FlagIcon from '@/components/ui/flag-icon';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { HelmetIconNode } from '@/lib/utils';
 import { Driver, type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Users } from 'lucide-react';
+import { Trophy, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,6 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Drivers({ driver }: { driver: Driver }) {
+    console.log(driver);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={driver.name + ' ' + driver.surname} />
@@ -42,24 +44,12 @@ export default function Drivers({ driver }: { driver: Driver }) {
                 </div>
                 <div className="flex h-full flex-1 flex-col gap-4 rounded-sm">
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
+                        <StatCard mainValue={driver.seasons || 0} label="Seasons active" />
+                        <StatCard mainValue={driver.championshipsCount || 0} subValue={driver.seasons} label="Championships" />
+                        <StatCard mainValue={driver.races || 0} label="Races" />
+                        <StatCard mainValue={driver.wins || 0} subValue={driver.races} label="Wins" />
+                        <StatCard mainValue={driver.points?.toFixed(3) || 0} label="Points" />
+                        <StatCard mainValue={driver.maxPoints?.toFixed(3) || 0} label="Max points" />
                     </div>
                     {driver.activity && (
                         <ActivityChart
@@ -72,14 +62,83 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             }}
                         />
                     )}
-                    <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                    {driver.info && (
+                        <div>
+                            <InfoGrid
+                                data={[
+                                    {
+                                        key: 'First race',
+                                        value: driver.info.firstRace && (
+                                            <Link
+                                                href={`/races/${driver.info.firstRace.id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >{`${driver.info.firstRace.name} (${new Date(driver.info.firstRace.date).toLocaleDateString('en-GB')})`}</Link>
+                                        ),
+                                    },
+                                    {
+                                        key: 'Last race',
+                                        value: driver.info.lastRace && (
+                                            <Link href={`/races/${driver.info.lastRace.id}`} className="hover:text-primary flex items-center gap-2">
+                                                {`${driver.info.lastRace.name} (${new Date(driver.info.lastRace.date).toLocaleDateString('en-GB')})`}
+                                            </Link>
+                                        ),
+                                    },
+                                    {
+                                        key: 'First win',
+                                        value: driver.info.firstWin && (
+                                            <Link
+                                                href={`/races/${driver.info.firstWin.id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >{`${driver.info.firstWin.name} (${new Date(driver.info.firstWin.date).toLocaleDateString('en-GB')})`}</Link>
+                                        ),
+                                    },
+                                    {
+                                        key: 'Last win',
+                                        value: driver.info.lastWin && (
+                                            <Link
+                                                href={`/races/${driver.info.lastWin.id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >{`${driver.info.lastWin.name} (${new Date(driver.info.lastWin.date).toLocaleDateString('en-GB')})`}</Link>
+                                        ),
+                                    },
+                                    {
+                                        key: 'Wins',
+                                        value: <>{driver.wins || 0}</>,
+                                    },
+                                    {
+                                        key: 'Win percentage',
+                                        value: <>{driver.info.winPercentage || 0}%</>,
+                                    },
+                                    {
+                                        key: 'Podiums',
+                                        value: <>{driver.info.podiums || 0}</>,
+                                    },
+                                    {
+                                        key: 'Podium percentage',
+                                        value: <>{driver.info.podiumPercentage || 0}%</>,
+                                    },
+                                    {
+                                        key: 'Without position',
+                                        value: driver.info.withoutPosition > 0 && <>{driver.info.withoutPosition}</>,
+                                    },
+                                    {
+                                        key: 'Championships',
+                                        value: driver.info.championships && (
+                                            <div className="flex flex-wrap gap-2">
+                                                {driver.info.championships.map((championship) => (
+                                                    <Link key={championship} href={`/seasons/${championship}`} className="hover:text-primary">
+                                                        <span className="flex items-center gap-1">
+                                                            <Trophy stroke="black" fill="gold" size={16} /> {championship}
+                                                        </span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        ),
+                                    },
+                                ]}
+                            />
                         </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                    </div>
+                    )}
                     {driver.pointsHistory && <SinglePointsChart data={driver.pointsHistory} />}
                     <table key="seasons"></table>
                     {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}

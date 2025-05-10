@@ -58,6 +58,10 @@ class DriverController extends Controller
     {
         $driver = Driver::findOrFail($id);
 
+        $racesCount = $driver->races()->count();
+        $winsCount = $driver->wins()->count();
+        $podiumsCount = $driver->podiums()->count();
+
         $driver =  [
             'id' => $driver->id,
             'name' => $driver->name,
@@ -65,15 +69,32 @@ class DriverController extends Controller
             'nationality' => $driver->nationality,
             'status' => $driver->status,
             'teams' => $driver->teams(),
-            'races' => $driver->races(),
-            'wins' => $driver->wins(),
+            'races' => $racesCount,
+            'wins' => $winsCount,
             'second_positions' => $driver->secondPositions(),
             'third_positions' => $driver->thirdPositions(),
-            'primaryStats' => [],
-            'secondaryStats' => [],
+            'seasons' => $driver->seasons()->count(),
+            'championshipsCount' => $driver->championships()?->count() ?? 0,
+            'points' => $driver->lastPoints(),
+            'maxPoints' => $driver->pointsHistory()->max('points'),
             'activity' => $driver->activity(),
-            'seasons' => [],
-            'racesWon' => [],
+            'info' => [
+                'firstRace' => $driver->races()->first(),
+                'lastRace' => $driver->races()->last(),
+                'firstWin' => $driver->wins()->first(),
+                'lastWin' => $driver->wins()->last(),
+                'winPercentage' => $racesCount > 0
+                    ? round($winsCount / $racesCount * 100, 2)
+                    : null,
+                'podiums' => $podiumsCount,
+                'podiumPercentage' => $racesCount > 0
+                    ? round($podiumsCount / $racesCount * 100, 2)
+                    : null,
+                'withoutPosition' => $driver->participations()
+                    ->where('position', null)
+                    ->count(),
+                'championships' => $driver->championships(),
+            ],
             'pointsHistory' => $driver->pointsHistory(),
             'positionsHistory' => $driver->countForPosition(),
             'teammates' => $driver->teammates(),

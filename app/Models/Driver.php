@@ -23,6 +23,29 @@ class Driver extends Model
         return $this->hasMany(Participation::class);
     }
 
+    public function championships(): Collection|null
+    {
+        $seasons = $this->seasons()->filter(function ($season) {
+            return Participation::seasonDriversClasification($season)
+                ->contains(function ($item) {
+                    return $item['position'] === 1 && $item['driver']->id === $this->id;
+                });
+        })->values();
+
+        return $seasons->isEmpty() ? null : $seasons;
+    }
+
+    public function seasons(): Collection
+    {
+        return $this->participations()
+            ->with('race')
+            ->get()
+            ->map(function ($participation) {
+                return $participation->race->season();
+            })
+            ->unique();
+    }
+
     public function teams(string $season = 'all'): Collection
     {
         return $this->participations()

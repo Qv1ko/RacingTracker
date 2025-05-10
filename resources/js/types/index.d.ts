@@ -55,11 +55,21 @@ export interface Driver {
     third_positions?: number;
     points?: number;
     // show
-    primaryStats?: DriverStat[];
-    secondaryStats?: DriverStat[];
+    seasons?: number;
+    championshipsCount?: number;
+    maxPoints?: number;
     activity?: { status: string; race_id: number; name: string; date: string }[];
-    seasons?: string[];
-    racesWon?: number[];
+    info?: {
+        firstRace?: Race;
+        lastRace?: Race;
+        firstWin?: Race;
+        lastWin?: Race;
+        winPercentage: number;
+        podiums: number;
+        podiumPercentage: number;
+        withoutPosition: number;
+        championships: string[];
+    };
     pointsHistory?: { race: string; points: number }[];
     positionsHistory?: { position: string; times: number }[];
     teammates?: Driver[];
