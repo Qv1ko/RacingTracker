@@ -4,6 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Qv1ko" />
+    <!-- <meta name="description" content="" /> -->
+
+    <meta name="robots" content="index, follow" />
+
+    <!-- <meta property="og:title" content="" />
+    <meta property="og:description" content= />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" /> -->
+
+    <!-- <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" /> -->
 
     {{-- Inline script to detect system dark mode preference and apply it immediately --}}
     <script>
