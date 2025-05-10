@@ -1,7 +1,7 @@
+import FlagIcon from '@/components/ui/flag-icon';
 import { type Race } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import FlagIcon from '../ui/flag-icon';
 
 export const columns: ColumnDef<NonNullable<Race['teamStandings']>[number]>[] = [
     {

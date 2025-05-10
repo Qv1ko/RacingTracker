@@ -1,8 +1,8 @@
 import { MultiPointsChart } from '@/components/charts/multi-points-chart';
 import { DataTable } from '@/components/data-table';
+import { columns as driverStandingsColumns } from '@/components/drivers/driver-standings-columns';
 import { Icon } from '@/components/icon';
-import { columns as driverStandingsColumns } from '@/components/races/driver-standings-columns';
-import { columns as teamStandingsColumns } from '@/components/races/team-standings-columns';
+import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { HelmetIconNode } from '@/lib/utils';
