@@ -549,10 +549,6 @@ sudo nginx -t && sudo systemctl reload nginx
 
 8. You can now access the application at [https://ec2-public-ip-address](https://ec2-public-ip-address).
 
-## 🌐 Usage
-
-...
-
 ## 📄 License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/Qv1ko/RacingTracker/blob/main/LICENSE) for more information.
