@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/data-table';
-import { columns as driverStandingsColumns } from '@/components/races/driver-standings-columns';
+import { columns as driverStandingsColumns } from '@/components/drivers/driver-standings-columns';
 import { columns as resultColumns } from '@/components/races/result-columns';
-import { columns as teamStandingsColumns } from '@/components/races/team-standings-columns';
+import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
 import AppLayout from '@/layouts/app-layout';
 import { Race } from '@/types';
 import { Head } from '@inertiajs/react';
