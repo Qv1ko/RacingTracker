@@ -8,7 +8,7 @@ interface StatCardProps {
 
 export default function StatCard({ mainValue, subValue, label }: StatCardProps) {
     return (
-        <Card className="border-0">
+        <Card className="border">
             <CardContent className="flex flex-col items-center justify-center p-6 text-center">
                 <div className="flex items-baseline">
                     <span className="text-primary text-4xl font-bold">{mainValue}</span>

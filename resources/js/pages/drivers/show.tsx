@@ -128,7 +128,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                                 {driver.info.championships.map((championship) => (
                                                     <Link key={championship} href={`/seasons/${championship}`} className="hover:text-primary">
                                                         <span className="flex items-center gap-1">
-                                                            <Trophy stroke="black" fill="gold" size={16} /> {championship}
+                                                            <Trophy stroke="gold" fill="gold" size={16} /> {championship}
                                                         </span>
                                                     </Link>
                                                 ))}
