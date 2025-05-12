@@ -71,8 +71,6 @@ class DriverController extends Controller
             'teams' => $driver->teams(),
             'races' => $racesCount,
             'wins' => $winsCount,
-            'second_positions' => $driver->secondPositions(),
-            'third_positions' => $driver->thirdPositions(),
             'seasons' => $driver->seasons()->count(),
             'championshipsCount' => $driver->championships()?->count() ?? 0,
             'points' => $driver->lastPoints(),
