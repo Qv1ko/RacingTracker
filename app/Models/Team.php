@@ -72,14 +72,15 @@ class Team extends Model
             ->values();
     }
 
-    public function races(string $season = 'all'): int
+    public function races(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->orderBy('races.date', 'asc')
             ->distinct('participations.race_id')
-            ->count('participations.race_id');
+            ->get(['races.*']);
     }
 
     public function countForPosition(string $season = 'all'): Collection
@@ -115,7 +116,7 @@ class Team extends Model
             ->values();
     }
 
-    public function wins(string $season = 'all'): int
+    public function wins(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
@@ -123,10 +124,10 @@ class Team extends Model
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 1)
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
     }
 
-    public function secondPositions(string $season = 'all'): int
+    public function secondPositions(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
@@ -134,10 +135,10 @@ class Team extends Model
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 2)
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
     }
 
-    public function thirdPositions(string $season = 'all'): int
+    public function thirdPositions(string $season = 'all'): Collection
     {
         return $this->participations()
             ->toBase()
@@ -231,7 +232,7 @@ class Team extends Model
         }
     }
 
-    public function lastPoints(string $season = 'all'): string | null
+    public function lastPoints(string $season = 'all'): float | null
     {
         $participations = $this->participations()->with('race')->get();
 

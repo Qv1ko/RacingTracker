@@ -38,10 +38,10 @@ class TeamController extends Controller
                 'nationality' => $team->nationality,
                 'status' => $team->status,
                 'drivers' => $team->drivers($season),
-                'races' => $team->races($season),
-                'wins' => $team->wins($season),
-                'second_positions' => $team->secondPositions($season),
-                'third_positions' => $team->thirdPositions($season),
+                'races' => $team->races($season)->count(),
+                'wins' => $team->wins($season)->count(),
+                'second_positions' => $team->secondPositions($season)->count(),
+                'third_positions' => $team->thirdPositions($season)->count(),
                 'points' => $team->lastPoints($season),
             ];
         });

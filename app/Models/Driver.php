@@ -23,7 +23,7 @@ class Driver extends Model
         return $this->hasMany(Participation::class);
     }
 
-    public function championships(): Collection|null
+    public function championships(): Collection | null
     {
         $seasons = $this->seasons()->filter(function ($season) {
             return Participation::seasonDriversClasification($season)
