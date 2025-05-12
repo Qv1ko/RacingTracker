@@ -70,7 +70,7 @@ export interface Driver {
         withoutPosition: number;
         championships: string[];
     };
-    pointsHistory?: { race: string; points: number }[];
+    pointsHistory?: { race: string; date: string; points: number }[];
     positionsHistory?: { position: string; times: number }[];
     teammates?: Driver[];
 }
@@ -130,13 +130,28 @@ export interface Team {
     nationality: string;
     status: boolean;
     // index
-    drivers?: Driver[];
     races?: number;
     wins?: number;
     second_positions?: number;
     third_positions?: number;
     points?: number;
     // show
-    pointsHistory?: { race: string; points: number }[];
+    seasons?: number;
+    championshipsCount?: number;
+    maxPoints?: number;
+    activity?: { status: string; race_id: number; name: string; date: string }[];
+    info?: {
+        firstRace?: Race;
+        lastRace?: Race;
+        firstWin?: Race;
+        lastWin?: Race;
+        winPercentage: number;
+        podiums: number;
+        podiumPercentage: number;
+        withoutPosition: number;
+        championships: string[];
+    };
+    pointsHistory?: { race: string; date: string; points: number }[];
     positionsHistory?: { position: string; times: number }[];
+    drivers?: Driver[];
 }

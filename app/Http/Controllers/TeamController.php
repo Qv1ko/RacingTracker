@@ -57,15 +57,38 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 
+        $racesCount = $team->races()->count();
+        $winsCount = $team->wins()->count();
+        $podiumsCount = $team->podiums()->count();
+
         $team = [
             'id' => $team->id,
             'name' => $team->name,
             'nationality' => $team->nationality,
             'status' => $team->status,
-            'races' => $team->races(),
-            'wins' => $team->wins(),
-            'second_positions' => $team->secondPositions(),
-            'third_positions' => $team->thirdPositions(),
+            'races' => $racesCount,
+            'wins' => $winsCount,
+            'seasons' => $team->seasons()->count(),
+            'championshipsCount' => $team->championships()?->count() ?? 0,
+            'points' => $team->lastPoints(),
+            'maxPoints' => $team->pointsHistory()->max('points'),
+            'info' => [
+                'firstRace' => $team->races()->first(),
+                'lastRace' => $team->races()->last(),
+                'firstWin' => $team->wins()->first(),
+                'lastWin' => $team->wins()->last(),
+                'winPercentage' => $racesCount > 0
+                    ? round($winsCount / $racesCount * 100, 2)
+                    : null,
+                'podiums' => $podiumsCount,
+                'podiumPercentage' => $racesCount > 0
+                    ? round($podiumsCount / $racesCount * 100, 2)
+                    : null,
+                'withoutPosition' => $team->participations()
+                    ->where('position', null)
+                    ->count(),
+                'championships' => $team->championships(),
+            ],
             'pointsHistory' => $team->pointsHistory(),
             'positionsHistory' => $team->countForPosition(),
             'drivers' => $team->drivers(),

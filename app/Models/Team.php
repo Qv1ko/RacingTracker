@@ -22,6 +22,29 @@ class Team extends Model
         return $this->hasMany(Participation::class);
     }
 
+    public function championships(): Collection | null
+    {
+        $seasons = $this->seasons()->filter(function ($season) {
+            return Participation::seasonTeamsClasification($season)
+                ->contains(function ($item) {
+                    return $item['position'] === 1 && $item['team']->id === $this->id;
+                });
+        })->values();
+
+        return $seasons->isEmpty() ? null : $seasons;
+    }
+
+    public function seasons(): Collection
+    {
+        return $this->participations()
+            ->with('race')
+            ->get()
+            ->map(function ($participation) {
+                return $participation->race->season();
+            })
+            ->unique();
+    }
+
     public function drivers(string $season = 'all'): Collection
     {
         return $this->participations()
@@ -122,7 +145,18 @@ class Team extends Model
             ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
             ->where('position', 3)
             ->distinct('race_id')
-            ->count('race_id');
+            ->get();
+    }
+
+    public function podiums(string $season = 'all'): Collection
+    {
+        return $this->participations()
+            ->join('races', 'participations.race_id', '=', 'races.id')
+            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->where('position', '<=', 3)
+            ->orderBy('races.date', 'asc')
+            ->distinct('participations.race_id')
+            ->get();
     }
 
     public function pointsHistory(string $season = 'all'): Collection
