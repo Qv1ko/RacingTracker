@@ -82,8 +82,17 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                                     }),
                                 }));
 
+                                const raceData = sortedData.find((race) => race.race === label);
+                                const raceDate = new Date(raceData?.date ?? '').toLocaleDateString('en-GB') || '';
+
                                 return (
-                                    <ChartTooltipContent active={active} payload={formatted} label={label} coordinate={coordinate} offset={offset} />
+                                    <ChartTooltipContent
+                                        active={active}
+                                        payload={formatted}
+                                        label={`${label} (${raceDate})`}
+                                        coordinate={coordinate}
+                                        offset={offset}
+                                    />
                                 );
                             }}
                             wrapperStyle={{ zIndex: 9999, pointerEvents: 'none' }}
