@@ -24,7 +24,7 @@ export const ActionsColumn: ColumnDef<Race> = {
         const handleDestroy = (id: number) => {
             if (
                 confirm(
-                    `Are you sure you want to delete the ${row.original.name} race held on ${new Date(row.original.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })}?`,
+                    `Are you sure you want to delete the ${row.original.name} race held on ${new Date(row.original.date).toLocaleDateString('en-GB')}?`,
                 )
             ) {
                 router.delete(route('races.destroy', id));

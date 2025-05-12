@@ -20,7 +20,7 @@ export default function Races({ race }: { race: Race }) {
                         <div className="t ext-center sm:text-left">
                             <h2 className="text-2xl font-bold">{race.name}</h2>
                             <div className="flex items-center gap-2">
-                                <p>{new Date(race.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })}</p>
+                                <p>{new Date(race.date).toLocaleDateString('en-GB')}</p>
                             </div>
                         </div>
                     </div>
