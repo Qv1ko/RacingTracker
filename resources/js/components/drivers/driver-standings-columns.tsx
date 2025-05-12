@@ -19,10 +19,10 @@ export const columns: ColumnDef<NonNullable<Race['driverStandings']>[number]>[] 
             return (
                 <Link href={`/drivers/${driver.id}`} className="hover:text-primary flex items-center gap-2 font-medium">
                     <FlagIcon nationality={driver.nationality ? driver.nationality : 'unknown'} size={16} />{' '}
-                    <span className="hidden md:block">
+                    <span className="hidden lg:block">
                         {driver.name} {driver.surname}
                     </span>
-                    <span className="block md:hidden">
+                    <span className="block lg:hidden">
                         {driver.name[0].toUpperCase()}. {driver.surname}
                     </span>{' '}
                 </Link>
