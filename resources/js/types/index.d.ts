@@ -107,6 +107,7 @@ export interface Race {
     }[];
     driverStandings?: { position: string; driver: Driver; points: number; gap: number }[];
     teamStandings?: { position: string; team: Team; points: number; gap: number }[];
+    more?: Race[];
 }
 
 export interface Season {

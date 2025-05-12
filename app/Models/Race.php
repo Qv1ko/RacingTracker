@@ -37,6 +37,12 @@ class Race extends Model
         return Carbon::parse($this->date)->format('Y');
     }
 
+    public function more(): Collection
+    {
+        return Race::where('name', 'LIKE', $this->name)->where('id', '!=', $this->id)
+            ->get();
+    }
+
     public function participant(int $position): Object | null
     {
         return  $this->participations()

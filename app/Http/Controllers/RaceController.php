@@ -54,6 +54,8 @@ class RaceController extends Controller
     {
         $race = Race::findOrFail($id);
 
+        $more = $race->more();
+
         $data = [
             'id' => $race->id,
             'name' => $race->name,
@@ -61,6 +63,17 @@ class RaceController extends Controller
             'result' => Participation::raceResult($race->id),
             'driverStandings' => Participation::raceDriverStandings($race->id),
             'teamStandings' => Participation::raceTeamStandings($race->id),
+            'more' => $more->map(function ($race) {
+                return [
+                    'id' => $race->id,
+                    'name' => $race->name,
+                    'date' => $race->date,
+                    'winner' => $race->participant(1),
+                    'second' => $race->participant(2),
+                    'third' => $race->participant(3),
+                    'better' => $race->better(),
+                ];
+            }),
         ];
 
         return Inertia::render('races/show', ['race' => $data]);

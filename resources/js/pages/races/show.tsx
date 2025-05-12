@@ -1,5 +1,6 @@
 import { DataTable } from '@/components/data-table';
 import { columns as driverStandingsColumns } from '@/components/drivers/driver-standings-columns';
+import { columns as moreColumns } from '@/components/races/more-columns';
 import { columns as resultColumns } from '@/components/races/result-columns';
 import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
 import AppLayout from '@/layouts/app-layout';
@@ -8,6 +9,7 @@ import { Head } from '@inertiajs/react';
 import { Flag } from 'lucide-react';
 
 export default function Races({ race }: { race: Race }) {
+    console.log(race);
     return (
         <AppLayout>
             <Head title={`${race.name} (${new Date(race.date).toLocaleDateString('en-GB')})`} />
@@ -30,12 +32,17 @@ export default function Races({ race }: { race: Race }) {
                     {race.driverStandings && <DataTable columns={driverStandingsColumns} data={race.driverStandings} />}
                     {race.teamStandings && <DataTable columns={teamStandingsColumns} data={race.teamStandings} />}
                 </div>
-                <div className="flex items-center justify-center gap-2">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full">
-                        <Flag className="h-8 w-8" />
-                    </div>
-                    <h3 className="text-xl font-semibold">More {race.name}</h3>
-                </div>
+                {race.more && race.more.length > 0 && (
+                    <>
+                        <div className="mb-4 flex items-center justify-center gap-2">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full">
+                                <Flag className="h-8 w-8" />
+                            </div>
+                            <h3 className="text-xl font-semibold">More {race.name}</h3>
+                        </div>
+                        <DataTable columns={moreColumns} data={race.more} />
+                    </>
+                )}
             </div>
         </AppLayout>
     );
