@@ -1,15 +1,13 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('home');
-})->name('home');
+Route::resource('/', HomeController::class)->only(['index']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('drivers', DriverController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);

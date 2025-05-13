@@ -1,7 +1,17 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { router } from '@inertiajs/react';
 
-export const SelectSeason = ({ seasons, selectedValue, url }: { seasons: string[]; selectedValue: string; url: string }) => {
+export const SelectSeason = ({
+    all = true,
+    seasons,
+    selectedValue,
+    url,
+}: {
+    all?: boolean;
+    seasons: string[];
+    selectedValue: string;
+    url: string;
+}) => {
     const handleSelectChange = (season: string) => {
         router.get(url + `?season=${season}`);
     };
@@ -14,9 +24,11 @@ export const SelectSeason = ({ seasons, selectedValue, url }: { seasons: string[
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectItem key="select-all" value="all">
-                            All seasons
-                        </SelectItem>
+                        {all && (
+                            <SelectItem key="select-all" value="all">
+                                All seasons
+                            </SelectItem>
+                        )}
                         {seasons.map((season) => (
                             <SelectItem key={'select-' + season} value={season}>
                                 {season}
