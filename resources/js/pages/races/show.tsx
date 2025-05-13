@@ -9,7 +9,6 @@ import { Head } from '@inertiajs/react';
 import { Flag } from 'lucide-react';
 
 export default function Races({ race }: { race: Race }) {
-    console.log(race);
     return (
         <AppLayout>
             <Head title={`${race.name} (${new Date(race.date).toLocaleDateString('en-GB')})`} />

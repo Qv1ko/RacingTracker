@@ -18,8 +18,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Teams({ team }: { team: Team }) {
-    console.log('team', team);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={team.name} />
@@ -107,6 +105,10 @@ export default function Teams({ team }: { team: Team }) {
                                     {
                                         key: 'Without position',
                                         value: team.info.withoutPosition > 0 && <>{team.info.withoutPosition}</>,
+                                    },
+                                    {
+                                        key: 'Teams ranking position',
+                                        value: team.info.raking && <>{team.info.raking.position}</>,
                                     },
                                     {
                                         key: 'Championships',

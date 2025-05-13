@@ -19,7 +19,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Drivers({ driver }: { driver: Driver }) {
-    console.log(driver);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={driver.name + ' ' + driver.surname} />
@@ -120,6 +119,10 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     {
                                         key: 'Without position',
                                         value: driver.info.withoutPosition > 0 && <>{driver.info.withoutPosition}</>,
+                                    },
+                                    {
+                                        key: 'Drivers ranking position',
+                                        value: driver.info.raking && <>{driver.info.raking.position}</>,
                                     },
                                     {
                                         key: 'Championships',
