@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
 use Illuminate\Support\Facades\DB;
+use App\Models\Participation;
 
 class TeamController extends Controller
 {
@@ -87,6 +88,7 @@ class TeamController extends Controller
                 'withoutPosition' => $team->participations()
                     ->where('position', null)
                     ->count(),
+                'raking' => Participation::teamsRanking()->firstWhere('team_id', $team->id),
                 'championships' => $team->championships(),
             ],
             'pointsHistory' => $team->pointsHistory(),

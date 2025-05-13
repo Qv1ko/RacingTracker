@@ -9,6 +9,7 @@ use App\Models\Race;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Models\Participation;
 
 class DriverController extends Controller
 {
@@ -91,6 +92,7 @@ class DriverController extends Controller
                 'withoutPosition' => $driver->participations()
                     ->where('position', null)
                     ->count(),
+                'raking' => Participation::driversRanking()->firstWhere('driver_id', $driver->id),
                 'championships' => $driver->championships(),
             ],
             'pointsHistory' => $driver->pointsHistory(),

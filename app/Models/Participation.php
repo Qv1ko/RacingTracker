@@ -132,6 +132,23 @@ class Participation extends Model
             });
     }
 
+    public static function driversRanking(): Collection
+    {
+        return Driver::whereHas('participations')
+            ->get()
+            ->map(function ($driver) {
+                return [
+                    'driver_id' => $driver->id,
+                    'points'    => $driver->lastPoints(),
+                ];
+            })
+            ->sortByDesc('points')
+            ->values()
+            ->map(function ($item, $key) {
+                $item['position'] = $key + 1;
+                return $item;
+            });
+    }
 
     public static function raceDriverStandings(string $raceId): Collection
     {
@@ -157,11 +174,29 @@ class Participation extends Model
         return $participations->values()
             ->map(function ($participation, $index) use ($maxPoints) {
                 return [
-                    'posicion' => $index + 1,
+                    'position' => $index + 1,
                     'driver' => $participation->driver,
                     'points' => $participation->points,
                     'gap' => $participation->points - $maxPoints
                 ];
+            });
+    }
+
+    public static function teamsRanking(): Collection
+    {
+        return Team::whereHas('participations')
+            ->get()
+            ->map(function ($team) {
+                return [
+                    'team_id' => $team->id,
+                    'points'    => $team->lastPoints(),
+                ];
+            })
+            ->sortByDesc('points')
+            ->values()
+            ->map(function ($item, $key) {
+                $item['position'] = $key + 1;
+                return $item;
             });
     }
 
@@ -201,7 +236,7 @@ class Participation extends Model
 
         return $teams->map(function ($team, $index) use ($maxPoints) {
             return [
-                'posicion' => $index + 1,
+                'position' => $index + 1,
                 'team' => $team['team'],
                 'points' => $team['points'],
                 'gap' => $team['points'] - $maxPoints,
