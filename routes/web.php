@@ -7,7 +7,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('/', HomeController::class)->only(['index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('drivers', DriverController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
