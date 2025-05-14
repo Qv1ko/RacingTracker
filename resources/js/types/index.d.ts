@@ -116,14 +116,21 @@ export interface Season {
     // index
     driverResults?: { position: number; driver: Driver; pointsDiff: number; points: number; startingPoints: number }[];
     teamResults?: { position: number; team: Team; pointsDiff: number; points: number; startingPoints: number }[];
-    races?: number;
+    racesCount?: number;
     drivers?: number;
     teams?: number;
     // show
+    info: {
+        firstRace?: Race;
+        lastRace?: Race;
+        mostWins?: { driver_id: number; driver: Driver; wins: number }[];
+        mostPodiums?: { driver_id: number; driver: Driver; podiums: number }[];
+    };
     driverStandings?: { position: string; driver: Driver; points: number; gap: number }[];
     driversPoints: { driver: Driver; pointsHistory: { race: string; date: string; points: number }[] }[];
     teamStandings?: { position: string; team: Team; points: number; gap: number }[];
     teamsPoints?: { team: Team; pointsHistory: { race: string; date: string; points: number }[] }[];
+    races: Race[];
 }
 
 export interface Team {

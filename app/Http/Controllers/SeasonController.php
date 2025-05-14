@@ -7,6 +7,7 @@ use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class SeasonController extends Controller
 {
@@ -19,7 +20,7 @@ class SeasonController extends Controller
                 'season' => $season,
                 'driverResults' => Participation::seasonDriversClasification($season),
                 'teamResults' => Participation::seasonTeamsClasification($season),
-                'races' => Participation::seasonRaces($season),
+                'racesCount' => Participation::seasonRaces($season),
                 'drivers' => Participation::seasonDrivers($season),
                 'teams' => Participation::seasonTeams($season),
             ];
@@ -34,9 +35,33 @@ class SeasonController extends Controller
     {
         abort_if(!Race::seasons()->contains($season), 404);
 
-        $lastRace = Race::whereYear('date', $season)
-            ->orderBy('date', 'desc')
-            ->first();
+        $races = Race::whereYear('date', $season)
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $winners = Participation::whereHas('race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->where('position', 1)
+            ->select('driver_id', DB::raw('COUNT(*) as wins'))
+            ->with('driver')
+            ->groupBy('driver_id')
+            ->orderByDesc('wins')
+            ->get();
+
+        $maxVictories = $winners->first()->wins ?? 0;
+
+        $podiums = Participation::whereHas('race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->where('position', '<=', 3)
+            ->select('driver_id', DB::raw('COUNT(*) as podiums'))
+            ->with('driver')
+            ->groupBy('driver_id')
+            ->orderByDesc('podiums')
+            ->get();
+
+        $maxPodiums = $podiums->first()->podiums ?? 0;
 
         $driverSeasonPointsHistory = Driver::whereHas('participations.race', function ($query) use ($season) {
             $query->whereYear('date', $season);
@@ -62,12 +87,32 @@ class SeasonController extends Controller
 
         $data =  [
             'season' => $season,
-            'driverStandings' => Participation::raceDriverStandings($lastRace->id),
+            'info' => [
+                'firstRace' => $races->first(),
+                'lastRace' => $races->last(),
+                'mostWins' => $winners->where('wins', $maxVictories)->values(),
+                'mostPodiums' => $podiums->where('podiums', $maxPodiums)->values(),
+            ],
+            'driverStandings' => Participation::raceDriverStandings($races->last()->id),
             'driverResults' => Participation::seasonDriversClasification($season),
             'driversPoints' => $driverSeasonPointsHistory,
-            'teamStandings' => Participation::raceTeamStandings($lastRace->id),
+            'teamStandings' => Participation::raceTeamStandings($races->last()->id),
             'teamResults' => Participation::seasonTeamsClasification($season),
             'teamsPoints' => $teamSeasonPointsHistory,
+            'races' => Race::whereYear('date', $season)
+                ->orderBy('date', 'asc')
+                ->get()
+                ->map(function ($race) {
+                    return [
+                        'id' => $race->id,
+                        'name' => $race->name,
+                        'date' => $race->date,
+                        'winner' => $race->participant(1),
+                        'second' => $race->participant(2),
+                        'third' => $race->participant(3),
+                        'better' => $race->better(),
+                    ];
+                }),
         ];
 
         return Inertia::render('seasons/show', ['season' => $data]);

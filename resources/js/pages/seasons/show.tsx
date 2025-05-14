@@ -2,12 +2,14 @@ import { MultiPointsChart } from '@/components/charts/multi-points-chart';
 import { DataTable } from '@/components/data-table';
 import { columns as driverStandingsColumns } from '@/components/drivers/driver-standings-columns';
 import { Icon } from '@/components/icon';
+import InfoGrid from '@/components/info-grid';
+import { columns as racesColumns } from '@/components/seasons/races-columns';
 import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import FlagIcon from '@/components/ui/flag-icon';
 import AppLayout from '@/layouts/app-layout';
 import { HelmetIconNode } from '@/lib/utils';
 import { Season, type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { CalendarFold, Flag, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -93,14 +95,89 @@ export default function Seasons({ season }: { season: Season }) {
                     </div>
                 </div>
                 <div className="flex h-full flex-1 flex-col gap-4 rounded-sm">
-                    <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                        <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-sm border">
-                            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                        </div>
-                    </div>
+                    <InfoGrid
+                        data={[
+                            {
+                                key: 'First race',
+                                value: season.info.firstRace && (
+                                    <Link
+                                        href={`/races/${season.info.firstRace.id}`}
+                                        className="hover:text-primary flex items-center gap-2"
+                                    >{`${season.info.firstRace.name} (${new Date(season.info.firstRace.date).toLocaleDateString('en-GB')})`}</Link>
+                                ),
+                            },
+                            {
+                                key: 'Last race',
+                                value: season.info.lastRace && (
+                                    <Link href={`/races/${season.info.lastRace.id}`} className="hover:text-primary flex items-center gap-2">
+                                        {`${season.info.lastRace.name} (${new Date(season.info.lastRace.date).toLocaleDateString('en-GB')})`}
+                                    </Link>
+                                ),
+                            },
+                            {
+                                key: 'Most wins',
+                                value: season.info.mostWins && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {season.info.mostWins.map((item) => (
+                                            <Link
+                                                key={item.driver_id}
+                                                href={`/drivers/${item.driver_id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >
+                                                <FlagIcon nationality={item.driver.nationality ? item.driver.nationality : 'unkown'} size={16} />{' '}
+                                                {`${item.driver.name[0].toUpperCase()}. ${item.driver.surname}`}
+                                            </Link>
+                                        ))}
+                                        <>({season.info.mostWins[0].wins})</>
+                                    </div>
+                                ),
+                            },
+                            {
+                                key: 'Most podiums',
+                                value: season.info.mostPodiums && season.info.mostPodiums.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {season.info.mostPodiums.map((item) => (
+                                            <Link
+                                                key={item.driver_id}
+                                                href={`/drivers/${item.driver_id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >
+                                                <FlagIcon nationality={item.driver.nationality ? item.driver.nationality : 'unkown'} size={16} />{' '}
+                                                {`${item.driver.name[0].toUpperCase()}. ${item.driver.surname}`}
+                                            </Link>
+                                        ))}
+                                        <>({season.info.mostPodiums[0].podiums})</>
+                                    </div>
+                                ),
+                            },
+                            // {
+                            //     key: 'Most without position',
+                            //     value: <>{driver.wins || 0}</>,
+                            // },
+                            // {
+                            //     key: 'Races',
+                            //     value: <>{driver.info.winPercentage || 0}%</>,
+                            // },
+                            // {
+                            //     key: 'Champion driver',
+                            //     value: driver.info.podiums && (
+                            //         <Link
+                            //             href={`/drivers/${driver.info.podiums.id}`}
+                            //             className="hover:text-primary flex items-center gap-2"
+                            //         >{`${driver.info.podiums.name} (${new Date(driver.info.podiums.date).toLocaleDateString('en-GB')})`}</Link>
+                            //     ),
+                            // },
+                            // {
+                            //     key: 'Champion team',
+                            //     value: driver.info.podiums && (
+                            //         <Link
+                            //             href={`/teams/${driver.info.podiums.id}`}
+                            //             className="hover:text-primary flex items-center gap-2"
+                            //         >{`${driver.info.podiums.name} (${new Date(driver.info.podiums.date).toLocaleDateString('en-GB')})`}</Link>
+                            //     ),
+                            // },
+                        ]}
+                    />
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
                             <Icon iconNode={HelmetIconNode} className="h-8 w-8" />
@@ -123,6 +200,7 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Races</h3>
                     </div>
+                    <DataTable columns={racesColumns} data={season.races} />
                 </div>
             </div>
         </AppLayout>
