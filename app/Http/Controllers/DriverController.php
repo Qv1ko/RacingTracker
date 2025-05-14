@@ -92,7 +92,7 @@ class DriverController extends Controller
                 'withoutPosition' => $driver->participations()
                     ->where('position', null)
                     ->count(),
-                'raking' => Participation::driversRanking()->firstWhere('driver_id', $driver->id),
+                'raking' => Participation::driversRanking()->firstWhere('driver.id', $driver->id),
                 'championships' => $driver->championships(),
             ],
             'pointsHistory' => $driver->pointsHistory(),

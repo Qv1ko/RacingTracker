@@ -138,7 +138,7 @@ class Participation extends Model
             ->get()
             ->map(function ($driver) {
                 return [
-                    'driver_id' => $driver->id,
+                    'driver' => $driver,
                     'points'    => $driver->lastPoints(),
                 ];
             })
@@ -188,7 +188,7 @@ class Participation extends Model
             ->get()
             ->map(function ($team) {
                 return [
-                    'team_id' => $team->id,
+                    'team' => $team,
                     'points'    => $team->lastPoints(),
                 ];
             })

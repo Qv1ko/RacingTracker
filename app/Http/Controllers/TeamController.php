@@ -88,7 +88,7 @@ class TeamController extends Controller
                 'withoutPosition' => $team->participations()
                     ->where('position', null)
                     ->count(),
-                'raking' => Participation::teamsRanking()->firstWhere('team_id', $team->id),
+                'raking' => Participation::teamsRanking()->firstWhere('team.id', $team->id),
                 'championships' => $team->championships(),
             ],
             'pointsHistory' => $team->pointsHistory(),
