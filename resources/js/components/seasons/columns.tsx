@@ -56,7 +56,7 @@ export const columns: ColumnDef<Season>[] = [
         accessorKey: 'races',
         header: () => <div className="hidden font-bold sm:table-cell">Races</div>,
         cell: ({ row }) => {
-            return <p className="hidden sm:table-cell">{row.original.races}</p>;
+            return <p className="hidden sm:table-cell">{row.original.racesCount}</p>;
         },
     },
     {
