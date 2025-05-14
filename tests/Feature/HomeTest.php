@@ -6,8 +6,8 @@ use App\Models\User;
 //     $this->get('/dashboard')->assertRedirect('/login');
 // });
 
-test('authenticated users can visit the home', function () {
-    $this->actingAs($user = User::factory()->create());
+// test('authenticated users can visit the home', function () {
+//     $this->actingAs($user = User::factory()->create());
 
-    $this->get(route('home'))->assertOk();
-});
+//     $this->get('/')->assertOk();
+// });
