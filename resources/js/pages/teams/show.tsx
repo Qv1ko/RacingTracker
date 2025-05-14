@@ -5,7 +5,7 @@ import InfoGrid from '@/components/info-grid';
 import StatCard from '@/components/stat-card';
 import FlagIcon from '@/components/ui/flag-icon';
 import AppLayout from '@/layouts/app-layout';
-import { HelmetIconNode } from '@/lib/utils';
+import { HelmetIconNode, medal } from '@/lib/utils';
 import { Team, type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Trophy, Users } from 'lucide-react';
@@ -108,7 +108,11 @@ export default function Teams({ team }: { team: Team }) {
                                     },
                                     {
                                         key: 'Teams ranking position',
-                                        value: team.info.raking && <>{team.info.raking.position}</>,
+                                        value: team.info.raking && (
+                                            <>
+                                                {medal(team.info.raking.position)} {team.info.raking.position}
+                                            </>
+                                        ),
                                     },
                                     {
                                         key: 'Championships',

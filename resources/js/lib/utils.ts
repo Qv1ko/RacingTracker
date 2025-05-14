@@ -17,6 +17,10 @@ export const HelmetIconNode = createLucideIcon('DriverHelmet', [
     ['path', { d: 'm21.8 18-10.5-4a2 2.06 0 0 1 .7-4h9.8', key: 'visor-detail' }],
 ]);
 
+export const medal = (position: number) => {
+    return position === 1 ? '🥇' : position === 2 ? '🥈' : position === 3 ? '🥉' : '';
+};
+
 interface Status {
     type: string;
     value: boolean;

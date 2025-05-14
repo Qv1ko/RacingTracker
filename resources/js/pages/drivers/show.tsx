@@ -6,7 +6,7 @@ import InfoGrid from '@/components/info-grid';
 import StatCard from '@/components/stat-card';
 import FlagIcon from '@/components/ui/flag-icon';
 import AppLayout from '@/layouts/app-layout';
-import { HelmetIconNode } from '@/lib/utils';
+import { HelmetIconNode, medal } from '@/lib/utils';
 import { Driver, type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Trophy, Users } from 'lucide-react';
@@ -122,7 +122,12 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     },
                                     {
                                         key: 'Drivers ranking position',
-                                        value: driver.info.raking && <>{driver.info.raking.position}</>,
+                                        value: driver.info.raking && (
+                                            <>
+                                                {medal(driver.info.raking.position)}
+                                                {driver.info.raking.position}
+                                            </>
+                                        ),
                                     },
                                     {
                                         key: 'Championships',
