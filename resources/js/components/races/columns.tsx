@@ -68,7 +68,7 @@ export const columns: ColumnDef<Race>[] = [
                             {second.name[0].toUpperCase()}. {second.surname}
                         </Link>
                         {secondTeam && (
-                            <Link href={`/teams/${secondTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                            <Link href={`/teams/${secondTeam.id}`} className="hover:text-primary hidden items-center gap-2 md:flex">
                                 {secondTeam.nationality ? <FlagIcon nationality={secondTeam.nationality} size={16} /> : null}
                                 {secondTeam.name}
                             </Link>
@@ -92,7 +92,7 @@ export const columns: ColumnDef<Race>[] = [
                             {third.name[0].toUpperCase()}. {third.surname}
                         </Link>
                         {thirdTeam && (
-                            <Link href={`/teams/${thirdTeam.id}`} className="hover:text-primary flex items-center gap-2">
+                            <Link href={`/teams/${thirdTeam.id}`} className="hover:text-primary hidden items-center gap-2 md:flex">
                                 {thirdTeam.nationality ? <FlagIcon nationality={thirdTeam.nationality} size={16} /> : null}
                                 {thirdTeam.name}
                             </Link>
