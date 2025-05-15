@@ -9,6 +9,8 @@ use App\Models\Team;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 
+use function Pest\Laravel\get;
+
 class SeasonController extends Controller
 {
     public function index()
@@ -63,6 +65,18 @@ class SeasonController extends Controller
 
         $maxPodiums = $podiums->first()->podiums ?? 0;
 
+        $withoutPosition = Participation::whereHas('race', function ($query) use ($season) {
+            $query->whereYear('date', $season);
+        })
+            ->whereNull('position')
+            ->select('driver_id', DB::raw('COUNT(*) as withoutPosition'))
+            ->with('driver')
+            ->groupBy('driver_id')
+            ->orderByDesc('withoutPosition')
+            ->get();
+
+        $maxWithoutPosition = $withoutPosition->first()->withoutPosition ?? 0;
+
         $driverSeasonPointsHistory = Driver::whereHas('participations.race', function ($query) use ($season) {
             $query->whereYear('date', $season);
         })
@@ -92,6 +106,10 @@ class SeasonController extends Controller
                 'lastRace' => $races->last(),
                 'mostWins' => $winners->where('wins', $maxVictories)->values(),
                 'mostPodiums' => $podiums->where('podiums', $maxPodiums)->values(),
+                'mostWithoutPosition' => $withoutPosition->where('withoutPosition', $maxWithoutPosition)->values(),
+                'racesCount' => Participation::seasonRaces($season),
+                'championDriver' => Participation::seasonDriversClasification($season)->where('position', 1)->first()['driver'],
+                'championTeam' => Participation::seasonTeamsClasification($season)->where('position', 1)->first()['team'],
             ],
             'driverStandings' => Participation::raceDriverStandings($races->last()->id),
             'driverResults' => Participation::seasonDriversClasification($season),

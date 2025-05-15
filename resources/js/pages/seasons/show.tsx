@@ -115,6 +115,42 @@ export default function Seasons({ season }: { season: Season }) {
                                 ),
                             },
                             {
+                                key: 'Champion driver',
+                                value: season.info.championDriver && (
+                                    <Link
+                                        key={season.info.championDriver.id}
+                                        href={`/drivers/${season.info.championDriver.id}`}
+                                        className="hover:text-primary flex items-center gap-2"
+                                    >
+                                        <FlagIcon
+                                            nationality={season.info.championDriver.nationality ? season.info.championDriver.nationality : 'unkown'}
+                                            size={16}
+                                        />{' '}
+                                        {`${season.info.championDriver.name[0].toUpperCase()}. ${season.info.championDriver.surname}`}
+                                    </Link>
+                                ),
+                            },
+                            {
+                                key: 'Champion team',
+                                value: season.info.championTeam && (
+                                    <Link
+                                        key={season.info.championTeam.id}
+                                        href={`/drivers/${season.info.championTeam.id}`}
+                                        className="hover:text-primary flex items-center gap-2"
+                                    >
+                                        <FlagIcon
+                                            nationality={season.info.championTeam.nationality ? season.info.championTeam.nationality : 'unkown'}
+                                            size={16}
+                                        />{' '}
+                                        {`${season.info.championTeam.name}`}
+                                    </Link>
+                                ),
+                            },
+                            {
+                                key: 'Races',
+                                value: season.info.racesCount && <>{season.info.racesCount || 0}</>,
+                            },
+                            {
                                 key: 'Most wins',
                                 value: season.info.mostWins && (
                                     <div className="flex flex-wrap gap-2">
@@ -150,32 +186,24 @@ export default function Seasons({ season }: { season: Season }) {
                                     </div>
                                 ),
                             },
-                            // {
-                            //     key: 'Most without position',
-                            //     value: <>{driver.wins || 0}</>,
-                            // },
-                            // {
-                            //     key: 'Races',
-                            //     value: <>{driver.info.winPercentage || 0}%</>,
-                            // },
-                            // {
-                            //     key: 'Champion driver',
-                            //     value: driver.info.podiums && (
-                            //         <Link
-                            //             href={`/drivers/${driver.info.podiums.id}`}
-                            //             className="hover:text-primary flex items-center gap-2"
-                            //         >{`${driver.info.podiums.name} (${new Date(driver.info.podiums.date).toLocaleDateString('en-GB')})`}</Link>
-                            //     ),
-                            // },
-                            // {
-                            //     key: 'Champion team',
-                            //     value: driver.info.podiums && (
-                            //         <Link
-                            //             href={`/teams/${driver.info.podiums.id}`}
-                            //             className="hover:text-primary flex items-center gap-2"
-                            //         >{`${driver.info.podiums.name} (${new Date(driver.info.podiums.date).toLocaleDateString('en-GB')})`}</Link>
-                            //     ),
-                            // },
+                            {
+                                key: 'Most without position',
+                                value: season.info.mostWithoutPosition && season.info.mostWithoutPosition.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {season.info.mostWithoutPosition.map((item) => (
+                                            <Link
+                                                key={item.driver_id}
+                                                href={`/drivers/${item.driver_id}`}
+                                                className="hover:text-primary flex items-center gap-2"
+                                            >
+                                                <FlagIcon nationality={item.driver.nationality ? item.driver.nationality : 'unkown'} size={16} />{' '}
+                                                {`${item.driver.name[0].toUpperCase()}. ${item.driver.surname}`}
+                                            </Link>
+                                        ))}
+                                        <>({season.info.mostWithoutPosition[0].withoutPosition})</>
+                                    </div>
+                                ),
+                            },
                         ]}
                     />
                     <div className="flex items-center justify-center gap-2">

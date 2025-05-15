@@ -123,8 +123,12 @@ export interface Season {
     info: {
         firstRace?: Race;
         lastRace?: Race;
+        championDriver?: Driver;
+        championTeam?: Team;
+        racesCount?: number;
         mostWins?: { driver_id: number; driver: Driver; wins: number }[];
         mostPodiums?: { driver_id: number; driver: Driver; podiums: number }[];
+        mostWithoutPosition?: { driver_id: number; driver: Driver; withoutPosition: number }[];
     };
     driverStandings?: { position: string; driver: Driver; points: number; gap: number }[];
     driversPoints: { driver: Driver; pointsHistory: { race: string; date: string; points: number }[] }[];
