@@ -44,6 +44,12 @@ class HomeController extends Controller
         return Inertia::render('home', [
             'seasons' => $seasons,
             'season' => $seasonData,
+            'drivers' => [
+                'ranking' => Participation::driversRanking(),
+            ],
+            'teams' => [
+                'ranking' => Participation::teamsRanking(),
+            ],
         ]);
     }
 }
