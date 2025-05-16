@@ -83,7 +83,7 @@ export default function Home({
                     )}
                 </div>
                 <div>
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="mb-4 flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
                             <Icon iconNode={HelmetIconNode} className="h-8 w-8" />
                         </div>
@@ -92,7 +92,7 @@ export default function Home({
                     <DataTable columns={driverRankingColumns} data={drivers.ranking} />
                 </div>
                 <div>
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="mb-4 flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
                             <Users className="h-8 w-8" />
                         </div>
