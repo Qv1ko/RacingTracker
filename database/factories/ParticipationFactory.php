@@ -115,7 +115,7 @@ class ParticipationFactory extends Factory
     private function buildRace(
         int $raceId,
         int $driverId,
-        int $teamId,
+        int | null $teamId,
         int $nextPosition,
         array $notFinishStatuses,
         float $points,
