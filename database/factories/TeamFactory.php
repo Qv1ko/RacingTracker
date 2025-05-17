@@ -18,7 +18,7 @@ class TeamFactory extends Factory
     {
         return [
             'name' => $this->generateTeamName(),
-            'nationality' => fake()->randomElements([
+            'nationality' => fake()->randomElement([
                 'Afghan',
                 'Albanian',
                 'Algerian',

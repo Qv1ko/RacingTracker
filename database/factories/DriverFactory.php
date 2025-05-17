@@ -19,7 +19,7 @@ class DriverFactory extends Factory
         return [
             'name' => fake()->firstName(),
             'surname' => fake()->lastName(),
-            'nationality' => fake()->randomElements([
+            'nationality' => fake()->randomElement([
                 'Afghan',
                 'Albanian',
                 'Algerian',
