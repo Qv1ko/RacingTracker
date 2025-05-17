@@ -21,11 +21,16 @@ class ParticipationFactory extends Factory
     public function definition(): array
     {
         $race = Race::inRandomOrder()->first();
-        $existingPositions = Participation::where('race_id', $race->id)->pluck('driver_id', 'position');
-        $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
+        $nextPosition = Participation::where('race_id', $race->id)
+            ->whereNotNull('position')
+            ->count() + 1;
 
         $driverId = Driver::where('status', true)
-            ->whereNotIn('id', $existingPositions->values()->all())
+            ->whereNotIn('id', function ($query) use ($race) {
+                $query->select('driver_id')
+                    ->from('participations')
+                    ->where('race_id', $race->id);
+            })
             ->inRandomOrder()
             ->value('id');
 
@@ -40,16 +45,16 @@ class ParticipationFactory extends Factory
 
         $lastTeamId = $lastParticipation?->team_id;
 
-        $teamId = $lastTeamId;
+        $teamId = $lastTeamId ?? Team::where('status', true)->inRandomOrder()->value('id');
 
-        if ($lastTeamId && fake()->boolean(5)) {
+        if ($lastTeamId && fake()->boolean(1)) {
             $teamId = Team::where('status', true)
                 ->where('id', '!=', $lastTeamId)
                 ->inRandomOrder()
                 ->value('id') ?? $lastTeamId;
         }
 
-        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ'", 'EXC', 'NC', 'OTL', 'RET'];
+        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ", 'EXC', 'NC', 'OTL', 'RET'];
 
         $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
         $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
@@ -67,12 +72,17 @@ class ParticipationFactory extends Factory
 
     public function race(int $raceId): static
     {
-        $race = Race::with('participations')->findOrFail($raceId);
-        $existingPositions = Participation::where('race_id', $race->id)->pluck('driver_id', 'position');
-        $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
+        $race = Race::findOrFail($raceId);
+        $nextPosition = Participation::where('race_id', $raceId)
+            ->whereNotNull('position')
+            ->count() + 1;
 
         $driverId = Driver::where('status', true)
-            ->whereNotIn('id', $existingPositions->values()->all())
+            ->whereNotIn('id', function ($query) use ($raceId) {
+                $query->select('driver_id')
+                    ->from('participations')
+                    ->where('race_id', $raceId);
+            })
             ->inRandomOrder()
             ->value('id');
 
@@ -87,16 +97,16 @@ class ParticipationFactory extends Factory
 
         $lastTeamId = $lastParticipation?->team_id;
 
-        $teamId = $lastTeamId;
+        $teamId = $lastTeamId ?? Team::where('status', true)->inRandomOrder()->value('id');
 
-        if ($lastTeamId && fake()->boolean(5)) {
+        if ($lastTeamId && fake()->boolean(1)) {
             $teamId = Team::where('status', true)
                 ->where('id', '!=', $lastTeamId)
                 ->inRandomOrder()
                 ->value('id') ?? $lastTeamId;
         }
 
-        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ'", 'EXC', 'NC', 'OTL', 'RET'];
+        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ", 'EXC', 'NC', 'OTL', 'RET'];
 
         $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
         $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
@@ -121,26 +131,24 @@ class ParticipationFactory extends Factory
         float $points,
         float $uncertainty,
     ): array {
-        if (fake()->boolean(90)) {
+        if (fake()->boolean(5)) {
             return [
                 'race_id'     => $raceId,
                 'driver_id'   => $driverId,
                 'team_id'     => $teamId,
-                'position'    => $nextPosition,
-                'status'      => $nextPosition,
+                'position'    => null,
+                'status'      => fake()->randomElement($notFinishStatuses),
                 'points'      => $points,
                 'uncertainty' => $uncertainty,
             ];
         }
 
-        $status = fake()->randomElement($notFinishStatuses);
-
         return [
             'race_id'     => $raceId,
             'driver_id'   => $driverId,
             'team_id'     => $teamId,
-            'position'    => null,
-            'status'      => $status,
+            'position'    => $nextPosition,
+            'status'      => $nextPosition,
             'points'      => $points,
             'uncertainty' => $uncertainty,
         ];

@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
 
 class SeasonSeeder extends Seeder
 {
-    private const SEASONS = 25;
+    private const SEASONS = 5;
 
     /**
      * Run the database seeds.
@@ -23,7 +23,7 @@ class SeasonSeeder extends Seeder
         for ($i = 0; $i < self::SEASONS; $i++) {
             $seasonYear = $startYear + $i;
 
-            $this->updateDrivers(1, 30, 3);
+            $this->updateDrivers(3, 20, 3);
             $this->updateTeams(1, 10, 1);
 
             $races = Race::factory()->fromYear($seasonYear)->count(rand(12, 24))->create();
@@ -32,7 +32,10 @@ class SeasonSeeder extends Seeder
             $minParticipants = (int) round($driverCount * 0.9);
 
             foreach ($races as $race) {
-                Participation::factory()->race($race->id)->count(rand($minParticipants, $driverCount))->create();
+                $participants = rand($minParticipants, $driverCount - 1);
+                for ($j = 0; $j < $participants; $j++) {
+                    Participation::factory()->race($race->id)->create();
+                }
                 Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
                     $query->where('date', '>=', $race->date);
                 })->get());
