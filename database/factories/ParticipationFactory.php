@@ -20,7 +20,7 @@ class ParticipationFactory extends Factory
      */
     public function definition(): array
     {
-        $race = Race::inRandomOrder();
+        $race = Race::inRandomOrder()->first();
         $existingPositions = Participation::where('race_id', $race->id)->pluck('driver_id', 'position');
         $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
 
