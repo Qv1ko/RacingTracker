@@ -33,6 +33,9 @@ class SeasonSeeder extends Seeder
 
             foreach ($races as $race) {
                 Participation::factory()->race($race->id)->count(rand($minParticipants, $driverCount))->create();
+                Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+                    $query->where('date', '>=', $race->date);
+                })->get());
             }
         }
     }
