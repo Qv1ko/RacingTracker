@@ -21,7 +21,7 @@ class ParticipationFactory extends Factory
     public function definition(): array
     {
         $race = Race::inRandomOrder()->value('id');
-        $existingPositions = $race->participations->pluck('driver_id', 'position');
+        $existingPositions = Participation::where('race_id', $race->id)->pluck('driver_id', 'position');
         $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
 
         $driverId = Driver::where('status', true)
@@ -68,7 +68,7 @@ class ParticipationFactory extends Factory
     public function race(int $raceId): static
     {
         $race = Race::with('participations')->findOrFail($raceId);
-        $existingPositions = $race->participations->pluck('driver_id', 'position');
+        $existingPositions = Participation::where('race_id', $race->id)->pluck('driver_id', 'position');
         $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
 
         $driverId = Driver::where('status', true)
