@@ -25,7 +25,7 @@ class ParticipationFactory extends Factory
         $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
 
         $driverId = Driver::where('status', true)
-            ->whereNotIn('id', $existingPositions->values())
+            ->whereNotIn('id', $existingPositions->values()->all())
             ->inRandomOrder()
             ->value('id');
 
@@ -72,7 +72,7 @@ class ParticipationFactory extends Factory
         $nextPosition = $existingPositions->keys()->max() + 1 ?: 1;
 
         $driverId = Driver::where('status', true)
-            ->whereNotIn('id', $existingPositions->values())
+            ->whereNotIn('id', $existingPositions->values()->all())
             ->inRandomOrder()
             ->value('id');
 
