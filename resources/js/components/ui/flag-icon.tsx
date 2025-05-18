@@ -4214,7 +4214,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     <path fill="#FFCC4D" d="M18 17l-1-1v2.958L18 20l1-1.042V16z"></path>
                 </svg>
             );
-        case "monegasque":
+        case "monégasque":
             return (
                 <svg
                     viewBox="0 0 36 36"
