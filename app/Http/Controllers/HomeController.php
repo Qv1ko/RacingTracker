@@ -38,7 +38,7 @@ class HomeController extends Controller
         $seasonData =  [
             'season' => $season,
             'driversPoints' => $driverSeasonPointsHistory,
-            'teamStandings' => Participation::raceTeamStandings($lastRace->id),
+            'teamStandings' => $lastRace?->id ? Participation::raceTeamStandings($lastRace->id) : [],
         ];
 
         return Inertia::render('home', [
