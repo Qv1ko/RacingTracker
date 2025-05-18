@@ -32,7 +32,7 @@ class DriverSeeder extends Seeder
             ['name' => 'Lewis', 'surname' => 'Hamilton', 'nationality' => 'British', 'status' => true],
             ['name' => 'Nico', 'surname' => 'Hülkenberg', 'nationality' => 'German', 'status' => false],
             ['name' => 'Robert', 'surname' => 'Kubica', 'nationality' => 'Polish', 'status' => false],
-            ['name' => 'Charles', 'surname' => 'Leclerc', 'nationality' => 'Monegasque', 'status' => true],
+            ['name' => 'Charles', 'surname' => 'Leclerc', 'nationality' => 'Monégasque', 'status' => true],
             ['name' => 'Felipe', 'surname' => 'Massa', 'nationality' => 'Brazilian', 'status' => false],
             ['name' => 'Pastor', 'surname' => 'Maldonado', 'nationality' => 'Venezuelan', 'status' => false],
             ['name' => 'Lando', 'surname' => 'Norris', 'nationality' => 'British', 'status' => true],
