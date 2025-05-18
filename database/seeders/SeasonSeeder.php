@@ -18,7 +18,7 @@ class SeasonSeeder extends Seeder
      */
     public function run(): void
     {
-        $startYear = now()->year - self::SEASONS + 1;
+        $startYear = now()->year - self::SEASONS;
 
         for ($i = 0; $i < self::SEASONS; $i++) {
             $seasonYear = $startYear + $i;
