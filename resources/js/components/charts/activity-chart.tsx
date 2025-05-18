@@ -40,7 +40,7 @@ export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
     return (
         <div className="rounded-sm border">
             <h3 className="mt-4 text-center font-medium">Activity history</h3>
-            <div className="m-8 mt-4 flex gap-1">
+            <div className="m-8 mt-4 flex flex-wrap gap-1">
                 {data.activity.map((activity, index) => (
                     <TooltipProvider key={index}>
                         <Tooltip>
