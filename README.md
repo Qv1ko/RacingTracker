@@ -15,8 +15,6 @@
 [![Vite 6.2](https://img.shields.io/badge/Vite_6.2-646CFF?style=for-the-badge&logo=vite&logoColor=E3E3E3&labelColor=333333)](https://vitejs.dev)
 
   <p align="center">
-    <a href="https://51.20.249.113">Demo</a>
-    &middot;
     <a href="https://github.com/Qv1ko/RacingTracker/tree/main/documents">🇪🇸 Docs</a> 
     &middot;
     <a href="https://github.com/Qv1ko/RacingTracker/issues/new">Report issue</a>
