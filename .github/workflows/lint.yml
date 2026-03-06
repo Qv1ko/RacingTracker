@@ -23,7 +23,6 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-          cache: 'bun'
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
