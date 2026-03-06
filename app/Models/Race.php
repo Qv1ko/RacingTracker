@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -134,5 +135,13 @@ class Race extends Model
             })
             ->filter()
             ->first() ?? null;
+    }
+
+    public function scopeInSeason(Builder $query, ?string $season): Builder
+    {
+        return $query->when(
+            $season,
+            fn ($q) => $q->whereYear('date', $season)
+        );
     }
 }
