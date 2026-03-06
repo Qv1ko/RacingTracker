@@ -1,5 +1,5 @@
-import { LucideIcon } from 'lucide-react';
-import type { Config } from 'ziggy-js';
+import { LucideIcon } from "lucide-react";
+import type { Config } from "ziggy-js";
 
 export interface Auth {
     user: User;
@@ -114,8 +114,20 @@ export interface Race {
 export interface Season {
     season: string;
     // index
-    driverResults?: { position: number; driver: Driver; pointsDiff: number; points: number; startingPoints: number }[];
-    teamResults?: { position: number; team: Team; pointsDiff: number; points: number; startingPoints: number }[];
+    driverResults?: {
+        position: number;
+        driver: Driver;
+        pointsDiff: number;
+        points: number;
+        startingPoints: number;
+    }[];
+    teamResults?: {
+        position: number;
+        team: Team;
+        pointsDiff: number;
+        points: number;
+        startingPoints: number;
+    }[];
     racesCount?: number;
     drivers?: number;
     teams?: number;
@@ -131,7 +143,10 @@ export interface Season {
         mostWithoutPosition?: { driver_id: number; driver: Driver; withoutPosition: number }[];
     };
     driverStandings?: { position: string; driver: Driver; points: number; gap: number }[];
-    driversPoints: { driver: Driver; pointsHistory: { race: string; date: string; points: number }[] }[];
+    driversPoints: {
+        driver: Driver;
+        pointsHistory: { race: string; date: string; points: number }[];
+    }[];
     teamStandings?: { position: string; team: Team; points: number; gap: number }[];
     teamsPoints?: { team: Team; pointsHistory: { race: string; date: string; points: number }[] }[];
     races: Race[];

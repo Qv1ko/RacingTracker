@@ -1,17 +1,17 @@
-import { DataTable } from '@/components/data-table';
-import { columns as driverStandingsColumns } from '@/components/drivers/driver-standings-columns';
-import { columns as moreColumns } from '@/components/races/more-columns';
-import { columns as resultColumns } from '@/components/races/result-columns';
-import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
-import AppLayout from '@/layouts/app-layout';
-import { Race } from '@/types';
-import { Head } from '@inertiajs/react';
-import { Flag } from 'lucide-react';
+import { DataTable } from "@/components/data-table";
+import { columns as driverStandingsColumns } from "@/components/drivers/driver-standings-columns";
+import { columns as moreColumns } from "@/components/races/more-columns";
+import { columns as resultColumns } from "@/components/races/result-columns";
+import { columns as teamStandingsColumns } from "@/components/teams/team-standings-columns";
+import AppLayout from "@/layouts/app-layout";
+import { Race } from "@/types";
+import { Head } from "@inertiajs/react";
+import { Flag } from "lucide-react";
 
 export default function Races({ race }: { race: Race }) {
     return (
         <AppLayout>
-            <Head title={`${race.name} (${new Date(race.date).toLocaleDateString('en-GB')})`} />
+            <Head title={`${race.name} (${new Date(race.date).toLocaleDateString("en-GB")})`} />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-center">
                     <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start">
@@ -21,15 +21,19 @@ export default function Races({ race }: { race: Race }) {
                         <div className="t ext-center sm:text-left">
                             <h2 className="text-2xl font-bold">{race.name}</h2>
                             <div className="flex items-center gap-2">
-                                <p>{new Date(race.date).toLocaleDateString('en-GB')}</p>
+                                <p>{new Date(race.date).toLocaleDateString("en-GB")}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 {race.result && <DataTable columns={resultColumns} data={race.result} />}
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    {race.driverStandings && <DataTable columns={driverStandingsColumns} data={race.driverStandings} />}
-                    {race.teamStandings && <DataTable columns={teamStandingsColumns} data={race.teamStandings} />}
+                    {race.driverStandings && (
+                        <DataTable columns={driverStandingsColumns} data={race.driverStandings} />
+                    )}
+                    {race.teamStandings && (
+                        <DataTable columns={teamStandingsColumns} data={race.teamStandings} />
+                    )}
                 </div>
                 {race.more && race.more.length > 0 && (
                     <>

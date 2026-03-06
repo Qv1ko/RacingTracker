@@ -1,5 +1,12 @@
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { router } from '@inertiajs/react';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { router } from "@inertiajs/react";
 
 export const SelectSeason = ({
     all = true,
@@ -18,7 +25,10 @@ export const SelectSeason = ({
 
     return (
         <div className="mb-4">
-            <Select value={selectedValue !== '' ? selectedValue : seasons[0]} onValueChange={handleSelectChange}>
+            <Select
+                value={selectedValue !== "" ? selectedValue : seasons[0]}
+                onValueChange={handleSelectChange}
+            >
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select season" />
                 </SelectTrigger>
@@ -30,7 +40,7 @@ export const SelectSeason = ({
                             </SelectItem>
                         )}
                         {seasons.map((season) => (
-                            <SelectItem key={'select-' + season} value={season}>
+                            <SelectItem key={"select-" + season} value={season}>
                                 {season}
                             </SelectItem>
                         ))}

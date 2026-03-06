@@ -42,10 +42,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#FF5B57"
                         d="M13.013 12.188l-.884-.884c1.581-1.581 3.682-2.451 5.917-2.451s4.336.871 5.917 2.451l-.885.884c-1.344-1.344-3.131-2.085-5.032-2.085s-3.689.741-5.033 2.085z"
                     ></path>
-                    <path
-                        fill="#FFF"
-                        d="M14.579 21.801l-.008-.632h6.789l.027.646z"
-                    ></path>
+                    <path fill="#FFF" d="M14.579 21.801l-.008-.632h6.789l.027.646z"></path>
                     <g fill="#FFF">
                         <path d="M21.387 15.549l-.57-.071v-1.335c0-.03-.01-.057-.017-.085h.027a.16.16 0 0 0 .159-.159a.16.16 0 0 0-.159-.159h-.707a.16.16 0 0 0-.159.159a.16.16 0 0 0 .159.159h.027c-.007.028-.017.055-.017.085v1.25l-.261-.032l-.518-.557a.926.926 0 0 0 .167-.515c0-.62-.641-1.122-1.433-1.122s-1.433.502-1.433 1.122c0 .185.063.358.164.512l-.521.561l-.262.032v-1.25c0-.03-.01-.057-.017-.085h.027a.16.16 0 0 0 .159-.159a.16.16 0 0 0-.159-.159h-.706a.16.16 0 0 0-.159.159a.16.16 0 0 0 .159.159h.027c-.007.028-.017.055-.017.085v1.335l-.569.07l.472.707h.074v.978h.731v-.978h4.053v.978h.731v-.978h.076l.472-.707z"></path>
                         <path d="M20.473 13.624c.27 0 .488-.116.488-.259c0-.078-.069-.146-.173-.194l-.316-.453l-.315.453c-.104.047-.173.115-.173.194c.001.143.22.259.489.259zm-2.447-.593c.28 0 .507-.14.507-.312c0-.092-.067-.172-.169-.229l-.338-.486l-.338.486c-.102.057-.169.138-.169.229c0 .172.227.312.507.312zm-2.337.593c.27 0 .488-.116.488-.259c0-.078-.069-.146-.173-.194l-.315-.453l-.315.453c-.104.047-.173.115-.173.194c0 .143.218.259.488.259z"></path>
@@ -122,14 +119,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#006233"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#006233" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"></path>
+                    <path fill="#EEE" d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#D20F34"
                         d="M20 24c-3.315 0-6-2.685-6-6c0-3.314 2.685-6 6-6c1.31 0 2.52.425 3.507 1.138A7.332 7.332 0 0 0 18 10.647A7.353 7.353 0 0 0 10.647 18A7.353 7.353 0 0 0 18 25.354c2.195 0 4.16-.967 5.507-2.492A5.963 5.963 0 0 1 20 24z"
@@ -158,19 +149,13 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#D01C3A"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#0020a8"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#0020a8" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FEDF00" d="M12 5h12v26H12z"></path>
                     <path
                         fill="#C7B37F"
                         d="M23.035 19.641c-.159-.472-.563-.382-.563-.225c0 0-.539-.39-.135-1.104c0 0 .786.093.337-.514c0 0 .674-.382.696-1.168c.022-.787-.876-1.281-1.258-.967c0 0-.023-.314-.18-.314s-.247.202-.247.202s.023-.517.359-.809c.337-.292 1.033-1.079-.428-1.528c-1.46-.449-1.527.473-1.303.675c0 0-.359.201-.764.179c-.404-.021-.113-.493-.023-.696c.09-.202.023-.921-.473-.898c-.494.022-.517.225-.696.292c-.177.066-.357.021-.357.021s-.18.045-.36-.023c-.179-.067-.202-.269-.696-.292c-.495-.023-.562.696-.472.898c.09.203.382.675-.023.696c-.404.022-.764-.179-.764-.179c.225-.202.157-1.124-1.303-.675c-1.46.449-.764 1.236-.427 1.528c.337.292.36.809.36.809s-.09-.202-.248-.202c-.157 0-.179.314-.179.314c-.382-.314-1.281.18-1.259.967c.023.786.697 1.168.697 1.168c-.45.606.337.514.337.514c.404.715-.135 1.104-.135 1.104c0-.157-.404-.247-.564.225c-.159.472.316.629.316.629c-.629.81-.225 1.573.382 2.022c.607.449 1.775.383 2.359.427c.584.045.697.337.697.337c-.449.428.225.765.225.765c.135.449.674-.045.674-.045l.383.338l.382-.337s.54.494.674.045c0 0 .675-.337.225-.765c0 0 .113-.292.697-.337c.584-.044 1.753.022 2.359-.427c.606-.449 1.011-1.213.382-2.022c0 .001.475-.157.316-.628z"
                     ></path>
-                    <path
-                        fill="#D01C3A"
-                        d="M17.82 17.641v-2.966h-2.966v2.966h2.966z"
-                    ></path>
+                    <path fill="#D01C3A" d="M17.82 17.641v-2.966h-2.966v2.966h2.966z"></path>
                     <path
                         fill="#FEDF00"
                         d="M15.933 16.506l-.882.91l.138.157l.744-.82zm1.449-1.157s.391.102.391-.247s-.234-.349-.312-.349c-.079 0-.438.057-.45.202c-.011.146.141.236.059.315c-.081.078-.302.273-.302.273l.131.156s.188-.156.337-.373c.076-.11.018-.378.09-.394c.213-.044.292.057.281.136c-.011.078-.146.157-.146.157l-.079.124z"
@@ -191,10 +176,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#D01C3A"
                         d="M16.502 20.967l.06-.012V17.91h-.45v3.108c.131-.005.262-.024.39-.051zm.959-.046V17.91h-.45v2.998c.165-.005.32.002.45.013zm-1.798.058V17.91h-.449v2.841a1 1 0 0 0 .449.228z"
                     ></path>
-                    <path
-                        fill="#FEDF00"
-                        d="M18.18 17.641v-2.966h2.966v2.966H18.18z"
-                    ></path>
+                    <path fill="#FEDF00" d="M18.18 17.641v-2.966h2.966v2.966H18.18z"></path>
                     <path
                         fill="#D01C3A"
                         d="M18.539 14.675h.45v2.966h-.45zm.899 0h.45v2.966h-.45zm.899 0h.449v2.966h-.449z"
@@ -227,14 +209,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"
-                    ></path>
-                    <path
-                        fill="#CE1B26"
-                        d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"
-                    ></path>
+                    <path fill="#141414" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
+                    <path fill="#CE1B26" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
                     <path
                         fill="#F9D616"
                         d="M17.452 13.646l.602 1.221l1.348.196l-.975.951l.231 1.343l-1.206-.634l-1.206.634l.23-1.343l-.976-.951l1.349-.196zm-2.296 3.542c.344.562 3.172 3.516 5.922 5.234c.359.234 1.344.984 1.719 1.25c-.156.203-.375.5-.609.75c-.391-.312-3.969-2.516-5.141-3.109c-1.172-.594-2.234-1.625-2.234-2.609c-.001-.985.343-1.516.343-1.516zm7.828 6.609c-.172.25-.438.594-.594.781c.312.047 1.109.438 1.516 1.281c.406.844 1.141.406 1.078-.047s-.953-1.437-2-2.015z"
@@ -274,10 +250,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#FCD116"
                         d="M25.826 14.978l-3.988-.827l3.392-2.417l-3.976.889l2.28-3.64l-3.36 2.47l.821-4.308l-2.232 3.676L18 6.5l-.763 4.321l-2.232-3.676l.821 4.308l-3.36-2.47l2.28 3.64l-3.976-.889l3.392 2.417l-3.988.827l.105.022h15.442z"
                     ></path>
-                    <path
-                        fill="#0072C6"
-                        d="M10.279 15H6.923l4.154 6h13.846l4.154-6h-3.356z"
-                    ></path>
+                    <path fill="#0072C6" d="M10.279 15H6.923l4.154 6h13.846l4.154-6h-3.356z"></path>
                     <path
                         fill="#CE1126"
                         d="M29.077 15l-4.154 6L18 31h14a4 4 0 0 0 4-4V9c0-.995-.366-1.903-.967-2.603L29.077 15zM6.923 15L.967 6.397A3.982 3.982 0 0 0 0 9v18a4 4 0 0 0 4 4h14l-6.923-10l-4.154-6z"
@@ -340,14 +313,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#D90012"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#F2A800"
-                        d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#D90012" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#F2A800" d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"></path>
                     <path fill="#0033A0" d="M0 13h36v10H0z"></path>
                 </svg>
             );
@@ -424,18 +391,12 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#E00034" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#0098C3"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#0098C3" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <g fill="#FFF">
                         <path d="M17.844 21.333a3.333 3.333 0 1 1 2.475-5.565a4 4 0 1 0 .001 4.464a3.325 3.325 0 0 1-2.476 1.101z"></path>
                         <path d="M23.667 17.998l-1.196-.424l.544-1.146l-1.146.545l-.426-1.195l-.424 1.196l-.003-.002l-1.144-.542l.546 1.146l-1.196.426l1.196.424l-.544 1.146l1.141-.543l.005-.002l.426 1.195l.424-1.196l1.147.544l-.546-1.146z"></path>
                     </g>
-                    <path
-                        fill="#00AE65"
-                        d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#00AE65" d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "bahamian":
@@ -530,10 +491,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#00267F"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#00267F"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#00267F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FFC726" d="M12 5h12v26H12z"></path>
                     <path
                         fill="#000000"
@@ -557,10 +515,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     <title>{nationality}</title>
                     <path fill="#4AA657" d="M6 31h26a4 4 0 0 0 4-4v-4H6v8z"></path>
                     <path fill="#C8313E" d="M32 5H6v18h30V9a4 4 0 0 0-4-4z"></path>
-                    <path
-                        fill="#FFF"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h2V5H4z"
-                    ></path>
+                    <path fill="#FFF" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h2V5H4z"></path>
                     <g fill="#C8313E">
                         <path d="M.766 29.188l.625-1.109l.641 1.141l-.542.871a3.9 3.9 0 0 0 .544.372l.792-1.437l-1.42-2.276l-1.117 1.726c.183.46.451.872.781 1.23l-.304-.518zm5.215-.091l-1.497-2.222l-1.502 2.171L4.268 31h.647l1.066-1.903zm-1.453-1.019l.641 1.141l-.641 1.031l-.625-1.062l.625-1.11zM6 18.333v-.894l-.313.436zM2.825 7.026l-.894-1.434a3.986 3.986 0 0 0-1.685 2.07l1.285 1.713l1.294-2.349zm-2.059.162l.625-1.109l.641 1.141l-.641 1.03l-.625-1.062zm3.851 2.343l1.364-2.435L4.569 5h-.171L2.983 7.046l1.634 2.485zm.551-2.312l-.64 1.031l-.625-1.062l.625-1.109l.64 1.14z"></path>
                         <path d="M4.953 15l.875-1.453l.172.076V13l-1.406-2.188l-1.688 2.344l-1.5-2.406L0 12.923v.65L.859 15l.609-.891l-.437-.609l.328-.438l.953 1.234l-1.406 2.312L0 15.361v1.553l.058-.077l.953 1.234L0 19.735v1.177l.906-1.248l1.406 2.312L1.522 23l-.163.211L1.201 23l-.17-.227l.438-.609l-.609-.891L0 22.701v.575l1.438 2.193L2.838 23l.053-.094l.058.094l1.614 2.609L6 23.062v-.391l-.125.056L5 21.273l-.61.891l.438.609l-.17.227l-.158.211L4.337 23l-.79-1.023l1.406-2.312L6 21.106v-1.142l-1.157-1.902l.953-1.234L6 17.1v-1.997L4.906 16.61L3.5 14.297l.953-1.234l.328.437l-.438.609l.61.891zm-.668 2.031v1.928L2.89 21.162L1.576 18.95v-1.908l1.314-2.213l1.395 2.202z"></path>
@@ -582,15 +537,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#141414" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FEE833" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#EE232C"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#EE232C" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "belizean":
@@ -725,10 +674,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#782121"
                         d="M16.167 18.817a.11.11 0 0 1-.156.021a.11.11 0 0 1-.021-.155l1.025-1.339a.11.11 0 0 1 .155-.021a.112.112 0 0 1 .021.156l-1.024 1.338z"
                     ></path>
-                    <path
-                        fill="#D3D3D3"
-                        d="M16.836 17.16l.285-.45l.6.38l-.286.45z"
-                    ></path>
+                    <path fill="#D3D3D3" d="M16.836 17.16l.285-.45l.6.38l-.286.45z"></path>
                     <path
                         fill="#782121"
                         d="M20.001 18.656a.11.11 0 0 0 .164-.149l-1.137-1.246c-.042-.045-.112-.048-.157-.007s-.049.111-.007.157l1.137 1.245z"
@@ -815,10 +761,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     <title>{nationality}</title>
                     <path fill="#FCD116" d="M32 5H14v13h22V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#E8112D" d="M14 31h18a4 4 0 0 0 4-4v-9H14v13z"></path>
-                    <path
-                        fill="#008751"
-                        d="M14 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h10V5z"
-                    ></path>
+                    <path fill="#008751" d="M14 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h10V5z"></path>
                 </svg>
             );
         case "bhutanese":
@@ -868,10 +811,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#FFE000" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#D52B1E"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#D52B1E" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FFF"
                         d="M12.894 16.335c.041.062.381.55.381.55h.489l-.2-.275l-.67-.275zm.733-.488c.041.061.381.55.381.55h.489l-.2-.275l-.67-.275zm.682-.614c.019.071.185.643.185.643l.462.157l-.1-.324l-.547-.476z"
@@ -1055,10 +995,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#009B3A"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#FEDF01"
-                        d="M32.728 18L18 29.124L3.272 18L18 6.875z"
-                    ></path>
+                    <path fill="#FEDF01" d="M32.728 18L18 29.124L3.272 18L18 6.875z"></path>
                     <circle fill="#002776" cx="17.976" cy="17.924" r="6.458"></circle>
                     <path
                         fill="#CBE9D4"
@@ -1113,14 +1050,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EEE"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#D62612"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"
-                    ></path>
+                    <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#D62612" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
                     <path fill="#00966E" d="M0 14h36v8H0z"></path>
                 </svg>
             );
@@ -1255,10 +1186,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#CC212D"
                         d="M12 5v26h12V5H12zm7.882 15.59L18 19.223l-1.882 1.367l.719-2.212l-1.882-1.367h2.326L18 14.798l.719 2.212h2.326l-1.882 1.367l.719 2.213z"
                     ></path>
-                    <path
-                        fill="#288541"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#288541" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path
                         fill="#FEE833"
                         d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4zM18.719 17.011L18 14.798l-.719 2.213h-2.326l1.882 1.367l-.719 2.212L18 19.223l1.882 1.367l-.719-2.212l1.882-1.367z"
@@ -1304,16 +1232,10 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#003893"
-                        d="M32 5H4a4 4 0 0 0-4 4v10h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#003893" d="M32 5H4a4 4 0 0 0-4 4v10h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M0 19h36v2H0zm0 5h36v2H0z"></path>
                     <path fill="#CF2027" d="M0 21v3h36v-3H0z"></path>
-                    <path
-                        fill="#003893"
-                        d="M4 31h28a4 4 0 0 0 4-4v-1H0v1a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#003893" d="M4 31h28a4 4 0 0 0 4-4v-1H0v1a4 4 0 0 0 4 4z"></path>
                     <path
                         fill="#F7D116"
                         d="M14.347 15.903l.764-.555h-.944l-.292-.898l-.292.898h-.944l.764.555l-.292.899l.764-.555l.764.555zm6.182 4.492l.764-.555h-.944l-.292-.899l-.292.899h-.945l.765.555l-.292.898l.764-.555l.764.555zm-12.364 0l.765-.555h-.945l-.292-.899l-.292.899h-.944l.764.555l-.292.898l.764-.555l.764.555zm0 4.017l.765-.555h-.945l-.292-.898l-.292.898h-.944l.764.555l-.292.898l.764-.555l.764.555zm12.364 0l.764-.555h-.944l-.292-.898l-.292.898h-.945l.765.555l-.292.898l.764-.555l.764.555zm-6.362 3.936l-.292-.898l-.292.898h-.944l.764.555l-.292.899l.764-.555l.764.555l-.292-.899l.764-.555zm4.001-.686l.764-.555h-.945l-.291-.898l-.292.898h-.945l.764.555l-.292.898l.765-.555l.764.555zm0-10.504l.764-.555h-.945l-.291-.898l-.292.898h-.945l.764.555l-.292.898l.765-.555l.764.555zM9.582 27.662l-.764-.555h.945l.291-.898l.292.898h.945l-.764.555l.292.898l-.765-.555l-.764.555zm0-10.504l-.764-.555h.945l.291-.898l.292.898h.945l-.764.555l.292.898l-.765-.555l-.764.555z"
@@ -1334,10 +1256,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#003082"
-                        d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#003082" d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M0 11.5h36V18H0z"></path>
                     <path fill="#289728" d="M0 18h36v6.5H0z"></path>
                     <path
@@ -1365,15 +1284,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#002664"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#002664" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FECB00" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#C60C30"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#C60C30" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "chilean":
@@ -1395,10 +1308,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M13 5H4a4 4 0 0 0-4 4v9h13V5zm-4.663 9.292l-1.882-1.367l-1.882 1.367l.719-2.212l-1.882-1.368h2.326L6.455 8.5l.719 2.212H9.5L7.618 12.08l.719 2.212z"
                     ></path>
                     <path fill="#EEE" d="M32 5H13v13h23V9a4 4 0 0 0-4-4z"></path>
-                    <path
-                        fill="#D42D27"
-                        d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"
-                    ></path>
+                    <path fill="#D42D27" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
                     <path
                         fill="#FFF"
                         d="M7.174 10.712L6.455 8.5l-.719 2.212H3.41l1.882 1.368l-.719 2.212l1.882-1.367l1.882 1.367l-.719-2.212L9.5 10.712z"
@@ -1443,15 +1353,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#FBD116"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#FBD116" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#22408C" d="M0 18h36v7H0z"></path>
-                    <path
-                        fill="#CE2028"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-2H0v2z"
-                    ></path>
+                    <path fill="#CE2028" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-2H0v2z"></path>
                 </svg>
             );
         case "comorian":
@@ -1468,14 +1372,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#3A75C4"
-                        d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"
-                    ></path>
-                    <path
-                        fill="#FFC61E"
-                        d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"
-                    ></path>
+                    <path fill="#3A75C4" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
+                    <path fill="#FFC61E" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
                     <path fill="#CE1126" d="M0 18h36v6.5H0z"></path>
                     <path fill="#EEE" d="M0 11.5h36V18H0z"></path>
                     <path
@@ -1541,21 +1439,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#F4CB58"
                         d="M10.269 19.5c0 .828-.792 2.079-1.769 2.079S6.731 20.328 6.731 19.5c0-.829.792-1.5 1.769-1.5s1.769.671 1.769 1.5z"
                     ></path>
-                    <ellipse
-                        fill="#DCA841"
-                        cx="8.5"
-                        cy="19.5"
-                        rx="2.5"
-                        ry="1.5"
-                    ></ellipse>
+                    <ellipse fill="#DCA841" cx="8.5" cy="19.5" rx="2.5" ry="1.5"></ellipse>
                     <ellipse fill="#89C5E4" cx="8.5" cy="16" rx="1.5" ry="1"></ellipse>
-                    <ellipse
-                        fill="#088930"
-                        cx="8.5"
-                        cy="18.5"
-                        rx="1.5"
-                        ry="2.5"
-                    ></ellipse>
+                    <ellipse fill="#088930" cx="8.5" cy="18.5" rx="1.5" ry="2.5"></ellipse>
                     <ellipse fill="#DCA841" cx="8.5" cy="16.5" rx="1.5" ry=".5"></ellipse>
                     <path
                         fill="#89C5E4"
@@ -1578,15 +1464,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#F77F00"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#F77F00" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#009E60"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#009E60" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "croatian":
@@ -1604,14 +1484,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 12.9h36v10.2H0z"></path>
-                    <path
-                        fill="#171796"
-                        d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"
-                    ></path>
-                    <path
-                        fill="#D52B1E"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#171796" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"></path>
+                    <path fill="#D52B1E" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#D52B1E"
                         d="M11.409 7.436V18.97a6.591 6.591 0 0 0 13.182 0V7.436H11.409z"
@@ -1648,10 +1522,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#002A8F"
                         d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
                     ></path>
-                    <path
-                        fill="#EEE"
-                        d="M13.846 15H36v-5H6.923zM6.923 26H36v-5H13.846z"
-                    ></path>
+                    <path fill="#EEE" d="M13.846 15H36v-5H6.923zM6.923 26H36v-5H13.846z"></path>
                     <path
                         fill="#CF142B"
                         d="M13.846 15l-6.923-5l-5.541-4.002A3.973 3.973 0 0 0 0 9v18c0 1.203.542 2.269 1.382 3.002L6.923 26l6.923-5L18 18l-4.154-3z"
@@ -1971,10 +1842,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#034EA2" d="M0 17h36v7H0z"></path>
-                    <path
-                        fill="#FD0"
-                        d="M36 17V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v8h36z"
-                    ></path>
+                    <path fill="#FD0" d="M36 17V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v8h36z"></path>
                     <path
                         fill="#FD0"
                         d="M23 19a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3z"
@@ -1991,10 +1859,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#6DBE46"
                         d="M19.973 14.135c-.133.488-.961.865-1.973.865s-1.84-.377-1.973-.865C14.822 14.307 15 14.628 15 15c0 .552.791 1 3 1s3-.448 3-1c0-.372.178-.693-1.027-.865z"
                     ></path>
-                    <path
-                        fill="#A6D388"
-                        d="M19 19a1 1 0 1 1-2 0v-3a1 1 0 0 1 2 0v3z"
-                    ></path>
+                    <path fill="#A6D388" d="M19 19a1 1 0 1 1-2 0v-3a1 1 0 0 1 2 0v3z"></path>
                     <path
                         fill="#662113"
                         d="M21.5 12c.44 0 .858.052 1.246.137C22.123 11.061 20 10 18 12c-2-2-4.123-.939-4.746.137A5.822 5.822 0 0 1 14.5 12c1.933 0 3.5.896 3.5 2c0-1.104 1.566-2 3.5-2z"
@@ -2043,10 +1908,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#CE1225"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#CE1225" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#BF9300"
                         d="M14.75 21.562s.016.25.234.375c0 0-.062.188.172.297c.234.109 1.078.281 2.547.281s2.297-.156 2.516-.266c.219-.109.234-.359.234-.359s.234-.125.219-.281c-.016-.156-.328-.328-.328-.328s-.078-.203-.297-.281c-.219-.078-.922.344-2.266.281c-1.344-.062-2.109-.266-2.359-.25c-.25.016-.359.266-.359.266s-.282.125-.313.265z"
@@ -2135,10 +1997,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     ></path>
                     <path fill="#FFCC01" d="M17.821 15.297l-2.474 4.265h4.949z"></path>
                     <path fill="#FFF" d="M15.694 19.362l2.127-3.667l2.127 3.667z"></path>
-                    <path
-                        fill="#017E93"
-                        d="M16.303 18.312l-.609 1.05h4.254l-.609-1.05z"
-                    ></path>
+                    <path fill="#017E93" d="M16.303 18.312l-.609 1.05h4.254l-.609-1.05z"></path>
                     <path
                         fill="#FFCC01"
                         d="M16.103 18.831s.688-.972.953-.972c.266 0 .391.305.391.305s.104-.164.247-.164c.143 0 .212.165.212.165s.103-.161.165-.131c.062.029.267.279.267.279s.061-.108.202-.148c.141-.04.234.148.234.148s.138-.296.17-.148c.033.148.543.667.543.667h-3.384z"
@@ -2169,10 +2028,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#3E9A00"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#3E9A00" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#0173CE"
                         d="M7.333 13L1.91 5.604A3.985 3.985 0 0 0 0 9v18c0 1.44.768 2.692 1.91 3.396L7.333 23L11 18l-3.667-5z"
@@ -2286,14 +2142,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#141414" d="M0 14h36v9H0z"></path>
-                    <path
-                        fill="#4891D9"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"
-                    ></path>
+                    <path fill="#4891D9" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#EEE" d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"></path>
                 </svg>
             );
         case "swazi":
@@ -2316,18 +2166,12 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     ></path>
                     <path fill="#FFD900" d="M0 10h36v16H0z"></path>
                     <path fill="#B10D0D" d="M0 11h36v14H0z"></path>
-                    <path
-                        fill="#FFF"
-                        d="M27.513 16.779l1.562.594l1.531-.594l-1.531-.5z"
-                    ></path>
+                    <path fill="#FFF" d="M27.513 16.779l1.562.594l1.531-.594l-1.531-.5z"></path>
                     <path
                         fill="#FFD900"
                         d="M28.531 16.8a.281.281 0 0 1-.281.281H5.781a.281.281 0 0 1 0-.562H28.25c.155 0 .281.126.281.281z"
                     ></path>
-                    <path
-                        fill="#FFF"
-                        d="M28.513 15.779l1.562.594l1.531-.594l-1.531-.5z"
-                    ></path>
+                    <path fill="#FFF" d="M28.513 15.779l1.562.594l1.531-.594l-1.531-.5z"></path>
                     <path
                         fill="#FFD900"
                         d="M29.531 15.8a.281.281 0 0 1-.281.281H6.781a.281.281 0 0 1 0-.562H29.25a.28.28 0 0 1 .281.281zm4.196 2.192a.421.421 0 0 1-.422.422H3.148a.422.422 0 0 1 0-.844h30.156c.234 0 .423.189.423.422z"
@@ -2373,14 +2217,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#FCDD0A" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#088930"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#DA1219"
-                        d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#088930" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#DA1219" d="M4 31h28a4 4 0 0 0 4-4v-4H0v4a4 4 0 0 0 4 4z"></path>
                     <circle fill="#0F47AF" cx="18" cy="18" r="9"></circle>
                     <g fill="#FCDD0A">
                         <path d="M13.25 24.469l1.719-5.531l-2.731-1.985h1.156l3.778 2.893l-.594.359l-.922-.83l-1.468 4.406z"></path>
@@ -2517,14 +2355,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#ED2939"
-                        d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"
-                    ></path>
-                    <path
-                        fill="#002495"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#ED2939" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"></path>
+                    <path fill="#002495" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
                 </svg>
             );
@@ -2542,14 +2374,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#009E60"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#3A75C4"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"
-                    ></path>
+                    <path fill="#009E60" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#3A75C4" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-5H0v5z"></path>
                     <path fill="#FCD116" d="M0 14h36v8H0z"></path>
                 </svg>
             );
@@ -2567,14 +2393,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CC162B"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#3C762C"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#CC162B" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#3C762C" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#EEE" d="M0 21h36v2H0zm0-8h36v2H0z"></path>
                     <path fill="#0D218A" d="M0 15h36v6H0z"></path>
                 </svg>
@@ -2594,10 +2414,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M32 5H20.5v10.5H36V9a4 4 0 0 0-4-4z"></path>
-                    <path
-                        fill="#E8112D"
-                        d="M20.5 5h-5v10.5H0v5h15.5V31h5V20.5H36v-5H20.5z"
-                    ></path>
+                    <path fill="#E8112D" d="M20.5 5h-5v10.5H0v5h15.5V31h5V20.5H36v-5H20.5z"></path>
                     <path
                         fill="#E8112D"
                         d="M28.915 9.585a13.58 13.58 0 0 1 .221-1.86a7.18 7.18 0 0 1-1.77 0c.117.615.19 1.237.221 1.86a13.58 13.58 0 0 1-1.86-.221a7.18 7.18 0 0 1 0 1.77a13.56 13.56 0 0 1 1.86-.221a13.58 13.58 0 0 1-.221 1.86a7.18 7.18 0 0 1 1.77 0a13.56 13.56 0 0 1-.221-1.86a13.58 13.58 0 0 1 1.86.221a7.18 7.18 0 0 1 0-1.77c-.616.118-1.237.191-1.86.221z"
@@ -2633,15 +2450,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#FFCD05"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#FFCD05" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#ED1F24" d="M0 14h36v9H0z"></path>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "ghanaian":
@@ -2658,10 +2469,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CC212D"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#CC212D" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FBD116"
                         d="M15.423 22h5.185l-2.592-1.884zm3.587-4.941h3.215l-2.601 1.889l.991 3.052H36v-8H18.016zm-2.602 1.889l-2.601-1.889h3.215L18.016 14H0v8h15.416z"
@@ -2861,15 +2669,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CE1126"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#CE1126" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FCD116" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#009460"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#009460" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "guyanese":
@@ -2923,10 +2725,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#D21C33"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#00209F"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#00209F" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#FFF" d="M12 13.041h11.906V23H12z"></path>
                     <path
                         fill="#006A16"
@@ -3027,14 +2826,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 14h36v8H0z"></path>
-                    <path
-                        fill="#CD2A3E"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#436F4D"
-                        d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#CD2A3E" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#436F4D" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "icelander":
@@ -3079,15 +2872,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#138808"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#138808" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#F93"
-                        d="M36 13V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36z"
-                    ></path>
+                    <path fill="#F93" d="M36 13V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36z"></path>
                     <circle fill="navy" cx="18" cy="18" r="4"></circle>
                     <circle fill="#EEE" cx="18" cy="18" r="3"></circle>
                     <path
@@ -3111,14 +2898,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#DC1F26"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"
-                    ></path>
+                    <path fill="#DC1F26" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#EEE" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"></path>
                 </svg>
             );
         case "iranian":
@@ -3135,15 +2916,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#DA0001"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#DA0001" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#239F40"
-                        d="M36 13V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36z"
-                    ></path>
+                    <path fill="#239F40" d="M36 13V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36z"></path>
                     <path fill="#E96667" d="M0 23h36v1H0z"></path>
                     <g fill="#BE1931">
                         <path d="M19.465 14.969c.957.49 3.038 2.953.798 5.731c1.391-.308 3.162-4.408-.798-5.731zm-2.937 0c-3.959 1.323-2.189 5.423-.798 5.731c-2.24-2.778-.159-5.241.798-5.731zm1.453-.143c.04.197 1.101.436.974-.573c-.168.408-.654.396-.968.207c-.432.241-.835.182-.988-.227c-.148.754.587.975.982.593z"></path>
@@ -3166,15 +2941,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#141414" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#DD2E44"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#DD2E44" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <g fill="#007A3C">
                         <path d="M11.227 18.06v1.229h5.651v-.737c0-.328-.369-.308-.369-.062v.552h-4.423v-.86l3.102-3.102l.471.501l-2.815 2.846h2.928s.133-.86.931-.86l.912.635v2.314h-8.23s-.205 1.085-1.454.941c0 0 .86-.573.86-1.249c0-.675-.552-1.208-.552-1.208l.778-.491s.082.42.164.542c.083.122.389.235.389.235h1.044l-.014-.546l-.151-.065l.778-.615zm8.302 1.002l-.166.227h-.487c.002-1.151.006-3.418-.001-3.441c-.01-.031.215-.194.215-.194l-.982-.542v5.406h1.843l-.422-1.456zm5.458-3.09v3.317h-.491V16.34l-.615.615v2.335h-.491v-1.966l-.613.615v.006l-.134.127l.134.052v.457c-.586-.301-1.229.155-1.229.71v1.228h4.053V15.36l-.614.612zm-2.564 3.317h-.036c-.246 0-.215-.328.123-.328c.188 0 .248.101.267.191v.137h-.354zm1.315-4.208c0 .152-.051.277-.113.277c-.062 0-.112-.124-.112-.277c0-.153.051-.276.112-.276c.063 0 .113.123.113.276zm-1.034.747s.184.175.523.123c.338-.051.45-.358.45-.358s.194.317.409.266c.216-.051.41-.389.41-.389s.01.542-.308.593c-.317.051-.45-.174-.45-.174s-.164.246-.471.266c-.307.022-.563-.327-.563-.327zm4.944 3.205l-.265.256h-.43v-3.491l.255-.113l-.992-.573v5.406h1.852z"></path>
                         <path d="M10.716 21.132a.267.267 0 1 1-.533-.001a.267.267 0 0 1 .533.001z"></path>
@@ -3195,15 +2964,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#169B62"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#169B62" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#FF883E"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#FF883E" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "israeli":
@@ -3260,14 +3023,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CE2B37"
-                        d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"
-                    ></path>
-                    <path
-                        fill="#009246"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#CE2B37" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"></path>
+                    <path fill="#009246" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
                 </svg>
             );
@@ -3334,14 +3091,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#007A3D"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#007A3D" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
                     <path fill="#EEE" d="M0 13.5h36v9H0z"></path>
                     <path
                         fill="#CE1126"
@@ -3408,10 +3159,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#BB1600" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M0 13h36v1H0zm0 9h36v1H0z"></path>
                     <path
                         fill="#141414"
@@ -3514,14 +3262,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#007A3D"
-                        d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#CE1126"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"
-                    ></path>
+                    <path fill="#007A3D" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#CE1126" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
                     <path fill="#EEE" d="M0 13.5h36v9H0z"></path>
                     <path
                         fill="#141414"
@@ -3655,10 +3397,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#00209F"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#00209F" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <g fillRule="evenodd" clipRule="evenodd">
                         <path
                             fill="#292F33"
@@ -3718,14 +3457,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#141414"
                         d="M0 24h36V12H0v12zm21.25-8.298l1.032 1.42l1.67-.542L22.92 18l1.032 1.42l-1.67-.542l-1.032 1.42v-1.756L19.58 18l1.67-.543v-1.755zM18 14.75c.902 0 1.718.368 2.307.961a2.808 2.808 0 0 0-1.649-.535a2.824 2.824 0 1 0 1.649 5.113A3.25 3.25 0 1 1 18 14.75z"
                     ></path>
-                    <path
-                        fill="#E70013"
-                        d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#239E46"
-                        d="M32 31H4a4 4 0 0 1-4-4v-3h36v3a4 4 0 0 1-4 4z"
-                    ></path>
+                    <path fill="#E70013" d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#239E46" d="M32 31H4a4 4 0 0 1-4-4v-3h36v3a4 4 0 0 1-4 4z"></path>
                     <path
                         fill="#FFF"
                         d="M18 21.25c.902 0 1.718-.368 2.307-.961a2.808 2.808 0 0 1-1.649.535a2.824 2.824 0 1 1 1.649-5.113A3.25 3.25 0 1 0 18 21.25z"
@@ -3754,10 +3487,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#CE1B26"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#002B7F"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#002B7F" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#B28914"
                         d="M12.516 11.415c0-.744-.585-1.334-1.428-1.334c-.892 0-1.873.3-2.623.468h-.568c-.75-.167-1.73-.468-2.623-.468c-.843 0-1.428.59-1.428 1.334c0 .889.328 1.545.726 2.317h7.217c.399-.772.727-1.428.727-2.317z"
@@ -3795,14 +3525,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#006A44" d="M0 14h36v8H0z"></path>
-                    <path
-                        fill="#FDB913"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#C1272D"
-                        d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#FDB913" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#C1272D" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "luxembourger":
@@ -3820,14 +3544,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 14h36v8H0z"></path>
-                    <path
-                        fill="#ED2939"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#00A1DE"
-                        d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#ED2939" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#00A1DE" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "malagasy":
@@ -3846,10 +3564,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     <title>{nationality}</title>
                     <path fill="#FC3D32" d="M32 5H13v13h23V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#007E3A" d="M13 31h19a4 4 0 0 0 4-4v-9H13v13z"></path>
-                    <path
-                        fill="#EEE"
-                        d="M13 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h9V5z"
-                    ></path>
+                    <path fill="#EEE" d="M13 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h9V5z"></path>
                 </svg>
             );
         case "malawian":
@@ -3871,10 +3586,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#DD2E44" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#DD2E44"
                         d="M23.191 12a5.992 5.992 0 0 0-10.382 0h10.382zm-5.493-6h.603L18 8.163zm-1.514.18l.594-.102l.068 2.183zm-1.463.433l.569-.201l.435 2.14zm-1.368.673l.527-.293l.79 2.036zm-1.235.895l.47-.378l1.122 1.873zm-1.067 1.09l.401-.452l1.421 1.658zm-.866 1.255l.317-.513l1.681 1.393zM10.898 12l-1.13-.65l-.226.559l.364.091zm15.355 0l.218-.054l-.221-.557l-1.074.611zm-.731-1.951l.312.512l-2.001.872zm-.943-1.198l.394.451l-1.826 1.198zm-1.132-1.023l.464.38l-1.596 1.487zm-1.288-.816l.521.296l-1.323 1.735zm-1.408-.588l.564.204l-1.011 1.934zm-1.487-.341l.59.106l-.67 2.077z"
@@ -3953,15 +3665,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#14B53A"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#14B53A" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FCD116" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#CE1126" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "maltese":
@@ -3978,14 +3684,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CF142B"
-                        d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"
-                    ></path>
+                    <path fill="#CF142B" d="M32 5H18v26h14a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#EEE" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h14V5H4z"></path>
                     <path fill="#CF142B" d="M1.654 9.656h8.691v2.688H1.654z"></path>
                     <path fill="#CF142B" d="M4.656 6.654h2.688v8.691H4.656z"></path>
                     <g fill="#CF142B">
@@ -4085,10 +3785,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EA2839"
-                        d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#EA2839" d="M32 5H4a4 4 0 0 0-4 4v2.5h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#1A206D" d="M0 11.5h36V18H0z"></path>
                     <path fill="#FFD500" d="M0 18h36v6.5H0z"></path>
                     <path
@@ -4111,19 +3808,10 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#006847"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h7V5H4z"
-                    ></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 5h-7v26h7a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#006847" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h7V5H4z"></path>
+                    <path fill="#CE1126" d="M32 5h-7v26h7a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M11 5h14v26H11z"></path>
-                    <path
-                        fill="#A6D388"
-                        d="M23 18a5 5 0 1 1-10 0h-1a6 6 0 0 0 12 0h-1z"
-                    ></path>
+                    <path fill="#A6D388" d="M23 18a5 5 0 1 1-10 0h-1a6 6 0 0 0 12 0h-1z"></path>
                     <path
                         fill="#5C913B"
                         d="M13.543 20.269a.498.498 0 0 0-.673-.218a.5.5 0 0 0-.219.673c.09.177.189.35.296.516v.001l.004.006v.001l.008.011v.001l.003.006l.001.002l.004.005v.001l.003.005v.002l.003.005l.001.002l.003.005l.001.002l.003.004l.002.003l.002.003l.001.003l.003.005l.001.001l.002.003l.003.006l.001.002l.003.005l.001.002l.007.01v.001l.005.007v.001c.052.077.105.151.161.226a.497.497 0 0 0 .697.101a.499.499 0 0 0 .103-.699a5.96 5.96 0 0 1-.43-.71zm-.497-1.582a5.282 5.282 0 0 1-.046-.833a.5.5 0 0 0-.485-.514l-.036.001a.5.5 0 0 0-.478.485a8.061 8.061 0 0 0-.001.311v.09l.001.005v.028l.001.003l-.001.002v.003l.001.002v.029l.001.003v.011l.001.019l.001.009v.011c.009.16.025.319.046.477a.5.5 0 0 0 .562.425a.503.503 0 0 0 .433-.567zm5.294 4.3l-.006.001l-.124.008a5.087 5.087 0 0 1-.71-.021a.5.5 0 0 0-.1.995l.125.011l.004.001l.002-.001l.003.001h.002l.006.001h.006l.003.001h.001l.006-.001l.003.001h.005l.006.001l.005.001h.013l.006.001h.013c.152.01.305.015.459.012h.039l.007-.001l.006.001h.015l.005-.001h.019l.006-.001h.001l.005.001l.001-.001l.006.001h.001l.005-.001h.008l.006-.001h.006l.001.001l.006-.001h.007l.005-.001h.02l.005-.001h.004l.004-.001l.004.001h.005l.004-.001h.005c.042-.001.085-.005.127-.007a.494.494 0 0 0 .453-.526a.493.493 0 0 0-.514-.473zm-2.439-.448a5.07 5.07 0 0 1-.724-.411a.495.495 0 0 0-.303-.087a.5.5 0 0 0-.263.911l.001.001l.006.003l.006.006l.006.004l.006.005c.266.181.548.34.842.476a.498.498 0 0 0 .663-.243a.498.498 0 0 0-.24-.665zm5.03-.398a.498.498 0 0 0-.248.08a5.142 5.142 0 0 1-.734.387a.498.498 0 0 0 .213.96a.528.528 0 0 0 .173-.038l.134-.06h.002l.006-.004l.002-.001l.004-.002h.004l.004-.002l.002-.002l.006-.001l.002-.002l.003-.002l.005-.002l.003-.001l.005-.002l.002-.001l.005-.002l.002-.001c.003-.002.003-.003.005-.003l.002-.001l.006-.003h.002l.006-.003l.006-.003l.002-.001l.005-.003l.002-.001l.006-.003l.001-.001l.007-.001l.007-.004l.002-.001l.004-.003h.002l.006-.004l.008-.002l.006-.004h.001l.007-.004l.001-.001l.014-.006l.007-.003l.014-.008l.008-.003l.006-.003h.001l.014-.008v-.001l.006-.002h.001l.022-.012l.007-.002l.014-.008l.007-.004h.001c.001-.001.003-.002.007-.002c.002-.003.004-.004.006-.005l.008-.004l.006-.003v-.001l.014-.006h.001l.007-.004l.001-.001l.005-.003h.001l.007-.004l.006-.003h.002l.006-.004v-.001l.007-.003l.001-.001l.006-.003v-.001l.006-.002l.002-.001l.004-.003l.003-.001l.005-.003l.002-.001l.005-.003l.002-.001l.006-.002c-.001-.001 0-.001.001-.001l.006-.003l.002-.001l.004-.003l.002-.001l.006-.003l.002-.001c0-.002.002-.002.004-.003l.003-.001l.004-.002l.003-.002l.004-.002l.003-.002l.003-.002l.003-.003l.005-.001l.004-.001l.002-.002l.004-.002l.004-.003l.002-.001l.004-.002l.004-.003l.003-.002c.002.001.003 0 .005-.001l.002-.002l.004-.002l.003-.002l.003-.002l.004-.002l.004-.003l.002-.001c.002-.001.006-.001.008-.003c-.002-.001-.002-.001 0-.001l.004-.002l.007-.005l.002-.001l.007-.003v-.001l.012-.006l.008-.005a.095.095 0 0 1 .02-.011h.001c.063-.038.128-.077.19-.117a.5.5 0 0 0 .152-.69a.554.554 0 0 0-.457-.225zm2.571-4.618l-.024.001a.5.5 0 0 0-.479.498c0 .277-.025.557-.072.829a.5.5 0 0 0 .987.168v-.005l.001-.002l.001-.002l-.001-.002l.001-.002v-.002l.001-.002v-.003l.001-.002v-.009c.002-.001.002-.003.002-.004v-.006a6.23 6.23 0 0 0 .052-.391l-.001-.001l.001-.003v-.001l.001-.004v-.011l.002-.003v-.001l-.001-.003v-.002l.001-.003v-.004l.002-.001l-.002-.003v-.004c.002-.001.002-.002.002-.003v-.019l.002-.003v-.001a6.22 6.22 0 0 0 .021-.495a.5.5 0 0 0-.498-.499zm-.443 2.696a.5.5 0 0 0-.68.196a4.853 4.853 0 0 1-.463.692a.5.5 0 0 0 .783.622c.116-.146.227-.299.33-.455c.002-.007.007-.014.011-.02l.001-.001l.004-.006v-.001l.004-.007c.002-.002.004-.004.004-.006l.001.001l.004-.006v-.001a.01.01 0 0 0 .003-.007l.002-.001l.004-.006v-.001c.002-.001.002-.003.003-.005l.001-.001l.004-.006l.001-.002l.002-.005l.003-.002l.002-.005h.002l.002-.006l.001-.002l.004-.004l.001-.002c.001-.002.001-.004.003-.005l.001-.003l.004-.003c0-.001 0-.002.002-.003v-.004l.003-.002l.003-.005l.001-.002l.003-.006l.002-.002l.002-.004l.002-.003c0-.001 0-.002.002-.003c0-.001 0-.002.002-.003l.003-.005l.001-.003l.002-.003l.002-.003c.002-.001.002-.002.002-.003c.002-.001.002-.002.002-.004l.002-.003l.003-.004l.003-.004v-.003l.002-.003l.003-.004l.003-.003v-.003l.004-.005v-.003c.002-.001.003-.002.003-.004l.002-.002l.002-.003l.003-.005l.002-.003v-.002l.004-.005c0-.001 0-.002.002-.003l.001-.003l.003-.004l.002-.004l.002-.003c.001-.001 0-.003.002-.004c0-.001 0-.002.002-.002l.002-.005l.002-.002l.002-.006l.002-.001l.002-.004l.002-.002l.002-.005l.002-.002l.002-.006c.002-.001 0-.002 0-.002l.004-.005l.001-.002l.004-.005v-.001l.003-.006l.002-.002l.002-.006v-.001l.005-.005l.003-.006v-.001l.004-.007l.002-.001l.025-.047a.498.498 0 0 0-.199-.672z"
@@ -4183,14 +3871,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#DD2E44"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#265FB5"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#DD2E44" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#265FB5" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FFCC4D" d="M12 5h12v26H12z"></path>
                     <path fill="#DD2E44" d="M16 15h4v3h-4z"></path>
                     <path fill="#269" d="M16 18v2l2 1l2-1v-2z"></path>
@@ -4228,14 +3910,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EEE"
-                        d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"
-                    ></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#EEE" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
+                    <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "mongolian":
@@ -4355,10 +4031,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#141414" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#007168"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#007168" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M0 13h36v1H0zm0 9h36v1H0z"></path>
                     <path
                         fill="#DD2E44"
@@ -4396,15 +4069,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EA2839"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#EA2839" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#34B232" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#FECB01"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#FECB01" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FFF"
                         d="M18 8.76L20.353 16h7.613l-6.159 4.333l2.352 7.169L18 22.992l-6.159 4.458l2.353-7.107L8.035 16h7.613z"
@@ -4511,14 +4178,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 14h36v8H0z"></path>
-                    <path
-                        fill="#AE1F28"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#20478B"
-                        d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#AE1F28" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#20478B" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "new zealander":
@@ -4610,14 +4271,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M22.557 18a4.557 4.557 0 1 1-9.113 0a4.557 4.557 0 0 1 9.113 0z"
                     ></path>
                     <circle fill="#EEE" cx="18" cy="18" r="4"></circle>
-                    <path
-                        fill="#265FB5"
-                        d="M14.758 20.155l3.228-5.591l3.228 5.591z"
-                    ></path>
-                    <path
-                        fill="#55ACEE"
-                        d="M15.116 19.938l2.87-4.969l2.869 4.969z"
-                    ></path>
+                    <path fill="#265FB5" d="M14.758 20.155l3.228-5.591l3.228 5.591z"></path>
+                    <path fill="#55ACEE" d="M15.116 19.938l2.87-4.969l2.869 4.969z"></path>
                     <path
                         fill="#BBDDF5"
                         d="M15.116 19.938l.693-1.199l4.322-.054l.724 1.253z"
@@ -4671,15 +4326,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#E05206"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#E05206" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <circle fill="#E05206" cx="18" cy="18" r="4"></circle>
-                    <path
-                        fill="#0DB02B"
-                        d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"
-                    ></path>
+                    <path fill="#0DB02B" d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"></path>
                 </svg>
             );
         case "nigerian":
@@ -4696,15 +4345,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#009A49"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#009A49" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#009A49"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#009A49" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "north korean":
@@ -4833,10 +4476,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#004600"
                         d="M32 5H9v26h23a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4zm-9.5 20.472a7.5 7.5 0 0 1-7.5-7.5c0-3.72 2.711-6.799 6.263-7.39A6.496 6.496 0 0 0 24 22.972a6.496 6.496 0 0 0 5.89-3.763c-.591 3.553-3.67 6.263-7.39 6.263zm5.11-10.424l-1.213 2.022l-.208-2.349l-2.298-.528l2.17-.924l-.207-2.349l1.548 1.779l2.17-.924l-1.212 2.023l1.548 1.779l-2.298-.529z"
                     ></path>
-                    <path
-                        fill="#EEE"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"
-                    ></path>
+                    <path fill="#EEE" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"></path>
                     <path
                         fill="#FFF"
                         d="M29.572 11.775l-2.17.924l-1.548-1.779l.207 2.349l-2.17.924l2.298.528l.208 2.349l1.213-2.022l2.298.529l-1.548-1.779z"
@@ -4882,14 +4522,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#007229"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#007229" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
                     <path fill="#EEE" d="M0 13.5h36v9H0z"></path>
                     <path
                         fill="#D21034"
@@ -4973,15 +4607,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#0038A8"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#0038A8" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#D52B1E"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#D52B1E" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#000000" d="M22 18a4 4 0 1 1-8 0a4 4 0 0 1 8 0z"></path>
                     <path
                         fill="#EEE"
@@ -4999,10 +4627,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#99AAB5"
                         d="M21.132 17.98a3.132 3.132 0 1 0-5.841 1.573l2.712-1.491l2.707 1.491c.268-.463.422-1 .422-1.573z"
                     ></path>
-                    <path
-                        fill="#000000"
-                        d="M20.5 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z"
-                    ></path>
+                    <path fill="#000000" d="M20.5 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z"></path>
                     <circle fill="#EEE" cx="18" cy="18" r="2.4"></circle>
                     <path
                         fill="#FFAC33"
@@ -5036,15 +4661,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#D91023"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#D91023" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#D91023"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#D91023" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "filipino":
@@ -5065,10 +4684,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#CE1126"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#0038A8"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#0038A8" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#EEE"
                         d="M1.313 29.945l17.718-11.881L1.33 6.041A3.975 3.975 0 0 0 0 9v18c0 1.171.512 2.214 1.313 2.945z"
@@ -5097,14 +4713,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EEE"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#DC143C"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0v9z"
-                    ></path>
+                    <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#DC143C" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0v9z"></path>
                 </svg>
             );
         case "portuguese":
@@ -5125,10 +4735,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#060"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#D52B1E"
-                        d="M32 5H15v26h17a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#D52B1E" d="M32 5H15v26h17a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FFCC4D"
                         d="M15 10a8 8 0 0 0-8 8a8 8 0 1 0 16 0a8 8 0 0 0-8-8zm-6.113 4.594l1.602 1.602l-2.46 1.23a6.95 6.95 0 0 1 .858-2.832zm-.858 3.979l4.4 2.207l-2.706 1.804l.014.021a6.963 6.963 0 0 1-1.708-4.032zM14 24.92a6.945 6.945 0 0 1-2.592-.92H14v.92zM14 23h-3.099L14 20.934V23zm0-3.268l-.607.405L9.118 18l2.116-1.058L14 19.707v.025zm0-1.439l-3.543-3.543l3.543.59v2.953zm0-3.992l-4.432-.713A6.983 6.983 0 0 1 14 11.08v3.221zm7.113.293a6.95 6.95 0 0 1 .858 2.833l-2.46-1.23l1.602-1.603zM16 11.08a6.987 6.987 0 0 1 4.432 2.508L16 14.301V11.08zm0 4.26l3.543-.591L16 18.293V15.34zm0 4.367l2.765-2.765L20.882 18l-4.274 2.137l-.608-.405v-.025zm0 5.213V24h2.592a6.945 6.945 0 0 1-2.592.92zM16 23v-2.066L19.099 23H16zm4.264-.395l.014-.021l-2.706-1.804l4.4-2.207a6.976 6.976 0 0 1-1.708 4.032z"
@@ -5157,10 +4764,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#8D1B3D"
-                        d="M32 5H11v26h21a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#8D1B3D" d="M32 5H11v26h21a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#EEE"
                         d="M11 28.111l5.295-1.444L11 25.222l5.295-1.444L11 22.333l5.295-1.444L11 19.444L16.295 18L11 16.556l5.295-1.444L11 13.667l5.295-1.444L11 10.778l5.295-1.445L11 7.889l5.295-1.444L11 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h7l5.295-1.444L11 28.111z"
@@ -5181,15 +4785,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#002B7F"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#002B7F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FCD116" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#CE1126" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "russian":
@@ -5206,15 +4804,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CE2028"
-                        d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"
-                    ></path>
+                    <path fill="#CE2028" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"></path>
                     <path fill="#22408C" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#EEE"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                 </svg>
             );
         case "rwandan":
@@ -5236,10 +4828,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                     <path fill="#FAD201" d="M0 19h36v7H0z"></path>
-                    <path
-                        fill="#00A1DE"
-                        d="M32 5H4a4 4 0 0 0-4 4v12h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#00A1DE" d="M32 5H4a4 4 0 0 0-4 4v12h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FAD201"
                         d="M26 5l.522 4.034l1.548-3.762l-.539 4.032L30 6.072l-1.565 3.755l3.221-2.484l-2.483 3.222L32.929 9l-3.234 2.469l4.033-.54l-3.762 1.548L34 13l-4.034.523l3.762 1.547l-4.033-.539L32.929 17l-3.756-1.565l2.483 3.222l-3.221-2.484L30 19.929l-2.469-3.234l.539 4.033l-1.548-3.762L26 21l-.522-4.034l-1.549 3.762l.54-4.033L22 19.929l1.565-3.756l-3.221 2.484l2.482-3.222L19.071 17l3.233-2.469l-4.032.539l3.761-1.547L18 13l4.033-.523l-3.761-1.548l4.032.54L19.071 9l3.755 1.565l-2.482-3.222l3.221 2.484L22 6.072l2.469 3.232l-.54-4.032l1.549 3.762z"
@@ -5263,10 +4852,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#009E49" d="M4 5a4 4 0 0 0-4 4v15.323L26.496 5H4z"></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 31a4 4 0 0 0 4-4V11.186L8.767 31H32z"
-                    ></path>
+                    <path fill="#CE1126" d="M32 31a4 4 0 0 0 4-4V11.186L8.767 31H32z"></path>
                     <path
                         fill="#FCD116"
                         d="M26.496 5L0 24.323v1.874L29.066 5zM8.767 31L36 11.186V9.312L6.197 31z"
@@ -5303,10 +4889,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#FFF"
                         d="M9.333 28.747l2.346-2.909L18 10.2l6.321 15.638l2.346 2.909L18 7.34z"
                     ></path>
-                    <path
-                        fill="#000000"
-                        d="M24.321 25.838L18 10.2l-6.321 15.638L18 18z"
-                    ></path>
+                    <path fill="#000000" d="M24.321 25.838L18 10.2l-6.321 15.638L18 18z"></path>
                     <path
                         fill="#FCD116"
                         d="M18 18l-6.321 7.838l-2.346 2.909h17.334l-2.346-2.909z"
@@ -5355,10 +4938,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#5EB6E4"
-                        d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"
-                    ></path>
+                    <path fill="#5EB6E4" d="M0 18v9a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-9H0z"></path>
                     <path
                         fill="#EEE"
                         d="M32 5.041H4a4 4 0 0 0-4 4V18h36V9.041a4 4 0 0 0-4-4z"
@@ -5482,15 +5062,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#00853F"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
+                    <path fill="#00853F" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
                     <path fill="#FDEF42" d="M12 5h12v26H12z"></path>
-                    <path
-                        fill="#E31B23"
-                        d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#E31B23" d="M32 5h-8v26h8a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#00853F"
                         d="M18.869 16.674L18 14l-.869 2.674H14.32l2.274 1.652L15.726 21L18 19.348L20.274 21l-.868-2.674l2.274-1.652z"
@@ -5512,10 +5086,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#0C4076" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#EEE"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#EEE" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path
                         fill="#C6363C"
                         d="M36 9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36V9zM7 13v9.5a5.5 5.5 0 0 0 11 0V13H7z"
@@ -5617,14 +5188,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 14h36v8H0z"></path>
-                    <path
-                        fill="#1EB53A"
-                        d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#0072C6"
-                        d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#1EB53A" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#0072C6" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
                 </svg>
             );
         case "singaporean":
@@ -5645,10 +5210,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#EEE"
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#ED2939"
-                        d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"
-                    ></path>
+                    <path fill="#ED2939" d="M36 18V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v9h36z"></path>
                     <path
                         fill="#FFF"
                         d="M6 11.5c0-2.585 1.624-4.748 3.81-5.336A5.498 5.498 0 0 0 8.5 6a5.5 5.5 0 1 0 0 11c.452 0 .889-.06 1.31-.164C7.624 16.248 6 14.085 6 11.5z"
@@ -5673,14 +5235,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#EE2024"
-                        d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"
-                    ></path>
+                    <path fill="#EE2024" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
+                    <path fill="#EEE" d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"></path>
                     <path fill="#0A4EA2" d="M0 13h36v10H0z"></path>
                     <path
                         fill="#FFF"
@@ -5714,14 +5270,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#ED1C23"
-                        d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"
-                    ></path>
+                    <path fill="#ED1C23" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
+                    <path fill="#EEE" d="M36 23H0V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v14z"></path>
                     <path fill="#005DA4" d="M0 13h36v10H0z"></path>
                     <path
                         fill="#ED1C23"
@@ -5816,10 +5366,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#DE3830" d="M32 5H6.5L19 13.5h17V9a4 4 0 0 0-4-4z"></path>
-                    <path
-                        fill="#002395"
-                        d="M6.5 31H32a4 4 0 0 0 4-4v-4.5H19L6.5 31z"
-                    ></path>
+                    <path fill="#002395" d="M6.5 31H32a4 4 0 0 0 4-4v-4.5H19L6.5 31z"></path>
                     <path fill="#141414" d="M0 11v14l10.5-7z"></path>
                     <path fill="#FFB611" d="M0 9v2l10.5 7L0 25v2l13.5-9z"></path>
                     <path
@@ -5878,14 +5425,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#141414"
-                        d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#078930"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-3H0v3z"
-                    ></path>
+                    <path fill="#141414" d="M32 5H4a4 4 0 0 0-4 4v3h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#078930" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-3H0v3z"></path>
                     <path fill="#DA121A" d="M0 12h36v12H0z"></path>
                     <path fill="#EEE" d="M0 12h36v2H0zm0 10h36v2H0z"></path>
                     <path
@@ -5976,14 +5517,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#009E60"
-                        d="M32 5h-5v26h5a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#0072C6"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"
-                    ></path>
+                    <path fill="#009E60" d="M32 5h-5v26h5a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#0072C6" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"></path>
                     <path fill="#FCD116" d="M9 5h18v26H9z"></path>
                     <path
                         fill="#009E60"
@@ -6005,14 +5540,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#D21034"
-                        d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#141414"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"
-                    ></path>
+                    <path fill="#D21034" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#141414" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
                     <path fill="#EEE" d="M0 13.5h36v9H0z"></path>
                     <path
                         fill="#007229"
@@ -6034,15 +5563,9 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#377E3F"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1H0v1z"
-                    ></path>
+                    <path fill="#377E3F" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1H0v1z"></path>
                     <path fill="#EEE" d="M0 23h36v3H0z"></path>
-                    <path
-                        fill="#377E3F"
-                        d="M32 5H4a4 4 0 0 0-4 4v1h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#377E3F" d="M32 5H4a4 4 0 0 0-4 4v1h36V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M0 10h36v3H0z"></path>
                     <path
                         fill="#B40A2D"
@@ -6072,10 +5595,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#006AA7"
                         d="M15.5 31H32c2.209 0 4-1.791 4-4.5v-6H15.5V31zM32 5H15.5v10.5H36V9a4 4 0 0 0-4-4zM10.5 5H4a4 4 0 0 0-4 3.997V15.5h10.5V5zM0 20.5v6.004C.002 29.211 1.792 31 4 31h6.5V20.5H0z"
                     ></path>
-                    <path
-                        fill="#FECC00"
-                        d="M15.5 5h-5v10.5H0v5h10.5V31h5V20.5H36v-5H15.5z"
-                    ></path>
+                    <path fill="#FECC00" d="M15.5 5h-5v10.5H0v5h10.5V31h5V20.5H36v-5H15.5z"></path>
                 </svg>
             );
         case "swiss":
@@ -6096,10 +5616,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#D32D27"
                         d="M31 27a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h18a4 4 0 0 1 4 4v18z"
                     ></path>
-                    <path
-                        fill="#FFF"
-                        d="M25 16.063h-5v-5h-4v5h-5V20h5v5.063h4V20h5z"
-                    ></path>
+                    <path fill="#FFF" d="M25 16.063h-5v-5h-4v5h-5V20h5v5.063h4V20h5z"></path>
                 </svg>
             );
         case "syrian":
@@ -6117,14 +5634,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#EEE" d="M0 13h36v10H0z"></path>
-                    <path
-                        fill="#CE1126"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#141414"
-                        d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"
-                    ></path>
+                    <path fill="#CE1126" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#141414" d="M32 31H4a4 4 0 0 1-4-4v-4h36v4a4 4 0 0 1-4 4z"></path>
                     <path
                         fill="#007A3D"
                         d="M9.177 18.332l-.633 1.947l1.656-1.203l1.656 1.203l-.633-1.947l1.656-1.202h-2.047l-.632-1.947l-.632 1.947H7.521zm15.6 0l-.633 1.947l1.656-1.203l1.656 1.203l-.633-1.947l1.656-1.202h-2.047l-.632-1.947l-.632 1.947h-2.047z"
@@ -6145,14 +5656,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#C00"
-                        d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#060"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"
-                    ></path>
+                    <path fill="#C00" d="M32 5H4a4 4 0 0 0-4 4v4.5h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#060" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4.5H0V27z"></path>
                     <path fill="#EEE" d="M0 13.5h36v9H0z"></path>
                     <g fill="#FFAC33">
                         <path d="M16.13 21.455c-.408.116-.646-.272-.646-.272l.323-.145l.156-.5l.323.465h.364c.001-.001-.082.327-.52.452zm5.146.437c-.625-.188-2.082-.438-3.188-.438c-1.104 0-2.562.25-3.188.438s-.479.791 0 .603s1.646-.375 3.188-.375c1.542 0 2.709.188 3.188.375c.48.188.625-.415 0-.603zm-2.937-1.125l-.25-.417l-.25.417l-.438.188s.312.353.688.353s.688-.353.688-.353l-.438-.188zm1.709.688c.408.116.646-.272.646-.272l-.323-.145l-.156-.5l-.322.465h-.365c-.002-.001.082.327.52.452z"></path>
@@ -6175,10 +5680,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                 >
                     <title>{nationality}</title>
                     <path fill="#1EB53A" d="M4 5a4 4 0 0 0-4 4v15.627L26.456 5H4z"></path>
-                    <path
-                        fill="#00A3DD"
-                        d="M32 31a4 4 0 0 0 4-4V11.33L9.479 31H32z"
-                    ></path>
+                    <path fill="#00A3DD" d="M32 31a4 4 0 0 0 4-4V11.33L9.479 31H32z"></path>
                     <path
                         fill="#141414"
                         d="M32 5h-2.532L0 26.638V27a4 4 0 0 0 4 4h2.467L36 9.318V9a4 4 0 0 0-4-4z"
@@ -6536,18 +6038,12 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#D90001"
-                        d="M36 27v-1H0v1a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"
-                    ></path>
+                    <path fill="#D90001" d="M36 27v-1H0v1a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
                     <path fill="#FCDC02" d="M0 22h36v4H0z"></path>
                     <path fill="#141414" d="M0 18h36v4H0z"></path>
                     <path fill="#D90001" d="M0 14h36v4H0z"></path>
                     <path fill="#FCDC02" d="M0 10h36v4H0z"></path>
-                    <path
-                        fill="#141414"
-                        d="M0 9v1h36V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4z"
-                    ></path>
+                    <path fill="#141414" d="M0 9v1h36V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4z"></path>
                     <circle fill="#FFF" cx="18" cy="18" r="4"></circle>
                     <path
                         fill="#D90000"
@@ -6593,14 +6089,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#005BBB"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#FFD500"
-                        d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"
-                    ></path>
+                    <path fill="#005BBB" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#FFD500" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-9h36v9z"></path>
                 </svg>
             );
         case "emirati":
@@ -6620,10 +6110,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     <path fill="#068241" d="M32 5H9v9h27V9a4 4 0 0 0-4-4z"></path>
                     <path fill="#EEE" d="M9 14h27v8H9z"></path>
                     <path fill="#141414" d="M9 31h23a4 4 0 0 0 4-4v-5H9v9z"></path>
-                    <path
-                        fill="#EC2028"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"
-                    ></path>
+                    <path fill="#EC2028" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h5V5H4z"></path>
                 </svg>
             );
         case "british":
@@ -6703,14 +6190,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-1H0v1zm0-8h36v4H0z"
                     ></path>
                     <path fill="#EEE" d="M0 23h36v3H0z"></path>
-                    <path
-                        fill="#0038A8"
-                        d="M36 9a4 4 0 0 0-4-4H16v4h20zm-20 3h20v4H16z"
-                    ></path>
-                    <path
-                        fill="#EEE"
-                        d="M16 9V5H4a4 4 0 0 0-4 4v10h36v-3H16v-4h20V9H16z"
-                    ></path>
+                    <path fill="#0038A8" d="M36 9a4 4 0 0 0-4-4H16v4h20zm-20 3h20v4H16z"></path>
+                    <path fill="#EEE" d="M16 9V5H4a4 4 0 0 0-4 4v10h36v-3H16v-4h20V9H16z"></path>
                     <path fill="#FFD983" d="M13 12a5 5 0 1 0-10 0a5 5 0 0 0 10 0z"></path>
                     <path fill="#FFCC4D" d="M12 12a4 4 0 1 0-8 0a4 4 0 0 0 8 0z"></path>
                     <path
@@ -6738,14 +6219,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#0099B5"
-                        d="M0 9v4h36V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4z"
-                    ></path>
-                    <path
-                        fill="#1EB53A"
-                        d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"
-                    ></path>
+                    <path fill="#0099B5" d="M0 9v4h36V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4z"></path>
+                    <path fill="#1EB53A" d="M36 27v-4H0v4a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4z"></path>
                     <path fill="#CE1126" d="M0 13h36v1.5H0zm0 8.5h36V23H0z"></path>
                     <path fill="#EEE" d="M0 18v3.5h36v-7H0z"></path>
                     <path
@@ -6768,14 +6243,8 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#D21034"
-                        d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"
-                    ></path>
-                    <path
-                        fill="#009543"
-                        d="M4 31h28a4 4 0 0 0 4-4v-9H0v9a4 4 0 0 0 4 4z"
-                    ></path>
+                    <path fill="#D21034" d="M32 5H4a4 4 0 0 0-4 4v9h36V9a4 4 0 0 0-4-4z"></path>
+                    <path fill="#009543" d="M4 31h28a4 4 0 0 0 4-4v-9H0v9a4 4 0 0 0 4 4z"></path>
                     <path
                         fill="#141414"
                         d="M17 15L1.732 5.705a4.027 4.027 0 0 0-1.17 1.25l-.002.002A3.991 3.991 0 0 0 0 9v18c0 .747.205 1.447.562 2.045l.001.003c.301.504.71.937 1.195 1.265h.001L17 21h19v-6H17z"
@@ -6808,18 +6277,12 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                     height={size}
                 >
                     <title>{nationality}</title>
-                    <path
-                        fill="#CF142B"
-                        d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"
-                    ></path>
+                    <path fill="#CF142B" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path>
                     <path
                         fill="#00247D"
                         d="M0 23h36V13H0v10zm25.316-3.55l.269.74l.787-.027l-.62.485l.269.74l-.653-.44l-.62.485l.217-.757l-.653-.44l.787-.027l.217-.759zM24.1 17.785l.73-.295l-.417.667l.506.603l-.764-.19l-.417.667l-.055-.785l-.764-.19l.73-.295l-.055-.785l.506.603zm-2.9-2.145l.682.394l.585-.527l-.164.77l.682.394l-.783.082l-.164.77l-.32-.719l-.783.082l.585-.527l-.32-.719zm-2.002-.493l.37-.695l.11.779l.775.137l-.707.345l.11.779l-.547-.566l-.709.345l.37-.695l-.547-.566l.775.137zm-2.875.084l.11-.779l.37.695l.775-.137l-.547.566l.37.695l-.707-.345l-.547.566l.11-.779l-.707-.345l.773-.137zm-2.789.276l.585.527l.681-.394l-.32.719l.585.527l-.783-.082l-.32.719l-.164-.77l-.783-.082l.682-.394l-.163-.77zM11.17 17.49l.73.295l.506-.603l-.055.785l.73.295l-.764.19l-.055.785l-.417-.667l-.764.19l.506-.603l-.417-.667zm-.756 2.699l.269-.74l.217.757l.787.027l-.653.44l.217.757l-.62-.485l-.653.44l.269-.74l-.62-.485l.787.029z"
                     ></path>
-                    <path
-                        fill="#FC0"
-                        d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"
-                    ></path>
+                    <path fill="#FC0" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
                     <path
                         fill="#FFF"
                         d="M18.6 16.271l.707-.345l.547.566l-.11-.779l.708-.345l-.775-.137l-.11-.779l-.369.695l-.776-.137l.547.566zm3.118.532l.32.719l.163-.769l.783-.083l-.681-.393l.163-.77l-.585.526l-.681-.393l.32.719l-.585.527zm1.201 1.459l.764.19l.055.785l.417-.667l.763.19l-.506-.603l.418-.667l-.73.295l-.506-.603l.055.785zm2.046 2.412l-.217.756l.621-.484l.652.44l-.269-.74l.62-.484l-.786.027l-.27-.739l-.217.756l-.786.028zm-8.819-4.182l.547-.566l.707.345l-.369-.695l.547-.566l-.776.137l-.369-.695l-.11.779l-.775.137l.708.345zm-2.347.261l.163.769l.32-.719l.783.083l-.585-.527l.32-.719l-.681.393l-.585-.526l.163.77l-.681.393zm-1.954 1.817l.417.667l.055-.785l.764-.19l-.73-.295l.055-.785l-.506.603l-.73-.295l.418.667l-.506.603zm-1.866 2.816l.652-.44l.621.484l-.217-.756l.652-.44l-.786-.028l-.217-.756l-.27.739l-.786-.027l.62.484z"
@@ -6944,10 +6407,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         fill="#FFD200"
                         d="M4.923 8L18 18L4.923 28h30.95c.083-.321.127-.653.127-1V9c0-.343-.046-.682-.127-1c0-.002-30.95 0-30.95 0z"
                     ></path>
-                    <path
-                        fill="#DE200F"
-                        d="M10.154 12l5.231 4H36v-4zm0 12H36v-4H15.385z"
-                    ></path>
+                    <path fill="#DE200F" d="M10.154 12l5.231 4H36v-4zm0 12H36v-4H15.385z"></path>
                     <path
                         fill="#141414"
                         d="M15.385 16L1.833 5.637a4.121 4.121 0 0 0-.5.381v.001L17 18L1.333 29.981c.156.14.324.267.501.382L15.385 20H36v-4H15.385z"
@@ -6974,7 +6434,7 @@ const FlagIcon: React.FC<FlagIconProps> = ({ nationality, size }) => {
                         d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z"
                     ></path>
                 </svg>
-            )
+            );
     }
 };
 

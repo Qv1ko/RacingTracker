@@ -1,13 +1,13 @@
-import { DataTable } from '@/components/data-table';
-import { columns } from '@/components/seasons/columns';
-import AppLayout from '@/layouts/app-layout';
-import { Season, type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { DataTable } from "@/components/data-table";
+import { columns } from "@/components/seasons/columns";
+import AppLayout from "@/layouts/app-layout";
+import { Season, type BreadcrumbItem } from "@/types";
+import { Head } from "@inertiajs/react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Seasons',
-        href: '/seasons',
+        title: "Seasons",
+        href: "/seasons",
     },
 ];
 

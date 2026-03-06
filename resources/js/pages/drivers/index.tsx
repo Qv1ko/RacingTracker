@@ -1,15 +1,15 @@
-import { CreateButton } from '@/components/create-button';
-import { DataTable } from '@/components/data-table';
-import { columns as tableColumns } from '@/components/drivers/columns';
-import { SelectSeason } from '@/components/select-season';
-import AppLayout from '@/layouts/app-layout';
-import { SharedData, type BreadcrumbItem, type Driver } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { CreateButton } from "@/components/create-button";
+import { DataTable } from "@/components/data-table";
+import { columns as tableColumns } from "@/components/drivers/columns";
+import { SelectSeason } from "@/components/select-season";
+import AppLayout from "@/layouts/app-layout";
+import { SharedData, type BreadcrumbItem, type Driver } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Drivers',
-        href: '/drivers',
+        title: "Drivers",
+        href: "/drivers",
     },
 ];
 
@@ -19,16 +19,19 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
 
     let columns = [...tableColumns];
 
-    if (season === 'all') {
+    if (season === "all") {
         columns = columns.filter(
-            (column) => column.accessorKey !== 'teams' && column.accessorKey !== 'second_positions' && column.accessorKey !== 'third_positions',
+            (column) =>
+                column.accessorKey !== "teams" &&
+                column.accessorKey !== "second_positions" &&
+                column.accessorKey !== "third_positions",
         );
     } else {
-        columns = columns.filter((column) => column.accessorKey !== 'status');
+        columns = columns.filter((column) => column.accessorKey !== "status");
     }
 
     if (!auth.user || drivers.length === 0) {
-        columns = columns.filter((column) => column.accessorKey !== 'actions');
+        columns = columns.filter((column) => column.accessorKey !== "actions");
     }
 
     return (
@@ -36,7 +39,11 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
             <Head title="Drivers" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason seasons={seasons} selectedValue={season ? season.toString() : ''} url={'/drivers'} />
+                    <SelectSeason
+                        seasons={seasons}
+                        selectedValue={season ? season.toString() : ""}
+                        url={"/drivers"}
+                    />
                     {auth.user && <CreateButton item="driver" createRoute="drivers.create" />}
                 </div>
                 <DataTable columns={columns} data={drivers} />

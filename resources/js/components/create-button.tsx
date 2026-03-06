@@ -1,7 +1,7 @@
-import { Plus } from 'lucide-react';
+import { Plus } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/react';
+import { Button } from "@/components/ui/button";
+import { Link } from "@inertiajs/react";
 
 export function CreateButton({ item, createRoute }: { item: string; createRoute: string }) {
     return (

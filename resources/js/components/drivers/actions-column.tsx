@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,23 +7,27 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { type Driver } from '@/types';
-import { router } from '@inertiajs/react';
-import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { type Driver } from "@/types";
+import { router } from "@inertiajs/react";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal, Pencil, Trash } from "lucide-react";
 
 export const ActionsColumn: ColumnDef<Driver> = {
-    accessorKey: 'actions',
+    accessorKey: "actions",
     header: () => <div className="font-bold"></div>,
     cell: ({ row }) => {
         const handleEdit = (id: number) => {
-            router.get(route('drivers.edit', id));
+            router.get(route("drivers.edit", id));
         };
 
         const handleDestroy = (id: number) => {
-            if (confirm(`Are you sure you want to delete the driver ${row.original.name} ${row.original.surname}?`)) {
-                router.delete(route('drivers.destroy', id));
+            if (
+                confirm(
+                    `Are you sure you want to delete the driver ${row.original.name} ${row.original.surname}?`,
+                )
+            ) {
+                router.delete(route("drivers.destroy", id));
             }
         };
 
@@ -39,10 +43,16 @@ export const ActionsColumn: ColumnDef<Driver> = {
                     <DropdownMenuLabel>Driver actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem onClick={() => handleEdit(row.original.id)} className="cursor-pointer">
+                        <DropdownMenuItem
+                            onClick={() => handleEdit(row.original.id)}
+                            className="cursor-pointer"
+                        >
                             <Pencil /> Update {row.original.name}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDestroy(row.original.id)} className="cursor-pointer">
+                        <DropdownMenuItem
+                            onClick={() => handleDestroy(row.original.id)}
+                            className="cursor-pointer"
+                        >
                             <Trash /> Delete
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

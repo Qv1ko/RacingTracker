@@ -1,20 +1,20 @@
-import { MultiPointsChart } from '@/components/charts/multi-points-chart';
-import { DataTable } from '@/components/data-table';
-import { columns as driverRankingColumns } from '@/components/drivers/ranking-column';
-import { SelectSeason } from '@/components/select-season';
-import { columns as teamRankingColumns } from '@/components/teams/ranking-column';
-import { columns as teamStandingsColumns } from '@/components/teams/team-standings-columns';
-import { Icon } from '@/components/ui/icon';
-import AppLayout from '@/layouts/app-layout';
-import { HelmetIconNode } from '@/lib/utils';
-import { Driver, Team, type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
-import { Users } from 'lucide-react';
+import { MultiPointsChart } from "@/components/charts/multi-points-chart";
+import { DataTable } from "@/components/data-table";
+import { columns as driverRankingColumns } from "@/components/drivers/ranking-column";
+import { SelectSeason } from "@/components/select-season";
+import { columns as teamRankingColumns } from "@/components/teams/ranking-column";
+import { columns as teamStandingsColumns } from "@/components/teams/team-standings-columns";
+import { Icon } from "@/components/ui/icon";
+import AppLayout from "@/layouts/app-layout";
+import { HelmetIconNode } from "@/lib/utils";
+import { Driver, Team, type BreadcrumbItem } from "@/types";
+import { Head } from "@inertiajs/react";
+import { Users } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Home',
-        href: '/',
+        title: "Home",
+        href: "/",
     },
 ];
 
@@ -27,7 +27,10 @@ export default function Home({
     seasons: string[];
     season: {
         season: string;
-        driversPoints: { driver: Driver; pointsHistory: { race: string; date: string; points: number }[] }[];
+        driversPoints: {
+            driver: Driver;
+            pointsHistory: { race: string; date: string; points: number }[];
+        }[];
         teamStandings: { position: string; team: Team; points: number; gap: number }[];
     };
     drivers: {
@@ -60,21 +63,35 @@ export default function Home({
         }, {}),
     ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    const driversPointsChartConfig = season.driversPoints.reduce<Record<string, { label: string }>>((acc, { driver: { id, name, surname } }) => {
-        acc[id] = { label: `${name[0].toUpperCase()}. ${surname}` };
-        return acc;
-    }, {});
+    const driversPointsChartConfig = season.driversPoints.reduce<Record<string, { label: string }>>(
+        (acc, { driver: { id, name, surname } }) => {
+            acc[id] = { label: `${name[0].toUpperCase()}. ${surname}` };
+            return acc;
+        },
+        {},
+    );
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-sm px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason all={false} seasons={seasons} selectedValue={season.season ? season.season.toString() : ''} url={''} />
+                    <SelectSeason
+                        all={false}
+                        seasons={seasons}
+                        selectedValue={season.season ? season.season.toString() : ""}
+                        url={""}
+                    />
                 </div>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <div className={`${season.teamStandings && season.teamStandings.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-                        <MultiPointsChart title="" data={driversPointsChartData} chartConfig={driversPointsChartConfig} />
+                    <div
+                        className={`${season.teamStandings && season.teamStandings.length > 0 ? "lg:col-span-2" : "lg:col-span-3"}`}
+                    >
+                        <MultiPointsChart
+                            title=""
+                            data={driversPointsChartData}
+                            chartConfig={driversPointsChartConfig}
+                        />
                     </div>
                     {season.teamStandings && season.teamStandings.length > 0 && (
                         <div>

@@ -1,10 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
     positions: {
-        label: 'Number of times',
+        label: "Number of times",
     },
 } satisfies ChartConfig;
 
@@ -16,7 +21,10 @@ type PositionsChartProps = {
     }[];
 };
 
-export const PositionsChart: React.FC<PositionsChartProps> = ({ title = 'Positions history', data }) => {
+export const PositionsChart: React.FC<PositionsChartProps> = ({
+    title = "Positions history",
+    data,
+}) => {
     return (
         <Card className="mb-4">
             <CardHeader>
@@ -33,11 +41,21 @@ export const PositionsChart: React.FC<PositionsChartProps> = ({ title = 'Positio
                         }}
                     >
                         <CartesianGrid vertical={false} />
-                        <XAxis dataKey="position" tickLine={false} tickMargin={8} axisLine={false} />
+                        <XAxis
+                            dataKey="position"
+                            tickLine={false}
+                            tickMargin={8}
+                            axisLine={false}
+                        />
                         <YAxis tickLine={false} axisLine={false} tickMargin={8} />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                         <Bar dataKey="times" fill="var(--color-primary)">
-                            <LabelList position="top" offset={12} className="fill-foreground" fontSize={12} />
+                            <LabelList
+                                position="top"
+                                offset={12}
+                                className="fill-foreground"
+                                fontSize={12}
+                            />
                         </Bar>
                     </BarChart>
                 </ChartContainer>

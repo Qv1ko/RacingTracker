@@ -1,7 +1,7 @@
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartConfig, ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 type MultiPointsChartProps = {
     title?: string;
@@ -23,11 +23,15 @@ type MultiPointsChart = {
     chartConfig: ChartConfig;
 };
 
-export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Season points', data, chartConfig }) => {
+export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
+    title = "Season points",
+    data,
+    chartConfig,
+}) => {
     const sortedData = data.map((race) => {
         const { race: raceName, date, ...driverPoints } = race;
         const sortedEntries = Object.entries(driverPoints)
-            .filter(([, v]) => typeof v === 'number')
+            .filter(([, v]) => typeof v === "number")
             .sort(([, a], [, b]) => (b as number) - (a as number));
         const sortedRace: Record<string, string | number> = {};
         sortedEntries.forEach(([id, pts]) => {
@@ -41,7 +45,7 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
     const driverKeys = Array.from(
         sortedData.reduce<Set<string>>((keys, obj) => {
             Object.keys(obj)
-                .filter((k) => k !== 'race' && k !== 'date')
+                .filter((k) => k !== "race" && k !== "date")
                 .forEach((k) => keys.add(k));
             return keys;
         }, new Set<string>()),
@@ -61,7 +65,9 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
-                            tickFormatter={(val) => (typeof val === 'string' ? val.slice(0, 3) : String(val))}
+                            tickFormatter={(val) =>
+                                typeof val === "string" ? val.slice(0, 3) : String(val)
+                            }
                         />
                         <YAxis
                             domain={([dataMin, dataMax]) => [dataMin - 1, dataMax + 1]}
@@ -71,19 +77,23 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                             tickFormatter={(value) => value.toFixed(0).toString()}
                         />
                         <Tooltip
-                            cursor={{ strokeDasharray: '3 3' }}
+                            cursor={{ strokeDasharray: "3 3" }}
                             content={({ payload = [], label, active, coordinate, offset }) => {
-                                const sorted = payload.slice().sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
+                                const sorted = payload
+                                    .slice()
+                                    .sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
                                 const formatted = sorted.map((entry) => ({
                                     ...entry,
-                                    value: Number(entry.value).toLocaleString('en-US', {
+                                    value: Number(entry.value).toLocaleString("en-US", {
                                         maximumFractionDigits: 3,
                                         useGrouping: false,
                                     }),
                                 }));
 
                                 const raceData = sortedData.find((race) => race.race === label);
-                                const raceDate = new Date(raceData?.date ?? '').toLocaleDateString('en-GB') || '';
+                                const raceDate =
+                                    new Date(raceData?.date ?? "").toLocaleDateString("en-GB") ||
+                                    "";
 
                                 return (
                                     <ChartTooltipContent
@@ -95,7 +105,7 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({ title = 'Sea
                                     />
                                 );
                             }}
-                            wrapperStyle={{ zIndex: 9999, pointerEvents: 'none' }}
+                            wrapperStyle={{ zIndex: 9999, pointerEvents: "none" }}
                         />
                         {driverKeys.map((key, i) => (
                             <Line
