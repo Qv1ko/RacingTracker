@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('participations', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('driver_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('team_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('race_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-
             $table->integer('position')->nullable();
             $table->string('status', 10);
             $table->double('points');
             $table->double('uncertainty');
+            $table->timestamps();
 
             $table->unique(['driver_id', 'team_id', 'race_id']);
             $table->index('driver_id');

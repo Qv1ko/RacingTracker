@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('surname', 100);
             $table->string('nationality', 100)->nullable();
             $table->boolean('status')->default(true);
+            $table->timestamps();
 
             $table->unique(['name', 'surname']);
             $table->index('nationality');

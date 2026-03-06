@@ -13,8 +13,6 @@ class Participation extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'driver_id',
         'team_id',

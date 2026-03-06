@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->date('date');
+            $table->timestamps();
 
             $table->unique(['name', 'date']);
             $table->index('date');

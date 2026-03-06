@@ -12,8 +12,6 @@ class Team extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'name',
         'nationality',
