@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Race;
 use App\Models\Driver;
 use App\Models\Participation;
-use Inertia\Inertia;
+use App\Models\Race;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -16,7 +16,7 @@ class HomeController extends Controller
         $seasons = Race::seasons();
         $season = $req->query('season');
 
-        if (!in_array($season, $seasons->all())) {
+        if (! in_array($season, $seasons->all())) {
             $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
         }
 
@@ -31,11 +31,11 @@ class HomeController extends Controller
             ->map(function ($driver) use ($season) {
                 return [
                     'driver' => $driver,
-                    'pointsHistory' => $driver->pointsHistory($season)
+                    'pointsHistory' => $driver->pointsHistory($season),
                 ];
             })->values();
 
-        $seasonData =  [
+        $seasonData = [
             'season' => $season,
             'driversPoints' => $driverSeasonPointsHistory,
             'teamStandings' => $lastRace?->id ? Participation::raceTeamStandings($lastRace->id) : [],

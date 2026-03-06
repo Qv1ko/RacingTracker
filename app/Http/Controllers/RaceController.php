@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Driver;
-use App\Models\Team;
-use App\Models\Race;
 use App\Http\Requests\Race\StoreRequest;
 use App\Http\Requests\Race\UpdateRequest;
+use App\Models\Driver;
 use App\Models\Participation;
-use Inertia\Inertia;
+use App\Models\Race;
+use App\Models\Team;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class RaceController extends Controller
 {
@@ -19,7 +19,7 @@ class RaceController extends Controller
         $seasons = Race::seasons();
         $season = $req->query('season');
 
-        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+        if ($season !== 'all' && ! in_array($season, $seasons->all())) {
             $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
         }
 
@@ -135,7 +135,7 @@ class RaceController extends Controller
             'race' => $race,
             'participations' => $race->participations,
             'drivers' => $drivers,
-            'teams' => $teams
+            'teams' => $teams,
         ]);
     }
 

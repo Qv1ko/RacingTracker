@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Participation;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +13,12 @@ class Driver extends Model
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = [
         'name',
         'surname',
         'nationality',
-        'status'
+        'status',
     ];
 
     public function participations(): HasMany
@@ -26,7 +26,7 @@ class Driver extends Model
         return $this->hasMany(Participation::class);
     }
 
-    public function championships(): Collection | null
+    public function championships(): ?Collection
     {
         $seasons = $this->seasons()->filter(function ($season) {
             return Participation::seasonDriversClasification($season)
@@ -53,7 +53,7 @@ class Driver extends Model
     {
         return $this->participations()
             ->when($season !== 'all', function ($query) use ($season) {
-                $query->whereHas('race', fn($q) => $q->whereYear('date', $season));
+                $query->whereHas('race', fn ($q) => $q->whereYear('date', $season));
             })
             ->get()
             ->sortByDesc(function ($participation) {
@@ -62,12 +62,14 @@ class Driver extends Model
             ->pluck('team')
             ->unique('id')
             ->map(function ($team) {
-                if (!$team) return null;
+                if (! $team) {
+                    return null;
+                }
 
                 return (object) [
                     'id' => $team->id,
                     'name' => $team->name,
-                    'nationality' => $team->nationality
+                    'nationality' => $team->nationality,
                 ];
             })
             ->values();
@@ -81,7 +83,7 @@ class Driver extends Model
                 'race_id',
                 Participation::where('driver_id', $this->id)
                     ->when($season !== 'all', function ($q) use ($season) {
-                        $q->whereHas('race', fn($r) => $r->whereYear('date', $season));
+                        $q->whereHas('race', fn ($r) => $r->whereYear('date', $season));
                     })
                     ->select('race_id')
             )
@@ -97,18 +99,20 @@ class Driver extends Model
             ->groupBy('driver_id')
             ->map(function ($group) {
                 $lastRace = $group->sortByDesc('race.date')->first();
-                return (object)[
+
+                return (object) [
                     'id' => $lastRace->driver->id,
                     'name' => $lastRace->driver->name,
                     'surname' => $lastRace->driver->surname,
                     'nationality' => $lastRace->driver->nationality,
-                    'last_shared_race_date' => $lastRace->race->date
+                    'last_shared_race_date' => $lastRace->race->date,
                 ];
             })
             ->sortByDesc('last_shared_race_date')
             ->values()
             ->map(function ($item) {
                 unset($item->last_shared_race_date);
+
                 return $item;
             });
     }
@@ -117,7 +121,7 @@ class Driver extends Model
     {
         return Race::join('participations', 'participations.race_id', '=', 'races.id')
             ->where('participations.driver_id', $this->id)
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
             ->distinct('races.id')
             ->get(['races.*']);
@@ -129,7 +133,7 @@ class Driver extends Model
             ->toBase()
             ->select('participations.status', 'participations.race_id', 'races.name', 'races.date')
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
             ->get();
     }
@@ -139,7 +143,7 @@ class Driver extends Model
         $results = $this->participations()
             ->toBase()
             ->when($season !== 'all', function ($query) use ($season) {
-                $query->whereHas('race', fn($q) => $q->whereYear('date', $season));
+                $query->whereHas('race', fn ($q) => $q->whereYear('date', $season));
             })
             ->select('status as position', DB::raw('count(*) as times'))
             ->groupBy('status')
@@ -150,18 +154,18 @@ class Driver extends Model
             return [
                 'position' => $item->position,
                 'times' => $item->times,
-                'position_numeric' => is_numeric($item->position) ? (int)$item->position : null
+                'position_numeric' => is_numeric($item->position) ? (int) $item->position : null,
             ];
         })->sortBy([
-            fn($a, $b) => match (true) {
+            fn ($a, $b) => match (true) {
                 is_null($a['position_numeric']) => 1,
                 is_null($b['position_numeric']) => -1,
                 default => $a['position_numeric'] <=> $b['position_numeric']
-            }
+            },
         ])->map(function ($item) {
             return [
                 'position' => $item['position'],
-                'times' => $item['times']
+                'times' => $item['times'],
             ];
         })
             ->values();
@@ -172,7 +176,7 @@ class Driver extends Model
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->where('position', 1)
             ->orderBy('races.date', 'asc')
             ->distinct('race_id')
@@ -184,7 +188,7 @@ class Driver extends Model
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->where('position', 2)
             ->orderBy('races.date', 'asc')
             ->distinct('race_id')
@@ -196,7 +200,7 @@ class Driver extends Model
         return $this->participations()
             ->toBase()
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->where('position', 3)
             ->orderBy('races.date', 'asc')
             ->distinct('race_id')
@@ -207,7 +211,7 @@ class Driver extends Model
     {
         return $this->participations()
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->where('position', '<=', 3)
             ->orderBy('races.date', 'asc')
             ->distinct('participations.race_id')
@@ -220,22 +224,22 @@ class Driver extends Model
             ->toBase()
             ->select('participations.points', 'races.name as race', 'races.date as date')
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
             ->get();
     }
 
-    public function lastPoints(string $season = 'all'): float | null
+    public function lastPoints(string $season = 'all'): ?float
     {
         $points = $this->participations()
             ->toBase()
             ->select('participations.points')
             ->join('races', 'participations.race_id', '=', 'races.id')
-            ->when($season !== 'all', fn($q) => $q->whereYear('races.date', $season))
+            ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'desc')
             ->limit(1)
             ->value('points') ?? null;
 
-        return $points !== null ? number_format((float)$points, 3) : null;
+        return $points !== null ? number_format((float) $points, 3) : null;
     }
 }

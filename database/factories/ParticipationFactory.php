@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Driver;
 use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Participation>
@@ -54,7 +54,7 @@ class ParticipationFactory extends Factory
                 ->value('id') ?? $lastTeamId;
         }
 
-        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ", 'EXC', 'NC', 'OTL', 'RET'];
+        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', 'DQ', 'EXC', 'NC', 'OTL', 'RET'];
 
         $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
         $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
@@ -106,12 +106,12 @@ class ParticipationFactory extends Factory
                 ->value('id') ?? $lastTeamId;
         }
 
-        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', "DQ", 'EXC', 'NC', 'OTL', 'RET'];
+        $notFinishStatuses = ['DNF', 'DNQ', 'DNS', 'DQ', 'EXC', 'NC', 'OTL', 'RET'];
 
         $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
         $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
 
-        return $this->state(fn() => $this->buildRace(
+        return $this->state(fn () => $this->buildRace(
             $raceId,
             $driverId,
             $teamId,
@@ -125,7 +125,7 @@ class ParticipationFactory extends Factory
     private function buildRace(
         int $raceId,
         int $driverId,
-        int | null $teamId,
+        ?int $teamId,
         int $nextPosition,
         array $notFinishStatuses,
         float $points,
@@ -133,23 +133,23 @@ class ParticipationFactory extends Factory
     ): array {
         if (fake()->boolean(5)) {
             return [
-                'race_id'     => $raceId,
-                'driver_id'   => $driverId,
-                'team_id'     => $teamId,
-                'position'    => null,
-                'status'      => fake()->randomElement($notFinishStatuses),
-                'points'      => $points,
+                'race_id' => $raceId,
+                'driver_id' => $driverId,
+                'team_id' => $teamId,
+                'position' => null,
+                'status' => fake()->randomElement($notFinishStatuses),
+                'points' => $points,
                 'uncertainty' => $uncertainty,
             ];
         }
 
         return [
-            'race_id'     => $raceId,
-            'driver_id'   => $driverId,
-            'team_id'     => $teamId,
-            'position'    => $nextPosition,
-            'status'      => $nextPosition,
-            'points'      => $points,
+            'race_id' => $raceId,
+            'driver_id' => $driverId,
+            'team_id' => $teamId,
+            'position' => $nextPosition,
+            'status' => $nextPosition,
+            'points' => $points,
             'uncertainty' => $uncertainty,
         ];
     }

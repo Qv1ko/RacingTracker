@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Participation extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = [
         'driver_id',
         'team_id',
@@ -25,6 +26,7 @@ class Participation extends Model
     ];
 
     public static $MU = 25.0;
+
     public static $SIGMA = 8.333; // $MU / 3
 
     public function driver(): BelongsTo
@@ -62,6 +64,7 @@ class Participation extends Model
                 $lastParticipations = $teamGroup
                     ->sortByDesc('race.date')
                     ->unique('driver_id');
+
                 return $lastParticipations->avg('points');
             });
 
@@ -123,14 +126,22 @@ class Participation extends Model
                 $aPos = $a['sort_position'];
                 $bPos = $b['sort_position'];
 
-                if (is_null($aPos) && !is_null($bPos)) return 1;
-                if (!is_null($aPos) && is_null($bPos)) return -1;
-                if (is_null($aPos) && is_null($bPos)) return 0;
+                if (is_null($aPos) && ! is_null($bPos)) {
+                    return 1;
+                }
+                if (! is_null($aPos) && is_null($bPos)) {
+                    return -1;
+                }
+                if (is_null($aPos) && is_null($bPos)) {
+                    return 0;
+                }
+
                 return $aPos <=> $bPos;
             })
             ->values()
             ->map(function ($item) {
                 unset($item['sort_position']);
+
                 return $item;
             });
     }
@@ -142,13 +153,14 @@ class Participation extends Model
             ->map(function ($driver) {
                 return [
                     'driver' => $driver,
-                    'points'    => $driver->lastPoints(),
+                    'points' => $driver->lastPoints(),
                 ];
             })
             ->sortByDesc('points')
             ->values()
             ->map(function ($item, $key) {
                 $item['position'] = $key + 1;
+
                 return $item;
             });
     }
@@ -180,7 +192,7 @@ class Participation extends Model
                     'position' => $index + 1,
                     'driver' => $participation->driver,
                     'points' => $participation->points,
-                    'gap' => $participation->points - $maxPoints
+                    'gap' => $participation->points - $maxPoints,
                 ];
             });
     }
@@ -192,13 +204,14 @@ class Participation extends Model
             ->map(function ($team) {
                 return [
                     'team' => $team,
-                    'points'    => $team->lastPoints(),
+                    'points' => $team->lastPoints(),
                 ];
             })
             ->sortByDesc('points')
             ->values()
             ->map(function ($item, $key) {
                 $item['position'] = $key + 1;
+
                 return $item;
             });
     }
@@ -316,7 +329,7 @@ class Participation extends Model
         // Difference between expected and actual
         $error = $expectedPosition - $position;
 
-        $newMu  = $mu + $K * $error;
+        $newMu = $mu + $K * $error;
 
         // Adjust sigma depending on how surprising the result was
         $errorImpact = $error == 0 || $participantsCount == 0 ? 0 : abs($error) / $participantsCount;
@@ -345,8 +358,8 @@ class Participation extends Model
 
         return $drivers->map(function ($driver) use ($season) {
             $lastParticipationBeforeSeason = $driver->participations()
-                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
-                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->with(['race' => fn ($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn ($q) => $q->whereYear('date', '<', $season))
                 ->orderByDesc(
                     Race::select('date')
                         ->whereColumn('races.id', 'participations.race_id')
@@ -357,14 +370,14 @@ class Participation extends Model
 
             $previousSeason = $lastParticipationBeforeSeason ? Carbon::parse($lastParticipationBeforeSeason?->race?->date)->format('Y') : null;
 
-            $points = (float)($driver->lastPoints($season) ?? self::$MU);
-            $startingPoints = (float)($previousSeason ? ($driver->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
+            $points = (float) ($driver->lastPoints($season) ?? self::$MU);
+            $startingPoints = (float) ($previousSeason ? ($driver->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
 
             return [
                 'driver' => $driver,
                 'pointsDiff' => $points - $startingPoints,
                 'points' => $points,
-                'startingPoints' => $startingPoints
+                'startingPoints' => $startingPoints,
             ];
         })->sortByDesc('pointsDiff')
             ->values()
@@ -374,7 +387,7 @@ class Participation extends Model
                     'driver' => $item['driver'],
                     'pointsDiff' => $item['pointsDiff'],
                     'points' => $item['points'],
-                    'startingPoints' => $item['startingPoints']
+                    'startingPoints' => $item['startingPoints'],
                 ];
             });
     }
@@ -400,8 +413,8 @@ class Participation extends Model
             $points = $latestDriverParticipations->avg('points') ?? self::$MU;
 
             $lastParticipationBeforeSeason = $team->participations()
-                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
-                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->with(['race' => fn ($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn ($q) => $q->whereYear('date', '<', $season))
                 ->orderByDesc(
                     Race::select('date')
                         ->whereColumn('races.id', 'participations.race_id')
@@ -454,8 +467,8 @@ class Participation extends Model
 
         return $teams->map(function ($team) use ($season) {
             $lastParticipationBeforeSeason = $team->participations()
-                ->with(['race' => fn($q) => $q->whereYear('date', '<', $season)])
-                ->whereHas('race', fn($q) => $q->whereYear('date', '<', $season))
+                ->with(['race' => fn ($q) => $q->whereYear('date', '<', $season)])
+                ->whereHas('race', fn ($q) => $q->whereYear('date', '<', $season))
                 ->orderByDesc(
                     Race::select('date')
                         ->whereColumn('races.id', 'participations.race_id')
@@ -466,14 +479,14 @@ class Participation extends Model
 
             $previousSeason = $lastParticipationBeforeSeason ? Carbon::parse($lastParticipationBeforeSeason?->race?->date)->format('Y') : null;
 
-            $points = (float)($team->lastPoints($season) ?? self::$MU);
-            $startingPoints = (float)($previousSeason ? ($team->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
+            $points = (float) ($team->lastPoints($season) ?? self::$MU);
+            $startingPoints = (float) ($previousSeason ? ($team->lastPoints($previousSeason) ?? self::$MU) : self::$MU);
 
             return [
                 'team' => $team,
                 'pointsDiff' => $points - $startingPoints,
                 'points' => $points,
-                'startingPoints' => $startingPoints
+                'startingPoints' => $startingPoints,
             ];
         })->sortByDesc('pointsDiff')
             ->values()
@@ -483,7 +496,7 @@ class Participation extends Model
                     'team' => $item['team'],
                     'pointsDiff' => $item['pointsDiff'],
                     'points' => $item['points'],
-                    'startingPoints' => $item['startingPoints']
+                    'startingPoints' => $item['startingPoints'],
                 ];
             });
     }

@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Participation;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -16,9 +14,10 @@ class Race extends Model
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = [
         'name',
-        'date'
+        'date',
     ];
 
     public function participations(): HasMany
@@ -29,7 +28,7 @@ class Race extends Model
     public static function seasons(): Collection
     {
         return Race::pluck('date')
-            ->map(fn($date) => Carbon::parse($date)->format('Y'))
+            ->map(fn ($date) => Carbon::parse($date)->format('Y'))
             ->unique()
             ->sortDesc()
             ->values();
@@ -46,17 +45,19 @@ class Race extends Model
             ->get();
     }
 
-    public function participant(int $position): Object | null
+    public function participant(int $position): ?object
     {
-        return  $this->participations()
+        return $this->participations()
             ->where('position', $position)
             ->with([
                 'driver:id,name,surname,nationality',
-                'team:id,name,nationality'
+                'team:id,name,nationality',
             ])
             ->get()
             ->map(function ($participation) {
-                if (!$participation->driver) return null;
+                if (! $participation->driver) {
+                    return null;
+                }
 
                 return (object) [
                     'id' => $participation->driver->id,
@@ -66,21 +67,21 @@ class Race extends Model
                     'team' => $participation->team ? (object) [
                         'id' => $participation->team->id,
                         'name' => $participation->team->name,
-                        'nationality' => $participation->team->nationality
-                    ] : null
+                        'nationality' => $participation->team->nationality,
+                    ] : null,
                 ];
             })
             ->filter()
             ->first() ?? null;
     }
 
-    public function better(): Object | null
+    public function better(): ?object
     {
         $season = request('season', Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")));
 
         return $this->participations()
             ->when($season !== 'all', function ($query) use ($season) {
-                $query->whereHas('race', fn($q) => $q->whereYear('date', $season));
+                $query->whereHas('race', fn ($q) => $q->whereYear('date', $season));
             })
             ->select([
                 'driver_id',
@@ -106,17 +107,19 @@ class Race extends Model
                                     LIMIT 1
                                 )
                             ELSE NULL
-                        END AS points_diff')
+                        END AS points_diff'),
             ])
             ->with([
                 'driver:id,name,surname,nationality',
-                'team:id,name,nationality'
+                'team:id,name,nationality',
             ])
             ->groupBy('driver_id', 'team_id', 'points_diff')
             ->orderByDesc('points_diff')
             ->get()
             ->map(function ($participation) {
-                if (!$participation->points_diff) return null;
+                if (! $participation->points_diff) {
+                    return null;
+                }
 
                 return (object) [
                     'id' => $participation->driver->id,
@@ -126,9 +129,9 @@ class Race extends Model
                     'team' => $participation->team ? (object) [
                         'id' => $participation->team->id,
                         'name' => $participation->team->name,
-                        'nationality' => $participation->team->nationality
+                        'nationality' => $participation->team->nationality,
                     ] : null,
-                    'points_diff' => $participation->points_diff
+                    'points_diff' => $participation->points_diff,
                 ];
             })
             ->filter()

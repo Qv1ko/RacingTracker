@@ -6,10 +6,8 @@ use App\Models\Driver;
 use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-
-use function Pest\Laravel\get;
+use Inertia\Inertia;
 
 class SeasonController extends Controller
 {
@@ -35,7 +33,7 @@ class SeasonController extends Controller
 
     public function show(string $season)
     {
-        abort_if(!Race::seasons()->contains($season), 404);
+        abort_if(! Race::seasons()->contains($season), 404);
 
         $races = Race::whereYear('date', $season)
             ->orderBy('date', 'asc')
@@ -84,7 +82,7 @@ class SeasonController extends Controller
             ->map(function ($driver) use ($season) {
                 return [
                     'driver' => $driver,
-                    'pointsHistory' => $driver->pointsHistory($season)
+                    'pointsHistory' => $driver->pointsHistory($season),
                 ];
             })->values();
 
@@ -95,11 +93,11 @@ class SeasonController extends Controller
             ->map(function ($team) use ($season) {
                 return [
                     'team' => $team,
-                    'pointsHistory' => $team->pointsHistory($season)
+                    'pointsHistory' => $team->pointsHistory($season),
                 ];
             })->values();
 
-        $data =  [
+        $data = [
             'season' => $season,
             'info' => [
                 'firstRace' => $races->first(),

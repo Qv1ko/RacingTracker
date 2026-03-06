@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
                 'regex:/^[\p{L}\'\.\- ]+$/u',
                 Rule::unique('drivers')->where(function ($query) {
                     return $query->where('surname', request('surname'));
-                })
+                }),
             ],
             'surname' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\'\.\- ]+$/u'],
             'nationality' => ['nullable', 'max:25'],

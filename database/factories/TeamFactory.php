@@ -50,7 +50,7 @@ class TeamFactory extends Factory
                 'Swiss',
                 'Emirati',
                 'British',
-                'American'
+                'American',
             ]),
             'status' => true,
         ];
@@ -62,18 +62,18 @@ class TeamFactory extends Factory
     protected function generateTeamName(): string
     {
         $consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'z'];
-        $clusters   = ['br', 'cr', 'dr', 'tr', 'st', 'fl', 'cl', 'gr', 'pr', 'sp'];
-        $vowels     = ['a', 'e', 'i', 'o', 'u', 'y'];
-        $suffixes   = ['ix', 'on', 'ia', 'us', 'ex', 'or', 'ax', 'is'];
+        $clusters = ['br', 'cr', 'dr', 'tr', 'st', 'fl', 'cl', 'gr', 'pr', 'sp'];
+        $vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+        $suffixes = ['ix', 'on', 'ia', 'us', 'ex', 'or', 'ax', 'is'];
 
         $syllableCount = $this->faker->numberBetween(2, 4);
         $name = '';
 
         for ($i = 0; $i < $syllableCount; $i++) {
             if ($this->faker->numberBetween(1, 3) === 1) {
-                $name .= $this->faker->randomElement($clusters) . $this->faker->randomElement($vowels);
+                $name .= $this->faker->randomElement($clusters).$this->faker->randomElement($vowels);
             } else {
-                $name .= $this->faker->randomElement($consonants) . $this->faker->randomElement($vowels);
+                $name .= $this->faker->randomElement($consonants).$this->faker->randomElement($vowels);
             }
         }
 

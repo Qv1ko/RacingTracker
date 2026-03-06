@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
                 'regex:/^[A-Za-z0-9 ]*$/',
                 Rule::unique('races')->where(function ($query) {
                     return $query->where('date', request('date'));
-                })
+                }),
             ],
             'date' => ['required',  'date'],
             'result.*.position' => ['required', 'string'],
@@ -47,10 +47,10 @@ class StoreRequest extends FormRequest
             'name.unique' => 'The race already exists.',
             'date.date' => 'The date is invalid.',
             'result.*.position.required' => 'The position is required.',
-            'result.*.position.string'   => 'The position must be a string.',
+            'result.*.position.string' => 'The position must be a string.',
             'result.*.driver.required' => 'The driver is required.',
-            'result.*.driver.exists'   => 'The driver not exists.',
-            'result.*.team.exists'   => 'The team not exists.',
+            'result.*.driver.exists' => 'The driver not exists.',
+            'result.*.team.exists' => 'The team not exists.',
         ];
     }
 }

@@ -6,7 +6,6 @@ use App\Models\Driver;
 use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SeasonSeeder extends Seeder
@@ -53,7 +52,6 @@ class SeasonSeeder extends Seeder
         $drivers->each->update(['status' => false]);
 
         $activeCount = Driver::where('status', true)->count();
-
 
         Driver::factory()->count($activeCount === 0 ? $initialCreate : $additionalCreate)->create();
     }

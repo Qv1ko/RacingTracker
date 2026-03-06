@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Team;
-use App\Models\Race;
-use Inertia\Inertia;
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
-use Illuminate\Support\Facades\DB;
 use App\Models\Participation;
+use App\Models\Race;
+use App\Models\Team;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class TeamController extends Controller
 {
@@ -18,7 +18,7 @@ class TeamController extends Controller
         $seasons = Race::seasons();
         $season = $req->query('season');
 
-        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+        if ($season !== 'all' && ! in_array($season, $seasons->all())) {
             $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
         }
 
@@ -107,6 +107,7 @@ class TeamController extends Controller
     public function store(StoreRequest $req)
     {
         $team = Team::create($req->validated());
+
         return redirect()->route('teams.show', $team->id);
     }
 
@@ -121,12 +122,14 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
         $team->update($req->validated());
+
         return redirect()->route('teams.show', $team->id);
     }
 
     public function destroy(string $id)
     {
         Team::findOrFail($id)->delete();
+
         return back();
     }
 }

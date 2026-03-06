@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Driver\StoreRequest;
 use App\Http\Requests\Driver\UpdateRequest;
 use App\Models\Driver;
+use App\Models\Participation;
 use App\Models\Race;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use App\Models\Participation;
+use Inertia\Inertia;
 
 class DriverController extends Controller
 {
@@ -18,7 +18,7 @@ class DriverController extends Controller
         $seasons = Race::seasons();
         $season = $req->query('season');
 
-        if ($season !== 'all' && !in_array($season, $seasons->all())) {
+        if ($season !== 'all' && ! in_array($season, $seasons->all())) {
             $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
         }
 
@@ -63,7 +63,7 @@ class DriverController extends Controller
         $winsCount = $driver->wins()->count();
         $podiumsCount = $driver->podiums()->count();
 
-        $driver =  [
+        $driver = [
             'id' => $driver->id,
             'name' => $driver->name,
             'surname' => $driver->surname,
@@ -111,6 +111,7 @@ class DriverController extends Controller
     public function store(StoreRequest $req)
     {
         $driver = Driver::create($req->validated());
+
         return redirect()->route('drivers.show', $driver->id);
     }
 
@@ -125,12 +126,14 @@ class DriverController extends Controller
     {
         $driver = Driver::findOrFail($id);
         $driver->update($req->validated());
+
         return redirect()->route('drivers.show', $driver->id);
     }
 
     public function destroy(string $id)
     {
         Driver::findOrFail($id)->delete();
+
         return back();
     }
 }

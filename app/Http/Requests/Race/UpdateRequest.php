@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
                 'regex:/^[A-Za-z0-9 ]*$/',
                 Rule::unique('races')->ignore($this->id)->where(function ($query) {
                     return $query->where('date', request('date'));
-                })
+                }),
             ],
             'date' => ['required', 'date'],
         ];
