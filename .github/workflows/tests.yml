@@ -26,16 +26,16 @@ jobs:
           coverage: xdebug
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: oven-sh/setup-bun
         with:
           node-version: '22'
-          cache: 'npm'
+          cache: 'bun'
 
       - name: Install Node Dependencies
-        run: npm ci
+        run: bun ci
 
       - name: Build Assets
-        run: npm run build
+        run: bun run build
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
