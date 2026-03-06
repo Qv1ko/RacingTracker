@@ -5,22 +5,15 @@
         "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
-        "format": "prettier --write resources/",
-        "format:check": "prettier --check resources/",
-        "lint": "eslint . --fix",
+        "fmt": "oxfmt resources/",
+        "fmt:check": "oxfmt --check resources/",
+        "lint": "oxlint . --fix",
         "types": "tsc --noEmit"
     },
     "devDependencies": {
-        "@eslint/js": "^9.39.1",
         "@types/node": "^22.19.1",
-        "eslint": "^9.39.1",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "prettier": "^3.6.2",
-        "prettier-plugin-organize-imports": "^4.3.0",
-        "prettier-plugin-tailwindcss": "^0.6.14",
-        "typescript-eslint": "^8.46.4"
+        "oxfmt": "^0.36.0",
+        "oxlint": "^1.51.0"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.9",
