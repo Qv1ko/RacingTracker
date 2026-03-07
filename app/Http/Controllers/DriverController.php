@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Driver\StoreRequest;
 use App\Http\Requests\Driver\UpdateRequest;
 use App\Models\Driver;
-use App\Models\Participation;
 use App\Models\Race;
+use App\Services\RankingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -38,13 +38,13 @@ class DriverController extends Controller
                 'name' => $driver->name,
                 'surname' => $driver->surname,
                 'nationality' => $driver->nationality,
-                'is_active' => $driver->is_active,
-                'teams' => $driver->teams($season),
-                'races' => $driver->races($season)->count(),
-                'wins' => $driver->wins($season)->count(),
-                'second_positions' => $driver->secondPositions($season)->count(),
-                'third_positions' => $driver->thirdPositions($season)->count(),
-                'points' => $driver->lastPoints($season),
+                'status' => $driver->status,
+                'teams' => $driver->teams(),
+                'races' => $driver->races()->count(),
+                'wins' => $driver->stats()->getPositionsCount($season),
+                'second_positions' => $driver->stats()->getPositionsCount($season, 2),
+                'third_positions' => $driver->stats()->getPositionsCount($season, 3),
+                'points' => $driver->stats()->lastPoints($season),
             ];
         });
 
@@ -55,33 +55,34 @@ class DriverController extends Controller
         ]);
     }
 
-    public function show(string $id)
+    public function show(Driver $driver)
     {
-        $driver = Driver::findOrFail($id);
+        $ranking = new RankingService;
 
+        $driverStats = $driver->stats();
         $racesCount = $driver->races()->count();
-        $winsCount = $driver->wins()->count();
-        $podiumsCount = $driver->podiums()->count();
+        $winsCount = $driverStats->getPositionsCount();
+        $podiumsCount = $driverStats->podiums()->count();
 
         $driver = [
             'id' => $driver->id,
             'name' => $driver->name,
             'surname' => $driver->surname,
             'nationality' => $driver->nationality,
-            'is_active' => $driver->is_active,
-            'teams' => $driver->teams(),
+            'status' => $driver->status,
+            'teams' => $driver->teams,
             'races' => $racesCount,
             'wins' => $winsCount,
-            'seasons' => $driver->seasons()->count(),
-            'championshipsCount' => $driver->championships()?->count() ?? 0,
-            'points' => $driver->lastPoints(),
-            'maxPoints' => $driver->pointsHistory()->max('points'),
-            'activity' => $driver->activity(),
+            'seasons' => $driverStats->seasons()->count(),
+            'championshipsCount' => $driverStats->championships()?->count() ?? 0,
+            'points' => $driverStats->lastPoints(),
+            'maxPoints' => $driverStats->pointsHistory()->max('points'),
+            'activity' => $driverStats->activity(),
             'info' => [
-                'firstRace' => $driver->races()->first(),
-                'lastRace' => $driver->races()->last(),
-                'firstWin' => $driver->wins()->first(),
-                'lastWin' => $driver->wins()->last(),
+                'firstRace' => $driver->races->first(),
+                'lastRace' => $driver->races->last(),
+                'firstWin' => $driver->races()->where('position', 1)->first(),
+                'lastWin' => $driver->races()->where('position', 1)->get()->last(),
                 'winPercentage' => $racesCount > 0
                     ? round($winsCount / $racesCount * 100, 2)
                     : null,
@@ -92,12 +93,12 @@ class DriverController extends Controller
                 'withoutPosition' => $driver->participations()
                     ->where('position', null)
                     ->count(),
-                'raking' => Participation::driversRanking()->firstWhere('driver.id', $driver->id),
-                'championships' => $driver->championships(),
+                'ranking' => $ranking->driversRanking()->firstWhere('driver.id', $driver->id),
+                'championships' => $driverStats->championships(),
             ],
-            'pointsHistory' => $driver->pointsHistory(),
-            'positionsHistory' => $driver->countForPosition(),
-            'teammates' => $driver->teammates(),
+            'pointsHistory' => $driverStats->pointsHistory(),
+            'positionsHistory' => $driverStats->countForPosition(),
+            'teammates' => $driverStats->teammates(),
         ];
 
         return Inertia::render('drivers/show', ['driver' => $driver]);
@@ -122,17 +123,16 @@ class DriverController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $req, $id)
+    public function update(UpdateRequest $req, Driver $driver)
     {
-        $driver = Driver::findOrFail($id);
         $driver->update($req->validated());
 
         return redirect()->route('drivers.show', $driver->id);
     }
 
-    public function destroy(string $id)
+    public function destroy(Driver $driver)
     {
-        Driver::findOrFail($id)->delete();
+        $driver->delete();
 
         return back();
     }

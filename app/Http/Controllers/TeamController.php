@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
-use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
+use App\Services\RankingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -37,13 +37,13 @@ class TeamController extends Controller
                 'id' => $team->id,
                 'name' => $team->name,
                 'nationality' => $team->nationality,
-                'is_active' => $team->is_active,
-                'drivers' => $team->drivers($season),
-                'races' => $team->races($season)->count(),
-                'wins' => $team->wins($season)->count(),
-                'second_positions' => $team->secondPositions($season)->count(),
-                'third_positions' => $team->thirdPositions($season)->count(),
-                'points' => $team->lastPoints($season),
+                'status' => $team->status,
+                'drivers' => $team->drivers(),
+                'races' => $team->races()->count(),
+                'wins' => $team->stats()->getPositionsCount($season),
+                'second_positions' => $team->stats()->getPositionsCount($season, 2),
+                'third_positions' => $team->stats()->getPositionsCount($season, 3),
+                'points' => $team->stats()->lastPoints($season),
             ];
         });
 
@@ -54,30 +54,31 @@ class TeamController extends Controller
         ]);
     }
 
-    public function show(string $id)
+    public function show(Team $team)
     {
-        $team = Team::findOrFail($id);
+        $ranking = new RankingService;
+        $teamStats = $team->stats();
 
-        $racesCount = $team->races()->count();
-        $winsCount = $team->wins()->count();
-        $podiumsCount = $team->podiums()->count();
+        $racesCount = $team->races->count();
+        $winsCount = $team->stats()->getPositionsCount();
+        $podiumsCount = $team->stats()->getPodiums()->count();
 
         $team = [
             'id' => $team->id,
             'name' => $team->name,
             'nationality' => $team->nationality,
-            'is_active' => $team->is_active,
+            'status' => $team->status,
             'races' => $racesCount,
             'wins' => $winsCount,
-            'seasons' => $team->seasons()->count(),
-            'championshipsCount' => $team->championships()?->count() ?? 0,
-            'points' => $team->lastPoints(),
-            'maxPoints' => $team->pointsHistory()->max('points'),
+            'seasons' => $teamStats->seasons()->count(),
+            'championshipsCount' => $teamStats->championships()->count(),
+            'points' => $teamStats->lastPoints(),
+            'maxPoints' => $teamStats->pointsHistory()->max('points'),
             'info' => [
-                'firstRace' => $team->races()->first(),
-                'lastRace' => $team->races()->last(),
-                'firstWin' => $team->wins()->first(),
-                'lastWin' => $team->wins()->last(),
+                'firstRace' => $team->races->first(),
+                'lastRace' => $team->races->last(),
+                'firstWin' => $team->races()->where('position', 1)->first(),
+                'lastWin' => $team->races()->where('position', 1)->get()->last(),
                 'winPercentage' => $racesCount > 0
                     ? round($winsCount / $racesCount * 100, 2)
                     : null,
@@ -88,12 +89,12 @@ class TeamController extends Controller
                 'withoutPosition' => $team->participations()
                     ->where('position', null)
                     ->count(),
-                'raking' => Participation::teamsRanking()->firstWhere('team.id', $team->id),
-                'championships' => $team->championships(),
+                'ranking' => $ranking->teamsRanking()->firstWhere('team.id', $team->id),
+                'championships' => $teamStats->championships(),
             ],
-            'pointsHistory' => $team->pointsHistory(),
-            'positionsHistory' => $team->countForPosition(),
-            'drivers' => $team->drivers(),
+            'pointsHistory' => $teamStats->pointsHistory(),
+            // 'positionsHistory' => $teamStats->countForPosition(),
+            'drivers' => $team->drivers,
         ];
 
         return Inertia::render('teams/show', ['team' => $team]);
