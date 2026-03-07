@@ -193,7 +193,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                         return (
                                             <div
                                                 className={
-                                                    "grid w-full grid-cols-[repeat(auto-fit,_minmax(150px,_max-content))] justify-center gap-4"
+                                                    "grid w-full grid-cols-[repeat(auto-fit,minmax(150px,max-content))] justify-center gap-4"
                                                 }
                                             >
                                                 {teams.map(
@@ -234,7 +234,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     (() => {
                                         const teammates = driver.teammates;
                                         return (
-                                            <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(150px,_max-content))] justify-center gap-4">
+                                            <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(150px,max-content))] justify-center gap-4">
                                                 {teammates.map(
                                                     (teammates, index) =>
                                                         teammates && (
