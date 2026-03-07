@@ -22,16 +22,21 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
     if (season === "all") {
         columns = columns.filter(
             (column) =>
+                "accessorKey" in column &&
                 column.accessorKey !== "drivers" &&
                 column.accessorKey !== "second_positions" &&
                 column.accessorKey !== "third_positions",
         );
     } else {
-        columns = columns.filter((column) => column.accessorKey !== "status");
+        columns = columns.filter(
+            (column) => "accessorKey" in column && column.accessorKey !== "status",
+        );
     }
 
     if (!auth.user || teams.length === 0) {
-        columns = columns.filter((column) => column.accessorKey !== "actions");
+        columns = columns.filter(
+            (column) => "accessorKey" in column && column.accessorKey !== "actions",
+        );
     }
 
     return (
