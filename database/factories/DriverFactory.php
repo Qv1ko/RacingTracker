@@ -76,7 +76,7 @@ class DriverFactory extends Factory
                 'Vietnamese',
                 null,
             ]),
-            'is_active' => true,
+            'status' => true,
         ];
     }
 }

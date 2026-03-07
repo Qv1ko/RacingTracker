@@ -52,7 +52,7 @@ class TeamFactory extends Factory
                 'British',
                 'American',
             ]),
-            'is_active' => true,
+            'status' => true,
         ];
     }
 
