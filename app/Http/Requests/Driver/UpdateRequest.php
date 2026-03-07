@@ -35,7 +35,7 @@ class UpdateRequest extends FormRequest
             ],
             'surname' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\'\.\- ]+$/u'],
             'nationality' => ['nullable', 'max:25'],
-            'status' => ['boolean'],
+            'is_active' => ['boolean'],
         ];
     }
 

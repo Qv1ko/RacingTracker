@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required', 'unique:teams', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z0-9][A-Za-z0-9\s\-&]*[A-Za-z0-9]$/'],
             'nationality' => ['nullable', 'max:25'],
-            'status' => ['boolean'],
+            'is_active' => ['boolean'],
         ];
     }
 

@@ -15,7 +15,7 @@ class Team extends Model
     protected $fillable = [
         'name',
         'nationality',
-        'status',
+        'is_active',
     ];
 
     public function participations(): HasMany

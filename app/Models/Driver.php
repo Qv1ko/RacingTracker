@@ -16,7 +16,7 @@ class Driver extends Model
         'name',
         'surname',
         'nationality',
-        'status',
+        'is_active',
     ];
 
     public function participations(): HasMany
@@ -129,7 +129,7 @@ class Driver extends Model
     {
         return $this->participations()
             ->toBase()
-            ->select('participations.status', 'participations.race_id', 'races.name', 'races.date')
+            ->select('participations.is_active', 'participations.race_id', 'races.name', 'races.date')
             ->join('races', 'participations.race_id', '=', 'races.id')
             ->when($season !== 'all', fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
@@ -143,8 +143,8 @@ class Driver extends Model
             ->when($season !== 'all', function ($query) use ($season) {
                 $query->whereHas('race', fn ($q) => $q->whereYear('date', $season));
             })
-            ->select('status as position', DB::raw('count(*) as times'))
-            ->groupBy('status')
+            ->select('is_active as position', DB::raw('count(*) as times'))
+            ->groupBy('is_active')
             ->orderBy('position', 'asc')
             ->get();
 
