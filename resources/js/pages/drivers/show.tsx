@@ -141,10 +141,10 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     },
                                     {
                                         key: "Drivers ranking position",
-                                        value: driver.info.raking && (
+                                        value: driver.info.ranking && (
                                             <>
-                                                {medal(driver.info.raking.position)}
-                                                {driver.info.raking.position}
+                                                {medal(driver.info.ranking.position)}
+                                                {driver.info.ranking.position}
                                             </>
                                         ),
                                     },

@@ -117,10 +117,10 @@ export default function Teams({ team }: { team: Team }) {
                                     },
                                     {
                                         key: "Teams ranking position",
-                                        value: team.info.raking && (
+                                        value: team.info.ranking && (
                                             <>
-                                                {medal(team.info.raking.position)}{" "}
-                                                {team.info.raking.position}
+                                                {medal(team.info.ranking.position)}{" "}
+                                                {team.info.ranking.position}
                                             </>
                                         ),
                                     },

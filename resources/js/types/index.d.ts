@@ -68,7 +68,7 @@ export interface Driver {
         podiums: number;
         podiumPercentage: number;
         withoutPosition: number;
-        raking: { driver_id: number; points: number; position: number };
+        ranking: { driver_id: number; points: number; position: number };
         championships: string[];
     };
     pointsHistory?: { race: string; date: string; points: number }[];
@@ -177,7 +177,7 @@ export interface Team {
         podiums: number;
         podiumPercentage: number;
         withoutPosition: number;
-        raking: { driver_id: number; points: number; position: number };
+        ranking: { driver_id: number; points: number; position: number };
         championships: string[];
     };
     pointsHistory?: { race: string; date: string; points: number }[];
