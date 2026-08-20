@@ -13,7 +13,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $listenerClass = config('ranking.algorithms')[config('ranking.algorithm')]
+        $listenerClass = config('ranking.algorithms.'.config('ranking.algorithm'))
             ?? TrueSkillCalculation::class;
 
         $this->app['events']->listen(RaceResultCalculated::class, $listenerClass);

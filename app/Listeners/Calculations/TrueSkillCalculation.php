@@ -5,25 +5,18 @@ namespace App\Listeners\Calculations;
 use App\Contracts\RatingCalculation;
 use App\Events\RaceResultCalculated;
 use App\Models\Participation;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 
-class TrueSkillCalculation implements RatingCalculation, ShouldQueue
+class TrueSkillCalculation implements RatingCalculation
 {
-    public string $queue = 'calculations';
-
-    private const MU = 25.0;
-
-    private const SIGMA = 8.333; // $MU / 3
-
     public function handle(RaceResultCalculated $event): void
     {
         foreach ($event->participations as $participation) {
             [$points, $uncertainty] = $this->previousRating($participation);
 
-            $finishedCount = $event->participations->where('race_id', $participation->race_id)->where('position', '>', 0)->count();
+            $finishedCount = $event->participations->where('position', '>', 0)->count();
             $position = $participation->position ?? $finishedCount + 1;
-            $participantCount = $event->participations->where('race_id', $participation->race_id)->count();
+            $participantCount = $event->participations->count();
             $relativeAvg = $this->relativeAverage($participation);
 
             $newRating = $this->updateRating($points, $uncertainty, $position, $participantCount, $relativeAvg);
@@ -37,19 +30,16 @@ class TrueSkillCalculation implements RatingCalculation, ShouldQueue
     private function previousRating(Participation $participation): array
     {
         $latest = Participation::query()
-            ->select('points', 'uncertainty')
-            ->with('races')
+            ->select('participations.points', 'participations.uncertainty')
             ->where('driver_id', $participation->driver_id)
-            ->whereHas(
-                'race',
-                fn ($q) => $q->where('date', '<', $participation->race->date)
-            )
+            ->whereHas('race', fn ($q) => $q->where('date', '<', $participation->race->date))
+            ->join('races', 'races.id', '=', 'participations.race_id')
             ->orderByDesc('races.date')
-            ->latest();
+            ->first();
 
         return [
-            $latest->points ?? self::MU,
-            $latest->uncertainty ?? self::SIGMA,
+            $latest->points ?? config('ranking.defaults.mu'),
+            $latest->uncertainty ?? config('ranking.defaults.sigma'),
         ];
     }
 
@@ -87,6 +77,11 @@ class TrueSkillCalculation implements RatingCalculation, ShouldQueue
         $tau = $mu / 300.0; // Dynamic factor
 
         $C = $sigma ** 2 + $beta ** 2; // Performance variance
+
+        if ($C == 0.0) {
+            return ['mu' => $mu, 'sigma' => $sigma];
+        }
+
         $K = ($sigma ** 2) / $C; // Update factor
 
         $expectedPosition = $avg * $participantsCount;

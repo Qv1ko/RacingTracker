@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RaceResultCalculated;
 use App\Http\Requests\Race\StoreRequest;
 use App\Http\Requests\Race\UpdateRequest;
 use App\Models\Driver;
@@ -92,36 +93,20 @@ class RaceController extends Controller
         $race = Race::create($req->validated());
 
         foreach ($req->result as $participation) {
+            [$previousPoints, $previousUncertainty] = $this->previousRating($participation['driver'], $race);
+
             Participation::create([
                 'driver_id' => $participation['driver'],
                 'team_id' => $participation['team'],
                 'race_id' => $race->id,
                 'position' => intval($participation['position']) ? intval($participation['position']) : null,
                 'status' => $participation['position'],
-                'points' => Participation::where('driver_id', $participation['driver'])
-                    ->whereHas('race', function ($query) use ($race) {
-                        $query->where('date', '<', $race->date);
-                    })
-                    ->orderByDesc(Race::select('date')
-                        ->whereColumn('id', 'participations.race_id')
-                        ->limit(1))
-                    ->first()
-                    ?->points ?? Participation::$MU,
-                'uncertainty' => Participation::where('driver_id', $participation['driver'])
-                    ->whereHas('race', function ($query) use ($race) {
-                        $query->where('date', '<', $race->date);
-                    })
-                    ->orderByDesc(Race::select('date')
-                        ->whereColumn('id', 'participations.race_id')
-                        ->limit(1))
-                    ->first()
-                    ?->uncertainty ?? Participation::$SIGMA,
+                'points' => $previousPoints,
+                'uncertainty' => $previousUncertainty,
             ]);
         }
 
-        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
-            $query->where('date', '>=', $race->date);
-        })->get());
+        $this->recalculateFrom($race);
 
         return redirect()->route('races.show', $race->id);
     }
@@ -147,36 +132,20 @@ class RaceController extends Controller
         $race->participations()->delete();
 
         foreach ($req->result as $participationData) {
+            [$previousPoints, $previousUncertainty] = $this->previousRating($participationData['driver'], $race);
+
             Participation::create([
                 'driver_id' => $participationData['driver'],
                 'team_id' => $participationData['team'],
                 'race_id' => $race->id,
                 'position' => intval($participationData['position']) ? intval($participationData['position']) : null,
                 'status' => $participationData['position'],
-                'points' => Participation::where('driver_id', $participationData['driver'])
-                    ->whereHas('race', function ($query) use ($race) {
-                        $query->where('date', '<', $race->date);
-                    })
-                    ->orderByDesc(Race::select('date')
-                        ->whereColumn('id', 'participations.race_id')
-                        ->limit(1))
-                    ->first()
-                    ?->points ?? Participation::$MU,
-                'uncertainty' => Participation::where('driver_id', $participationData['driver'])
-                    ->whereHas('race', function ($query) use ($race) {
-                        $query->where('date', '<', $race->date);
-                    })
-                    ->orderByDesc(Race::select('date')
-                        ->whereColumn('id', 'participations.race_id')
-                        ->limit(1))
-                    ->first()
-                    ?->uncertainty ?? Participation::$SIGMA,
+                'points' => $previousPoints,
+                'uncertainty' => $previousUncertainty,
             ]);
         }
 
-        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
-            $query->where('date', '>=', $race->date);
-        })->get());
+        $this->recalculateFrom($race);
 
         return redirect()->route('races.show', $race->id);
     }
@@ -185,12 +154,35 @@ class RaceController extends Controller
     {
         $race = Race::findOrFail($id);
 
-        Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
-            $query->where('date', '>=', $race->date);
-        })->get());
-
         $race->delete();
 
+        $this->recalculateFrom($race);
+
         return back();
+    }
+
+    private function previousRating(int|string $driverId, Race $race): array
+    {
+        $latest = Participation::where('driver_id', $driverId)
+            ->whereHas('race', fn ($query) => $query->where('date', '<', $race->date))
+            ->orderByDesc(Race::select('date')
+                ->whereColumn('races.id', 'participations.race_id')
+                ->limit(1))
+            ->first();
+
+        return [
+            $latest?->points ?? config('ranking.defaults.mu'),
+            $latest?->uncertainty ?? config('ranking.defaults.sigma'),
+        ];
+    }
+
+    private function recalculateFrom(Race $race): void
+    {
+        Participation::whereHas('race', fn ($query) => $query->where('date', '>=', $race->date))
+            ->with('race')
+            ->get()
+            ->sortBy(fn ($participation) => $participation->race->date)
+            ->groupBy('race_id')
+            ->each(fn ($participations) => RaceResultCalculated::dispatch($participations));
     }
 }
