@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
-use App\Models\Participation;
 use App\Models\Race;
+use App\Services\RankingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -35,20 +35,22 @@ class HomeController extends Controller
                 ];
             })->values();
 
+        $ranking = new RankingService;
+
         $seasonData = [
             'season' => $season,
             'driversPoints' => $driverSeasonPointsHistory,
-            'teamStandings' => $lastRace?->id ? Participation::raceTeamStandings($lastRace->id) : [],
+            'teamStandings' => $lastRace ? $ranking->raceTeamStandings($lastRace) : [],
         ];
 
         return Inertia::render('home', [
             'seasons' => $seasons,
             'season' => $seasonData,
             'drivers' => [
-                'ranking' => Participation::driversRanking(),
+                'ranking' => $ranking->driversRanking(),
             ],
             'teams' => [
-                'ranking' => Participation::teamsRanking(),
+                'ranking' => $ranking->teamsRanking(),
             ],
         ]);
     }
