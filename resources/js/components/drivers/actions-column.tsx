@@ -47,7 +47,7 @@ export const ActionsColumn: ColumnDef<Driver> = {
                             onClick={() => handleEdit(row.original.id)}
                             className="cursor-pointer"
                         >
-                            <Pencil /> Update {row.original.name}
+                            <Pencil /> Update {row.original.name} {row.original.surname}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => handleDestroy(row.original.id)}

@@ -64,7 +64,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             label="Max points"
                         />
                     </div>
-                    {driver.activity && (
+                    {driver.activity && driver.activity.length > 0 && (
                         <ActivityChart
                             data={{
                                 activity: driver.activity.map((activity) => ({
