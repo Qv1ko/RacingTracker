@@ -2,9 +2,14 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Schedule::command('f1:sync')
+    ->dailyAt('04:00')
+    ->withoutOverlapping()
+    ->onOneServer();
+
+Schedule::command('ranking:recalculate')
+    ->weeklyOn(1, '05:00')
+    ->withoutOverlapping()
+    ->onOneServer();
