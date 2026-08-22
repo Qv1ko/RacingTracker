@@ -291,7 +291,14 @@ The mapping between algorithm names and classes lives in `config/ranking.php` un
 2. Recalculate all stored ratings so existing races use the new system:
 
 ```bash
-php artisan tinker --execute="(new App\Actions\SyncRaceParticipations)->recalculateFrom('1950-01-01');"
+php artisan ranking:recalculate
+```
+
+You can also recalculate a single season or only races after a given date:
+
+```bash
+php artisan ranking:recalculate --season=2025
+php artisan ranking:recalculate --from=2025-01-01
 ```
 
 ### Adding a custom algorithm
@@ -331,7 +338,34 @@ class MySystemCalculation implements RatingCalculation
 
 3. Select it with `RANKING_ALGORITHM=my-system` in `.env` and recalculate as explained above.
 
-> Note: some pages consider the season champion to be the driver or team that **gained the most points** during the season (not the one with the most accumulated points). Keep this in mind when designing a custom system.
+> Note: ratings are reset at the start of every season, so all drivers and teams begin each season from the same neutral value and the season champion is simply the one with the most points at the end of the last race.
+
+## 🔄 Automation
+
+The scheduler keeps data and ratings up to date automatically (see `routes/console.php`):
+
+| Schedule | Command | Description |
+| -------- | ------- | ----------- |
+| Daily at 04:00 | `f1:sync` | Imports missing seasons, races and results from the [Jolpica API](https://api.jolpi.ca) (current and previous season by default). Existing data is never overwritten, so manual edits always win. |
+| Weekly on Mondays at 05:00 | `ranking:recalculate` | Full ratings recalculation as a consistency safety net after each Grand Prix weekend. |
+
+In production, make sure the Laravel scheduler runs every minute via cron:
+
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+For local development you can run it with:
+
+```bash
+php artisan schedule:work
+```
+
+To import the full history from scratch at any time:
+
+```bash
+php artisan f1:sync --from=1950
+```
 
 ## ☁️ Deployment on AWS
 
