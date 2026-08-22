@@ -51,6 +51,19 @@ class SyncRaceParticipations
 
     public function recalculateFrom(string $date): void
     {
+        // Start every recalculation from an algorithm-neutral state so
+        // ratings from a previously active system never leak into the new
+        // one (e.g. trueskill decimals surviving a switch to classic).
+        $neutral = config('ranking.algorithm') === 'trueskill'
+            ? [
+                'points' => config('ranking.defaults.mu'),
+                'uncertainty' => config('ranking.defaults.sigma'),
+            ]
+            : ['points' => 0, 'uncertainty' => 0];
+
+        Participation::whereHas('race', fn ($query) => $query->where('date', '>=', $date))
+            ->update($neutral);
+
         Participation::whereHas('race', fn ($query) => $query->where('date', '>=', $date))
             ->with('race')
             ->get()
