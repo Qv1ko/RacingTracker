@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'algorithm' => env('RANKING_ALGORITHM') ?: 'trueskill',
+    'algorithm' => env('RANKING_ALGORITHM') ?: 'classic',
 
     'algorithms' => [
         'classic' => ClassicCalculation::class,
