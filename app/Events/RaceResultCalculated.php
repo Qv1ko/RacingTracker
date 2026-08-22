@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -11,8 +13,6 @@ class RaceResultCalculated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * @param  Collection  $participations  The participations of the race, already persisted with position/status.
-     */
+    /** @param  Collection  $participations  The participations of the race, already persisted with position/status. */
     public function __construct(public readonly Collection $participations) {}
 }

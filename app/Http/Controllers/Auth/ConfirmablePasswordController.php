@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -12,20 +14,16 @@ use Inertia\Response;
 
 class ConfirmablePasswordController extends Controller
 {
-    /**
-     * Show the confirm password page.
-     */
+    /** Show the confirm password page. */
     public function show(): Response
     {
         return Inertia::render('auth/confirm-password');
     }
 
-    /**
-     * Confirm the user's password.
-     */
+    /** Confirm the user's password. */
     public function store(Request $request): RedirectResponse
     {
-        if (! Auth::guard('web')->validate([
+        if ( ! Auth::guard('web')->validate([
             'email' => $request->user()->email,
             'password' => $request->password,
         ])) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Listeners\Calculations\ClassicCalculation;
 use App\Listeners\Calculations\PositionCalculation;
 use App\Listeners\Calculations\TrueSkillCalculation;

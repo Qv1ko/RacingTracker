@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Events\RaceResultCalculated;
@@ -8,9 +10,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
-    /**
-     * Register the correct calculation listener based on RANKING_ALGORITHM env var.
-     */
+    /** Register the correct calculation listener based on RANKING_ALGORITHM env var. */
     public function boot(): void
     {
         $listenerClass = config('ranking.algorithms.'.config('ranking.algorithm'))
