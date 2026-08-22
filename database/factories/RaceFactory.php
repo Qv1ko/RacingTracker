@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Race;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Race>
+ * @extends Factory<Race>
  */
 class RaceFactory extends Factory
 {
@@ -22,9 +25,7 @@ class RaceFactory extends Factory
         ];
     }
 
-    /**
-     * Generates a random date within the given year.
-     */
+    /** Generates a random date within the given year. */
     public function fromYear(int $year): static
     {
         return $this->state(fn () => [

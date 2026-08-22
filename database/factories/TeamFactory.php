@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
+ * @extends Factory<Team>
  */
 class TeamFactory extends Factory
 {
@@ -56,9 +59,7 @@ class TeamFactory extends Factory
         ];
     }
 
-    /**
-     * Generates a 2-4 syllable team name + optional suffix.
-     */
+    /** Generates a 2-4 syllable team name + optional suffix. */
     protected function generateTeamName(): string
     {
         $consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'z'];
