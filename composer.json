@@ -9,10 +9,10 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "inertiajs/inertia-laravel": "^2.0",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1",
+        "php": "^8.4",
+        "inertiajs/inertia-laravel": "^3.0",
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^3.0",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
@@ -22,9 +22,10 @@
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "pestphp/pest": "^4",
-        "pestphp/pest-plugin-laravel": "^4",
-        "phpunit/phpunit": "^12.5.23"
+        "nunomaduro/larastan": "^3.10",
+        "pestphp/pest": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0",
+        "phpunit/phpunit": "^13.0"
     },
     "autoload": {
         "psr-4": {
@@ -39,6 +40,15 @@
         }
     },
     "scripts": {
+        "lint": [
+            "@php vendor/bin/pint --test",
+            "pnpm run fmt:check"
+        ],
+        "lint:fix": [
+            "@php vendor/bin/pint",
+            "pnpm run fmt"
+        ],
+        "analyse": "@php vendor/bin/phpstan",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -56,7 +66,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"pnpm run dev\" --names='server,queue,vite'"
         ],
         "dev:ssr": [
             "npm run build:ssr",
