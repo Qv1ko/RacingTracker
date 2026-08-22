@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -7,9 +9,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
+    /** Seed the application's database. */
     public function run(): void
     {
         User::factory()->create([
@@ -17,11 +17,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@racingtracker.dev',
             'password' => bcrypt('admin'),
         ]);
-
         $this->call([
-            // SeasonSeeder::class,
-            // DriverSeeder::class,
-            // TeamSeeder::class,
+            F1SeasonSeeder::class,
         ]);
     }
 }
