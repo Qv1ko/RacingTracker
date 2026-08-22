@@ -1,7 +1,10 @@
+import { useMemo } from "react";
+
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import { downsample } from "@/lib/downsample";
 
 type MultiPointsChartProps = {
     title?: string;
@@ -28,19 +31,23 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
     data,
     chartConfig,
 }) => {
-    const sortedData = data.map((race) => {
-        const { race: raceName, date, ...driverPoints } = race;
-        const sortedEntries = Object.entries(driverPoints)
-            .filter(([, v]) => typeof v === "number")
-            .sort(([, a], [, b]) => (b as number) - (a as number));
-        const sortedRace: Record<string, string | number> = {};
-        sortedEntries.forEach(([id, pts]) => {
-            sortedRace[id] = pts;
+    const sortedData = useMemo(() => {
+        const mapped = data.map((race) => {
+            const { race: raceName, date, ...driverPoints } = race;
+            const sortedEntries = Object.entries(driverPoints)
+                .filter(([, v]) => typeof v === "number")
+                .sort(([, a], [, b]) => (b as number) - (a as number));
+            const sortedRace: Record<string, string | number> = {};
+            sortedEntries.forEach(([id, pts]) => {
+                sortedRace[id] = pts;
+            });
+            sortedRace.race = raceName;
+            sortedRace.date = date;
+            return sortedRace;
         });
-        sortedRace.race = raceName;
-        sortedRace.date = date;
-        return sortedRace;
-    });
+
+        return downsample(mapped);
+    }, [data]);
 
     const driverKeys = Array.from(
         sortedData.reduce<Set<string>>((keys, obj) => {
@@ -77,6 +84,7 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
                             tickFormatter={(value) => value.toFixed(0).toString()}
                         />
                         <Tooltip
+                            isAnimationActive={false}
                             cursor={{ strokeDasharray: "3 3" }}
                             content={({ payload = [], label, active, coordinate, offset }) => {
                                 const sorted = payload
@@ -90,16 +98,18 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
                                     }),
                                 }));
 
-                                const raceData = sortedData.find((race) => race.race === label);
-                                const raceDate =
-                                    new Date(raceData?.date ?? "").toLocaleDateString("en-GB") ||
-                                    "";
+                                const point = payload[0]?.payload as
+                                    | { race?: string; date?: string }
+                                    | undefined;
+                                const raceDate = point?.date
+                                    ? new Date(point.date).toLocaleDateString("en-GB")
+                                    : "";
 
                                 return (
                                     <ChartTooltipContent
                                         active={active}
                                         payload={formatted}
-                                        label={`${label} (${raceDate})`}
+                                        label={`${point?.race ?? label} (${raceDate})`}
                                         coordinate={coordinate}
                                         offset={offset}
                                     />

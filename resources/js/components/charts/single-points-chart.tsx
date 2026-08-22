@@ -1,6 +1,10 @@
+import { useMemo } from "react";
+
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { downsample } from "@/lib/downsample";
 
 const chartConfig = {
     points: {
@@ -21,6 +25,8 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
     title = "Points history",
     data,
 }) => {
+    const points = useMemo(() => downsample(data), [data]);
+
     return (
         <Card className="mb-4">
             <CardHeader>
@@ -28,7 +34,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig} className="h-[360px] w-full">
-                    <LineChart accessibilityLayer data={data} margin={{ top: 12, left: -22 }}>
+                    <LineChart accessibilityLayer data={points} margin={{ top: 12, left: -22 }}>
                         <CartesianGrid vertical={false} />
                         <XAxis
                             dataKey="race"
@@ -45,29 +51,21 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                             tickFormatter={(value) => value.toFixed(0).toString()}
                         />
                         <Tooltip
+                            isAnimationActive={false}
                             cursor={{ strokeDasharray: "3 3" }}
                             content={({ payload = [], label, active, coordinate, offset }) => {
-                                const sorted = payload
-                                    .slice()
-                                    .sort((a, b) => Number(b.value ?? 0) - Number(a.value ?? 0));
-                                const formatted = sorted.map((entry) => ({
-                                    ...entry,
-                                    value: Number(entry.value).toLocaleString("en-US", {
-                                        maximumFractionDigits: 3,
-                                        useGrouping: false,
-                                    }),
-                                }));
-
-                                const raceData = data.find((race) => race.race === label);
-                                const raceDate =
-                                    new Date(raceData?.date ?? "").toLocaleDateString("en-GB") ||
-                                    "";
+                                const point = payload[0]?.payload as
+                                    | { race?: string; date?: string }
+                                    | undefined;
+                                const raceDate = point?.date
+                                    ? new Date(point.date).toLocaleDateString("en-GB")
+                                    : "";
 
                                 return (
                                     <ChartTooltipContent
                                         active={active}
-                                        payload={formatted}
-                                        label={`${label} (${raceDate})`}
+                                        payload={payload}
+                                        label={`${point?.race ?? label} (${raceDate})`}
                                         coordinate={coordinate}
                                         offset={offset}
                                     />
@@ -82,6 +80,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                             stroke="var(--color-primary)"
                             strokeWidth={2}
                             dot={false}
+                            isAnimationActive={false}
                         />
                     </LineChart>
                 </ChartContainer>
