@@ -30,7 +30,9 @@ class ClassicCalculation implements RatingCalculation
         $latest = Participation::query()
             ->select('participations.points', 'participations.uncertainty')
             ->where('driver_id', $participation->driver_id)
-            ->whereHas('race', fn ($q) => $q->where('date', '<', $participation->race->date))
+            ->whereHas('race', fn ($q) => $q
+                ->whereYear('date', $participation->race->season)
+                ->where('date', '<', $participation->race->date))
             ->join('races', 'races.id', '=', 'participations.race_id')
             ->orderByDesc('races.date')
             ->first();
