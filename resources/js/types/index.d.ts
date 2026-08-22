@@ -58,7 +58,7 @@ export interface Driver {
     seasons?: number;
     championshipsCount?: number;
     maxPoints?: number;
-    activity?: { status: string; race_id: number; name: string; date: string }[];
+    activity?: { position: string; name: string; date: string }[];
     info?: {
         firstRace?: Race;
         lastRace?: Race;
@@ -68,7 +68,7 @@ export interface Driver {
         podiums: number;
         podiumPercentage: number;
         withoutPosition: number;
-        ranking: { driver_id: number; points: number; position: number };
+        ranking: { position: number };
         championships: string[];
     };
     pointsHistory?: { race: string; date: string; points: number }[];

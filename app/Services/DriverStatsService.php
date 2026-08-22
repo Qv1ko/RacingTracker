@@ -134,7 +134,7 @@ class DriverStatsService
             ->whereIn(
                 'race_id',
                 Participation::where('driver_id', $this->driver->id)
-                    ->when($season !== 'all', function ($q) use ($season) {
+                    ->when($season && $season !== 'all', function ($q) use ($season) {
                         $q->whereHas('race', fn ($r) => $r->whereYear('date', $season));
                     })
                     ->select('race_id')

@@ -68,7 +68,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                         <ActivityChart
                             data={{
                                 activity: driver.activity.map((activity) => ({
-                                    position: activity.status,
+                                    position: activity.position,
                                     name: activity.name,
                                     date: activity.date,
                                 })),
@@ -178,7 +178,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                     {driver.pointsHistory && <SinglePointsChart data={driver.pointsHistory} />}
                     <table key="seasons"></table>
                     {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}
-                    {((driver.teams?.length || 0) > 0 || driver.teammates) && (
+                    {((driver.teams?.length || 0) > 0 || (driver.teammates?.length || 0) > 0) && (
                         <div className="grid auto-rows-min grid-cols-1 gap-4 md:grid-cols-2">
                             <div className="grid auto-rows-min justify-items-center gap-4">
                                 <div className="flex items-center justify-center gap-2">
@@ -232,33 +232,32 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                 </div>
                                 {driver.teammates &&
                                     (() => {
-                                        const teammates = driver.teammates;
+                                        const teammates = driver.teammates.filter(
+                                            (teammate) => teammate,
+                                        );
                                         return (
                                             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(150px,max-content))] justify-center gap-4">
-                                                {teammates.map(
-                                                    (teammates, index) =>
-                                                        teammates && (
-                                                            <div
-                                                                key={`team-${index}`}
-                                                                className="rounded-sm border px-4 py-2"
-                                                            >
-                                                                <Link
-                                                                    href={`/drivers/${teammates.id}`}
-                                                                    className="hover:text-primary flex items-center justify-center gap-2"
-                                                                >
-                                                                    <FlagIcon
-                                                                        nationality={
-                                                                            teammates.nationality ||
-                                                                            "unknown"
-                                                                        }
-                                                                        size={16}
-                                                                    />{" "}
-                                                                    {teammates.name[0].toUpperCase()}
-                                                                    . {teammates.surname}
-                                                                </Link>
-                                                            </div>
-                                                        ),
-                                                )}
+                                                {teammates.map((teammate, index) => (
+                                                    <div
+                                                        key={`teammate-${index}`}
+                                                        className="rounded-sm border px-4 py-2"
+                                                    >
+                                                        <Link
+                                                            href={`/drivers/${teammate.id}`}
+                                                            className="hover:text-primary flex items-center justify-center gap-2"
+                                                        >
+                                                            <FlagIcon
+                                                                nationality={
+                                                                    teammate.nationality ||
+                                                                    "unknown"
+                                                                }
+                                                                size={16}
+                                                            />{" "}
+                                                            {teammate.name?.[0]?.toUpperCase()}.{" "}
+                                                            {teammate.surname}
+                                                        </Link>
+                                                    </div>
+                                                ))}
                                             </div>
                                         );
                                     })()}
