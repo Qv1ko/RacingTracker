@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\SyncRaceParticipations;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -56,19 +57,59 @@ class TeamStatsService
 
     public function pointsHistory(?string $season = null): Collection
     {
-        $participations = $this->team
+        $perRace = $this->team
             ->participations()
             ->with('race')
             ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->get()
             ->sortBy(fn ($p) => $p->race->date)
+            ->groupBy(fn ($p) => $p->race->id)
+            ->map(function ($rows) {
+                $race = $rows->first()->race;
+                $latestByDriver = [];
+
+                foreach ($rows as $p) {
+                    $latestByDriver[$p->driver_id] = (float) $p->points;
+                }
+
+                return [
+                    'race_id' => $race->id,
+                    'race' => $race->name,
+                    'date' => $race->date,
+                    'season' => $race->season,
+                    'average' => array_sum($latestByDriver) / count($latestByDriver),
+                ];
+            })
             ->values();
 
-        return $participations
-            ->groupBy(fn ($p) => $p->race->season)
-            ->sortKeys()
-            ->flatMap(fn ($rows) => $this->pointsHistoryForSeason($rows))
-            ->values();
+        if ($season !== null) {
+            return $perRace
+                ->map(fn ($row) => [
+                    'race_id' => $row['race_id'],
+                    'race' => $row['race'],
+                    'date' => $row['date'],
+                    'points' => round($row['average'], 3),
+                ]);
+        }
+
+        $neutral = (float) SyncRaceParticipations::neutralRating()['points'];
+        $total = 0.0;
+        $previousBySeason = [];
+
+        return $perRace
+            ->map(function ($row) use ($neutral, &$total, &$previousBySeason) {
+                $base = $previousBySeason[$row['season']] ?? $neutral;
+
+                $total += $row['average'] - $base;
+                $previousBySeason[$row['season']] = $row['average'];
+
+                return [
+                    'race_id' => $row['race_id'],
+                    'race' => $row['race'],
+                    'date' => $row['date'],
+                    'points' => round($total, 3),
+                ];
+            });
     }
 
     public function lastPoints(?string $season = null): ?float
@@ -91,29 +132,6 @@ class TeamStatsService
         )->avg('points');
 
         return $points === null ? null : (float) number_format((float) $points, 3);
-    }
-
-    private function pointsHistoryForSeason(Collection $participations): Collection
-    {
-        $latestByDriver = [];
-        $history = [];
-
-        foreach ($participations->groupBy(fn ($p) => $p->race->id) as $rows) {
-            $race = $rows->first()->race;
-
-            foreach ($rows as $p) {
-                $latestByDriver[$p->driver_id] = (float) $p->points;
-            }
-
-            $history[] = [
-                'race_id' => $race->id,
-                'race' => $race->name,
-                'date' => $race->date,
-                'points' => array_sum($latestByDriver) / count($latestByDriver),
-            ];
-        }
-
-        return collect($history);
     }
 
     private function latestPointsPerDriver(Collection $participations): Collection

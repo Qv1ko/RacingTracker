@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\SyncRaceParticipations;
 use App\Models\Driver;
 use App\Models\Participation;
 use Carbon\Carbon;
@@ -52,7 +53,7 @@ class DriverStatsService
 
     public function pointsHistory(?string $season = null): Collection
     {
-        return $this->driver
+        $rows = $this->driver
             ->participations()
             ->toBase()
             ->select('participations.points', 'races.name as race', 'races.date as date')
@@ -60,6 +61,26 @@ class DriverStatsService
             ->when($season, fn ($q) => $q->whereYear('races.date', $season))
             ->orderBy('races.date', 'asc')
             ->get();
+
+        if ($season !== null) {
+            return $rows;
+        }
+
+        $neutral = (float) SyncRaceParticipations::neutralRating()['points'];
+        $total = 0.0;
+        $previousBySeason = [];
+
+        return $rows->map(function ($row) use ($neutral, &$total, &$previousBySeason) {
+            $year = substr($row->date, 0, 4);
+            $base = $previousBySeason[$year] ?? $neutral;
+
+            $total += (float) $row->points - $base;
+            $previousBySeason[$year] = (float) $row->points;
+
+            $row->points = round($total, 3);
+
+            return $row;
+        });
     }
 
     public function podiums(?string $season = null): Collection
