@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { type Driver } from "@/types";
 import { router } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Pencil, Trash } from "lucide-react";
 
-export const ActionsColumn: ColumnDef<Driver> = {
-    accessorKey: "actions",
+import { type DataTableColumn } from "@/components/data-table";
+
+export const ActionsColumn: DataTableColumn<Driver> = {
+    id: "actions",
     header: () => <div className="font-bold"></div>,
     cell: ({ row }) => {
         const handleEdit = (id: number) => {

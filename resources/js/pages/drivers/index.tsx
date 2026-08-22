@@ -1,5 +1,5 @@
 import { CreateButton } from "@/components/create-button";
-import { DataTable } from "@/components/data-table";
+import { DataTable, getColumnKey } from "@/components/data-table";
 import { columns as tableColumns } from "@/components/drivers/columns";
 import { SelectSeason } from "@/components/select-season";
 import AppLayout from "@/layouts/app-layout";
@@ -22,16 +22,16 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
     if (season === "all") {
         columns = columns.filter(
             (column) =>
-                column.accessorKey !== "teams" &&
-                column.accessorKey !== "second_positions" &&
-                column.accessorKey !== "third_positions",
+                getColumnKey(column) !== "teams" &&
+                getColumnKey(column) !== "second_positions" &&
+                getColumnKey(column) !== "third_positions",
         );
     } else {
-        columns = columns.filter((column) => column.accessorKey !== "status");
+        columns = columns.filter((column) => getColumnKey(column) !== "status");
     }
 
     if (!auth.user || drivers.length === 0) {
-        columns = columns.filter((column) => column.accessorKey !== "actions");
+        columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
     return (

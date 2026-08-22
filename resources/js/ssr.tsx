@@ -1,4 +1,4 @@
-import { createInertiaApp } from "@inertiajs/react";
+import { createInertiaApp, type ResolvedComponent } from "@inertiajs/react";
 import createServer from "@inertiajs/react/server";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import ReactDOMServer from "react-dom/server";
@@ -12,7 +12,10 @@ createServer((page) =>
         render: ReactDOMServer.renderToString,
         title: (title) => `${title} - ${appName}`,
         resolve: (name) =>
-            resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
+            resolvePageComponent(
+                `./pages/${name}.tsx`,
+                import.meta.glob("./pages/**/*.tsx"),
+            ) as Promise<ResolvedComponent>,
         setup: ({ App, props }) => {
             // @ts-expect-error
             global.route = (name, params, absolute) =>

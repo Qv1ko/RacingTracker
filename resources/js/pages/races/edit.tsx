@@ -259,9 +259,17 @@ export default function CreateRaceForm({
                                                 </SelectContent>
                                             </Select>
                                         )}
-                                        {errors["result." + i + ".position"] && (
+                                        {errors[
+                                            ("result." + i + ".position") as keyof typeof errors
+                                        ] && (
                                             <p className="text-destructive text-sm font-medium">
-                                                {errors["result." + i + ".position"]}
+                                                {
+                                                    errors[
+                                                        ("result." +
+                                                            i +
+                                                            ".position") as keyof typeof errors
+                                                    ]
+                                                }
                                             </p>
                                         )}
                                     </td>
@@ -314,9 +322,17 @@ export default function CreateRaceForm({
                                                     ))}
                                             </SelectContent>
                                         </Select>
-                                        {errors["result." + i + ".driver"] && (
+                                        {errors[
+                                            ("result." + i + ".driver") as keyof typeof errors
+                                        ] && (
                                             <p className="text-destructive text-sm font-medium">
-                                                {errors["result." + i + ".driver"]}
+                                                {
+                                                    errors[
+                                                        ("result." +
+                                                            i +
+                                                            ".driver") as keyof typeof errors
+                                                    ]
+                                                }
                                             </p>
                                         )}
                                     </td>
@@ -365,9 +381,17 @@ export default function CreateRaceForm({
                                                     ))}
                                             </SelectContent>
                                         </Select>
-                                        {errors["result." + i + ".team"] && (
+                                        {errors[
+                                            ("result." + i + ".team") as keyof typeof errors
+                                        ] && (
                                             <p className="text-destructive text-sm font-medium">
-                                                {errors["result." + i + ".team"]}
+                                                {
+                                                    errors[
+                                                        ("result." +
+                                                            i +
+                                                            ".team") as keyof typeof errors
+                                                    ]
+                                                }
                                             </p>
                                         )}
                                     </td>

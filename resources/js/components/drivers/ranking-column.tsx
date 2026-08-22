@@ -1,13 +1,14 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { Driver } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<
+import { type DataTableColumn } from "@/components/data-table";
+
+export const columns: DataTableColumn<
     NonNullable<{ position: number; driver: Driver; points: number }[]>[number]
 >[] = [
     {
-        accessorKey: "positions",
+        id: "positions",
         header: () => <div className="font-bold">Pos.</div>,
         cell: ({ row }) => {
             return row.original.position;

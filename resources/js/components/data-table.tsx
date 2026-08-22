@@ -9,25 +9,50 @@ import {
 } from "@/components/ui/table";
 import {
     ColumnDef,
+    createPaginatedRowModel,
     flexRender,
-    getCoreRowModel,
-    getPaginationRowModel,
-    useReactTable,
+    RowData,
+    rowPaginationFeature,
+    columnVisibilityFeature,
+    tableFeatures,
+    useTable,
 } from "@tanstack/react-table";
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
+const features = tableFeatures({
+    rowPaginationFeature,
+    columnVisibilityFeature,
+    paginatedRowModel: createPaginatedRowModel(),
+});
+
+export type DataTableColumn<TData extends RowData> = ColumnDef<typeof features, TData, any>;
+
+export function getColumnKey<TData extends RowData>(
+    column: DataTableColumn<TData>,
+): string | undefined {
+    if ("accessorKey" in column && typeof column.accessorKey === "string") {
+        return column.accessorKey;
+    }
+
+    if ("id" in column) {
+        return column.id;
+    }
+
+    return undefined;
+}
+
+interface DataTableProps<TData extends RowData> {
+    columns: ColumnDef<typeof features, TData, any>[];
     data: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-    const table = useReactTable({
+export function DataTable<TData extends RowData>({ columns, data }: DataTableProps<TData>) {
+    const table = useTable({
+        features,
         data,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
+                pageIndex: 0,
                 pageSize: 32,
             },
         },
@@ -58,10 +83,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
-                                >
+                                <TableRow key={row.id}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(

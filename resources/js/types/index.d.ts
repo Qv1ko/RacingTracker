@@ -95,7 +95,8 @@ export interface Race {
     winner?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
     second?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
     third?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
-    better?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    betterDriver?: { id: number; name: string; surname: string; nationality?: string; team?: Team };
+    betterTeam?: { id: number; name: string; nationality?: string };
     // show
     result?: {
         position: string;
@@ -114,23 +115,11 @@ export interface Race {
 export interface Season {
     season: string;
     // index
-    driverResults?: {
-        position: number;
-        driver: Driver;
-        pointsDiff: number;
-        points: number;
-        startingPoints: number;
-    }[];
-    teamResults?: {
-        position: number;
-        team: Team;
-        pointsDiff: number;
-        points: number;
-        startingPoints: number;
-    }[];
     racesCount?: number;
-    drivers?: number;
-    teams?: number;
+    driversCount?: number;
+    teamsCount?: number;
+    championDriver?: Driver;
+    championTeam?: Team;
     // show
     info: {
         firstRace?: Race;

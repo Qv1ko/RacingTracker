@@ -3,11 +3,12 @@ import { Badge } from "@/components/ui/badge";
 import FlagIcon from "@/components/ui/flag-icon";
 import { type Driver } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<Driver>[] = [
+import { type DataTableColumn } from "@/components/data-table";
+
+export const columns: DataTableColumn<Driver>[] = [
     {
-        accessorKey: "drivers",
+        id: "driver",
         header: () => <div className="font-bold">Driver</div>,
         cell: ({ row }) => {
             const { name, surname, nationality } = row.original;

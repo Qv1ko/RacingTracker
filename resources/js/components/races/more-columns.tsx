@@ -1,11 +1,12 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { type Race } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<Race>[] = [
+import { type DataTableColumn } from "@/components/data-table";
+
+export const columns: DataTableColumn<Race>[] = [
     {
-        accessorKey: "dates",
+        id: "date",
         header: () => <div className="font-bold">Date</div>,
         cell: ({ row }) => {
             return (
@@ -23,7 +24,7 @@ export const columns: ColumnDef<Race>[] = [
         },
     },
     {
-        accessorKey: "winners",
+        id: "winner",
         header: () => <div className="font-bold">Winner</div>,
         cell: ({ row }) => {
             const winner = row.original.winner ? row.original.winner : null;
@@ -57,7 +58,7 @@ export const columns: ColumnDef<Race>[] = [
         },
     },
     {
-        accessorKey: "seconds",
+        id: "second",
         header: () => <div className="hidden font-bold md:table-cell">2nd</div>,
         cell: ({ row }) => {
             const second = row.original.second ? row.original.second : undefined;
@@ -91,7 +92,7 @@ export const columns: ColumnDef<Race>[] = [
         },
     },
     {
-        accessorKey: "thirds",
+        id: "third",
         header: () => <div className="hidden font-bold md:table-cell">3rd</div>,
         cell: ({ row }) => {
             const third = row.original.third ? row.original.third : undefined;
@@ -125,22 +126,22 @@ export const columns: ColumnDef<Race>[] = [
         },
     },
     {
-        accessorKey: "betters",
+        id: "betterDriver",
         header: () => <div className="font-bold">Better driver</div>,
         cell: ({ row }) => {
-            const better = row.original.better ? row.original.better : null;
-            const betterTeam = better?.team ? better.team : null;
+            const betterDriver = row.original.betterDriver ? row.original.betterDriver : null;
+            const betterTeam = betterDriver?.team ? betterDriver.team : null;
             return (
-                better && (
+                betterDriver && (
                     <div>
                         <Link
-                            href={better.id ? `/drivers/${better.id}` : ""}
+                            href={betterDriver.id ? `/drivers/${betterDriver.id}` : ""}
                             className="hover:text-primary flex items-center gap-2"
                         >
-                            {better.nationality ? (
-                                <FlagIcon nationality={better.nationality} size={16} />
+                            {betterDriver.nationality ? (
+                                <FlagIcon nationality={betterDriver.nationality} size={16} />
                             ) : null}
-                            {better.name[0].toUpperCase()}. {better.surname}
+                            {betterDriver.name[0].toUpperCase()}. {betterDriver.surname}
                         </Link>
                         {betterTeam && (
                             <Link
@@ -153,6 +154,28 @@ export const columns: ColumnDef<Race>[] = [
                                 {betterTeam.name}
                             </Link>
                         )}
+                    </div>
+                )
+            );
+        },
+    },
+    {
+        id: "betterTeam",
+        header: () => <div className="font-bold">Better team</div>,
+        cell: ({ row }) => {
+            const betterTeam = row.original.betterTeam ? row.original.betterTeam : null;
+            return (
+                betterTeam && (
+                    <div>
+                        <Link
+                            href={`/teams/${betterTeam.id}`}
+                            className="hover:text-primary flex items-center gap-2"
+                        >
+                            {betterTeam.nationality ? (
+                                <FlagIcon nationality={betterTeam.nationality} size={16} />
+                            ) : null}
+                            {betterTeam.name}
+                        </Link>
                     </div>
                 )
             );

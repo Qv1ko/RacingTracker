@@ -1,18 +1,19 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { type Race } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<NonNullable<Race["teamStandings"]>[number]>[] = [
+import { type DataTableColumn } from "@/components/data-table";
+
+export const columns: DataTableColumn<NonNullable<Race["teamStandings"]>[number]>[] = [
     {
-        accessorKey: "positions",
+        id: "positions",
         header: () => <div className="font-bold">Pos.</div>,
         cell: ({ row }) => {
             return row.index + 1;
         },
     },
     {
-        accessorKey: "teams",
+        id: "team",
         header: () => <div className="font-bold">Team</div>,
         cell: ({ row }) => {
             return (
@@ -47,7 +48,7 @@ export const columns: ColumnDef<NonNullable<Race["teamStandings"]>[number]>[] = 
         },
     },
     {
-        accessorKey: "gaps",
+        id: "gap",
         header: () => <div className="font-bold">Gap</div>,
         cell: ({ row }) => {
             return (

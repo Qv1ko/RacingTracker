@@ -1,6 +1,6 @@
 import "../css/app.css";
 
-import { createInertiaApp } from "@inertiajs/react";
+import { createInertiaApp, type ResolvedComponent } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import { initializeTheme } from "./hooks/use-appearance";
@@ -10,9 +10,12 @@ const appName = import.meta.env.VITE_APP_NAME || "RacingTracker";
 createInertiaApp({
     title: (title) => (title.length > 0 ? `${title} - ${appName}` : appName),
     resolve: (name) =>
-        resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
+        resolvePageComponent(
+            `./pages/${name}.tsx`,
+            import.meta.glob("./pages/**/*.tsx"),
+        ) as Promise<ResolvedComponent>,
     setup({ el, App, props }) {
-        const root = createRoot(el);
+        const root = createRoot(el!);
 
         root.render(<App {...props} />);
     },

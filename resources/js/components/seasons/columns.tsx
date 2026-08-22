@@ -1,11 +1,12 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { type Season } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<Season>[] = [
+import { type DataTableColumn } from "@/components/data-table";
+
+export const columns: DataTableColumn<Season>[] = [
     {
-        accessorKey: "seasons",
+        id: "season",
         header: () => <div className="font-bold">Season</div>,
         cell: ({ row }) => {
             return (
@@ -19,11 +20,10 @@ export const columns: ColumnDef<Season>[] = [
         },
     },
     {
-        accessorKey: "champion drivers",
+        id: "champion-driver",
         header: () => <div className="font-bold">Champion driver</div>,
         cell: ({ row }) => {
-            const drivers = row.original.driverResults;
-            const champion = drivers?.filter((driver) => driver.position === 1)[0]?.driver;
+            const champion = row.original.championDriver;
             return (
                 champion && (
                     <Link
@@ -45,11 +45,10 @@ export const columns: ColumnDef<Season>[] = [
         },
     },
     {
-        accessorKey: "champion teams",
+        id: "champion-team",
         header: () => <div className="font-bold">Champion team</div>,
         cell: ({ row }) => {
-            const teams = row.original.teamResults;
-            const champion = teams?.filter((team) => team.position === 1)[0]?.team;
+            const champion = row.original.championTeam;
             return (
                 champion && (
                     <Link
@@ -73,17 +72,17 @@ export const columns: ColumnDef<Season>[] = [
         },
     },
     {
-        accessorKey: "drivers",
+        accessorKey: "driversCount",
         header: () => <div className="hidden font-bold sm:table-cell">Drivers</div>,
         cell: ({ row }) => {
-            return <p className="hidden sm:table-cell">{row.original.drivers}</p>;
+            return <p className="hidden sm:table-cell">{row.original.driversCount}</p>;
         },
     },
     {
-        accessorKey: "teams",
+        accessorKey: "teamsCount",
         header: () => <div className="hidden font-bold sm:table-cell">Teams</div>,
         cell: ({ row }) => {
-            return <p className="hidden sm:table-cell">{row.original.teams}</p>;
+            return <p className="hidden sm:table-cell">{row.original.teamsCount}</p>;
         },
     },
 ];

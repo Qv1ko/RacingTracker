@@ -1,5 +1,5 @@
 import { CreateButton } from "@/components/create-button";
-import { DataTable } from "@/components/data-table";
+import { DataTable, getColumnKey } from "@/components/data-table";
 import { columns as tableColumns } from "@/components/races/columns";
 import { SelectSeason } from "@/components/select-season";
 import AppLayout from "@/layouts/app-layout";
@@ -22,16 +22,16 @@ export default function Races({ seasons, races }: { seasons: string[]; races: Ra
     if (season === "all") {
         columns = columns.filter(
             (column) =>
-                column.accessorKey !== "dates" &&
-                column.accessorKey !== "seconds" &&
-                column.accessorKey !== "thirds",
+                getColumnKey(column) !== "date" &&
+                getColumnKey(column) !== "second" &&
+                getColumnKey(column) !== "third",
         );
     } else {
-        columns = columns.filter((column) => column.accessorKey !== "datesWY");
+        columns = columns.filter((column) => getColumnKey(column) !== "date-wy");
     }
 
     if (!auth.user || races.length === 0) {
-        columns = columns.filter((column) => column.accessorKey !== "actions");
+        columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
     return (
