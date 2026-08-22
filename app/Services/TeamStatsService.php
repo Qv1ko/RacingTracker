@@ -58,16 +58,16 @@ class TeamStatsService
     {
         $participations = $this->team
             ->participations()
+            ->with('race')
             ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
-            ->get();
+            ->get()
+            ->sortBy(fn ($p) => $p->race->date)
+            ->values();
 
-        $seasons = $season ? collect([$season]) : $participations->pluck('race')->map(fn ($r) => $r->season)->unique()->sort()->values();
-
-        return $seasons->flatMap(
-            fn ($qs) => $this->pointsHistoryForSeason(
-                $participations->filter(fn ($qp) => $qp->race->season === $qs)
-            )
-        )
+        return $participations
+            ->groupBy(fn ($p) => $p->race->season)
+            ->sortKeys()
+            ->flatMap(fn ($rows) => $this->pointsHistoryForSeason($rows))
             ->values();
     }
 
@@ -95,19 +95,29 @@ class TeamStatsService
 
     private function pointsHistoryForSeason(Collection $participations): Collection
     {
-        return $participations
-            ->pluck('race')
-            ->unique('id')
-            ->sortBy('date')
-            ->values()
-            ->map(fn ($race) => [
+        // Chronologically sorted participations: sweep race by race keeping
+        // each driver's latest points, averaging across drivers after every
+        // race. Equivalent to the previous O(races x participations) filter
+        // but linear.
+        $latestByDriver = [];
+        $history = [];
+
+        foreach ($participations->groupBy(fn ($p) => $p->race->id) as $rows) {
+            $race = $rows->first()->race;
+
+            foreach ($rows as $p) {
+                $latestByDriver[$p->driver_id] = (float) $p->points;
+            }
+
+            $history[] = [
                 'race_id' => $race->id,
                 'race' => $race->name,
                 'date' => $race->date,
-                'points' => $this->latestPointsPerDriver(
-                    $participations->filter(fn ($qp) => $qp->race->date <= $race->date)
-                )->avg('points'),
-            ]);
+                'points' => array_sum($latestByDriver) / count($latestByDriver),
+            ];
+        }
+
+        return collect($history);
     }
 
     private function latestPointsPerDriver(Collection $participations): Collection
