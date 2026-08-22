@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Models\Race;
+use App\Services\DriverStatsService;
 use App\Services\RankingService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -16,8 +18,8 @@ class HomeController extends Controller
         $seasons = Race::seasons();
         $season = $req->query('season');
 
-        if (! in_array($season, $seasons->all())) {
-            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
+        if ( ! in_array($season, $seasons->all())) {
+            $season = $seasons->first() ?? 'all';
         }
 
         $lastRace = Race::whereYear('date', $season)
@@ -31,7 +33,7 @@ class HomeController extends Controller
             ->map(function ($driver) use ($season) {
                 return [
                     'driver' => $driver,
-                    'pointsHistory' => $driver->pointsHistory($season),
+                    'pointsHistory' => (new DriverStatsService($driver))->pointsHistory($season),
                 ];
             })->values();
 

@@ -1,39 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Models\Participation;
 use App\Models\Race;
 use App\Models\Team;
+use App\Services\DriverStatsService;
+use App\Services\RacePresenter;
+use App\Services\RankingService;
+use App\Services\TeamStatsService;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class SeasonController extends Controller
 {
+    public function __construct(private RacePresenter $presenter, private RankingService $ranking) {}
+
     public function index()
     {
-        $seasons = Race::seasons();
-
-        $data = $seasons->map(function ($season) {
-            return [
-                'season' => $season,
-                'driverResults' => Participation::seasonDriversClasification($season),
-                'teamResults' => Participation::seasonTeamsClasification($season),
-                'racesCount' => Participation::seasonRaces($season),
-                'drivers' => Participation::seasonDrivers($season),
-                'teams' => Participation::seasonTeams($season),
-            ];
-        });
-
         return Inertia::render('seasons/index', [
-            'seasons' => $data,
+            'seasons' => $this->ranking->seasonsSummary(),
         ]);
     }
 
     public function show(string $season)
     {
-        abort_if(! Race::seasons()->contains($season), 404);
+        abort_if( ! Race::seasons()->contains($season), 404);
+
+        $ranking = new RankingService;
 
         $races = Race::whereYear('date', $season)
             ->orderBy('date', 'asc')
@@ -82,7 +79,7 @@ class SeasonController extends Controller
             ->map(function ($driver) use ($season) {
                 return [
                     'driver' => $driver,
-                    'pointsHistory' => $driver->pointsHistory($season),
+                    'pointsHistory' => (new DriverStatsService($driver))->pointsHistory($season),
                 ];
             })->values();
 
@@ -93,42 +90,35 @@ class SeasonController extends Controller
             ->map(function ($team) use ($season) {
                 return [
                     'team' => $team,
-                    'pointsHistory' => $team->pointsHistory($season),
+                    'pointsHistory' => (new TeamStatsService($team))->pointsHistory($season),
                 ];
             })->values();
+
+        $lastRace = $races->last();
 
         $data = [
             'season' => $season,
             'info' => [
                 'firstRace' => $races->first(),
-                'lastRace' => $races->last(),
+                'lastRace' => $lastRace,
                 'mostWins' => $winners->where('wins', $maxVictories)->values(),
                 'mostPodiums' => $podiums->where('podiums', $maxPodiums)->values(),
                 'mostWithoutPosition' => $withoutPosition->where('withoutPosition', $maxWithoutPosition)->values(),
-                'racesCount' => Participation::seasonRaces($season),
-                'championDriver' => Participation::seasonDriversClasification($season)->where('position', 1)->first()['driver'],
-                'championTeam' => Participation::seasonTeamsClasification($season)->where('position', 1)->first()['team'],
+                'racesCount' => $ranking->seasonRacesCount($season),
+                'championDriver' => $ranking->seasonDriversClassification($season)->where('position', 1)->first()['driver'],
+                'championTeam' => $ranking->seasonTeamsClassification($season)->where('position', 1)->first()['team'],
             ],
-            'driverStandings' => Participation::raceDriverStandings($races->last()->id),
-            'driverResults' => Participation::seasonDriversClasification($season),
+            'driverStandings' => $lastRace ? $ranking->raceDriverStandings($lastRace) : [],
+            'driverResults' => $ranking->seasonDriversClassification($season),
             'driversPoints' => $driverSeasonPointsHistory,
-            'teamStandings' => Participation::raceTeamStandings($races->last()->id),
-            'teamResults' => Participation::seasonTeamsClasification($season),
+            'teamStandings' => $lastRace ? $ranking->raceTeamStandings($lastRace) : [],
+            'teamResults' => $ranking->seasonTeamsClassification($season),
             'teamsPoints' => $teamSeasonPointsHistory,
             'races' => Race::whereYear('date', $season)
                 ->orderBy('date', 'asc')
+                ->with(['participations.driver', 'participations.team'])
                 ->get()
-                ->map(function ($race) {
-                    return [
-                        'id' => $race->id,
-                        'name' => $race->name,
-                        'date' => $race->date,
-                        'winner' => $race->participant(1),
-                        'second' => $race->participant(2),
-                        'third' => $race->participant(3),
-                        'better' => $race->better(),
-                    ];
-                }),
+                ->map(fn (Race $race) => $this->presenter->present($race)),
         ];
 
         return Inertia::render('seasons/show', ['season' => $data]);
