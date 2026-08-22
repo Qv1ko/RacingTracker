@@ -12,6 +12,7 @@ use App\Models\Race;
 use App\Models\Team;
 use App\Services\RacePresenter;
 use App\Services\RankingService;
+use Carbon\Carbon;
 use Inertia\Inertia;
 
 class RaceController extends Controller
@@ -94,9 +95,13 @@ class RaceController extends Controller
 
     public function update(UpdateRequest $req, Race $race)
     {
+        $originalDate = $race->date;
+
         $race->update($req->validated());
 
-        $this->syncParticipations->handle($race, $req->result);
+        $recalculateFrom = Carbon::parse($originalDate)->min(Carbon::parse($race->date))->format('Y-m-d');
+
+        $this->syncParticipations->handle($race, $req->result, $recalculateFrom);
 
         return redirect()->route('races.show', $race->id);
     }
