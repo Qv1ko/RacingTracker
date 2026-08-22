@@ -23,10 +23,6 @@ class F1SeasonSeeder extends Seeder
 
     private const REQUEST_DELAY_MS = 300;
 
-    /**
-     * Status codes returned by the API mapped to
-     * the short statuses used by the application.
-     */
     private const STATUS_MAP = [
         'R' => 'DNF',
         'W' => 'DNS',
@@ -121,8 +117,6 @@ class F1SeasonSeeder extends Seeder
             $total ??= (int) $data->total;
 
             foreach ($data->RaceTable->Races as $race) {
-                // A race can span multiple pages, merge its results instead
-                // of overwriting the entry from the previous page.
                 if (isset($racesByRound[$race->round])) {
                     $racesByRound[$race->round]->Results = array_merge(
                         $racesByRound[$race->round]->Results ?? [],

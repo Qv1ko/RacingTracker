@@ -24,8 +24,5 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
     })
-    // Only the algorithm selected via RANKING_ALGORITHM may listen to race
-    // results, so automatic listener discovery stays off (see
-    // bootstrap/providers.php + EventServiceProvider).
     ->withEvents(discover: false)
     ->withExceptions(function (Exceptions $exceptions) {})->create();

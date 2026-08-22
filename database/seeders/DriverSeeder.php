@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 class DriverSeeder extends Seeder
 {
-    /** Run the database seeds. */
     public function run(): void
     {
         Driver::insert([

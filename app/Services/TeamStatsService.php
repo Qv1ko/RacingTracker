@@ -95,10 +95,6 @@ class TeamStatsService
 
     private function pointsHistoryForSeason(Collection $participations): Collection
     {
-        // Chronologically sorted participations: sweep race by race keeping
-        // each driver's latest points, averaging across drivers after every
-        // race. Equivalent to the previous O(races x participations) filter
-        // but linear.
         $latestByDriver = [];
         $history = [];
 

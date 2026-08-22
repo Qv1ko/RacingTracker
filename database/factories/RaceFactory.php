@@ -12,11 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RaceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function definition(): array
     {
         return [
@@ -25,7 +21,6 @@ class RaceFactory extends Factory
         ];
     }
 
-    /** Generates a random date within the given year. */
     public function fromYear(int $year): static
     {
         return $this->state(fn () => [

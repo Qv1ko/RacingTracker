@@ -15,7 +15,6 @@ class SeasonSeeder extends Seeder
 {
     private const SEASONS = 5;
 
-    /** Run the database seeds. */
     public function run(): void
     {
         $startYear = now()->year - self::SEASONS;

@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class RankingService
 {
-    /**
-     * Season champions (biggest points gain) computed with a single pass
-     * over the participations table, mirroring the semantics of
-     * seasonDriversClassification() and seasonTeamsClassification().
-     *
-     * @return array{driver: Collection, team: Collection} Collections keyed by season
-     */
+    /** @return array{driver: Collection, team: Collection} Collections keyed by season */
     public function championsBySeason(): array
     {
         $rows = DB::table('participations')
@@ -41,7 +35,6 @@ class RankingService
         ];
     }
 
-    /** Lightweight summary of every season (counts + champions). */
     public function seasonsSummary(): Collection
     {
         $champions = $this->championsBySeason();
@@ -126,8 +119,6 @@ class RankingService
 
     private function computeTeamChampions(Collection $rowsBySeason): Collection
     {
-        // Per team: chronological map of season => average of each driver's
-        // latest points in that season (mirrors seasonTeamsClassification).
         $avgByTeamAndSeason = [];
         $seasonsOfTeam = [];
         $champions = collect();
@@ -183,10 +174,6 @@ class RankingService
         return $champions;
     }
 
-    /**
-     * Ranking position of a driver based on their latest points,
-     * computed with two aggregate queries instead of the full ranking.
-     */
     public function driverPosition(Driver $driver): ?int
     {
         $latestPointsByDriver = $this->latestPointsPerEntity('driver_id');
@@ -200,7 +187,6 @@ class RankingService
         return count(array_filter($latestPointsByDriver, fn ($row) => $row->points > $mine->points)) + 1;
     }
 
-    /** Ranking position of a team based on their latest points. */
     public function teamPosition(Team $team): ?int
     {
         $latestPointsByTeam = $this->latestPointsPerEntity('team_id');

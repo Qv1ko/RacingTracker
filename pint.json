@@ -65,6 +65,8 @@
         "not_operator_with_space": true,
         "not_operator_with_successor_space": true,
         "php_unit_fqcn_annotation": true,
+
+        "Pint/phpdoc_type_annotations_only": true,
         "phpdoc_line_span": {
             "const": "single",
             "method": "single",

@@ -12,11 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeamFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function definition(): array
     {
         return [
@@ -59,7 +55,6 @@ class TeamFactory extends Factory
         ];
     }
 
-    /** Generates a 2-4 syllable team name + optional suffix. */
     protected function generateTeamName(): string
     {
         $consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'z'];

@@ -118,7 +118,6 @@ class TeamController extends Controller
                 'championships' => $teamStats->championships(),
             ],
             'pointsHistory' => $teamStats->pointsHistory(),
-            // 'positionsHistory' => $teamStats->countForPosition(),
             'drivers' => $team->drivers->unique('id')->values(),
         ];
 

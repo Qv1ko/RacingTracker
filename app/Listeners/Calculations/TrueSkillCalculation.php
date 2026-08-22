@@ -75,27 +75,22 @@ class TrueSkillCalculation implements RatingCalculation
 
     private function updateRating(float $mu, float $sigma, float $position, int $participantsCount, float $avg = 0): array
     {
-        $beta = $mu / 6.0; // Performance deviation
-        $tau = $mu / 300.0; // Dynamic factor
-
-        $C = $sigma ** 2 + $beta ** 2; // Performance variance
-
+        $beta = $mu / 6.0;
+        $tau = $mu / 300.0;
+        $C = $sigma ** 2 + $beta ** 2;
         if ($C == 0.0) {
             return ['mu' => $mu, 'sigma' => $sigma];
         }
 
-        $K = ($sigma ** 2) / $C; // Update factor
-
+        $K = ($sigma ** 2) / $C;
         $expectedPosition = $avg * $participantsCount;
-        $error = $expectedPosition - $position; // Difference between expected and actual
+        $error = $expectedPosition - $position;
         $newMu = $mu + $K * $error;
 
-        // Adjust sigma depending on how surprising the result was
         $errorImpact = ($error == 0 || $participantsCount == 0)
             ? 0
             : abs($error) / $participantsCount;
 
-        // More error -> increase sigma; Less error -> decrease sigma
         $sigmaChange = $tau * (0.5 - $errorImpact);
         $maxChange = $sigma * 0.15;
         $sigmaChange = $sigmaChange > 0
@@ -104,7 +99,7 @@ class TrueSkillCalculation implements RatingCalculation
 
         return [
             'mu' => $newMu,
-            'sigma' => max(0.001, $sigma + $sigmaChange), // Prevent sigma from reaching zero
+            'sigma' => max(0.001, $sigma + $sigmaChange),
         ];
     }
 }

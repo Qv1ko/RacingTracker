@@ -15,11 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ParticipationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function definition(): array
     {
         $race = Race::inRandomOrder()->first();
