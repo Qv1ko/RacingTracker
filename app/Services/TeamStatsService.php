@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Team;
@@ -23,12 +25,11 @@ class TeamStatsService
 
     public function championships(): Collection
     {
-        return $this->seasons()
-            ->filter(
-                fn ($season) => (new RankingService)
-                    ->seasonTeamsClassification($season)
-                    ->contains(fn ($item) => $item['position'] === 1 && $item['team']->id === $this->team->id)
-            )
+        $champions = (new RankingService)->championsBySeason();
+
+        return collect($champions['team'])
+            ->filter(fn ($championTeamId) => $championTeamId === $this->team->id)
+            ->keys()
             ->values();
     }
 
@@ -36,7 +37,7 @@ class TeamStatsService
     {
         return $this->team
             ->participations()
-            ->whereHas('race', fn ($q) => $q->inSeason($season))
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->where('position', $position)
             ->count();
     }
@@ -47,7 +48,7 @@ class TeamStatsService
             ->participations()
             ->with('race')
             ->where('position', '<=', 3)
-            ->whereHas('race', fn ($q) => $q->inSeason($season))
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->get()
             ->sortBy(fn ($participation) => $participation->race->date)
             ->values();
@@ -57,14 +58,14 @@ class TeamStatsService
     {
         $participations = $this->team
             ->participations()
-            ->whereHas('race', fn ($q) => $q->inSeason($season))
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->get();
 
-        $seasons = $season ? collect([$season]) : $participations->pluck('race')->map(fn ($r) => $r->season())->unique()->sort()->values();
+        $seasons = $season ? collect([$season]) : $participations->pluck('race')->map(fn ($r) => $r->season)->unique()->sort()->values();
 
         return $seasons->flatMap(
             fn ($qs) => $this->pointsHistoryForSeason(
-                $participations->filter(fn ($qp) => $qp->race->season() === $qs)
+                $participations->filter(fn ($qp) => $qp->race->season === $qs)
             )
         )
             ->values();
@@ -81,7 +82,7 @@ class TeamStatsService
         ? $participations->pluck('race')->map(fn ($r) => $r->season)->unique()->sortDesc()->first()
         : $season;
 
-        if (! $targetSeason) {
+        if ( ! $targetSeason) {
             return null;
         }
 

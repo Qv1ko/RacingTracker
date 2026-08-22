@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
+use App\Models\Driver;
 use App\Models\Race;
 use App\Models\Team;
 use App\Services\RankingService;
@@ -19,26 +22,48 @@ class TeamController extends Controller
         $season = $req->query('season');
 
         if ($season !== 'all' && ! in_array($season, $seasons->all())) {
-            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
+            $season = $seasons->first() ?? 'all';
         }
 
         if ($season === 'all') {
-            $teams = Team::orderByRaw('LOWER(name) asc')->get();
+            $teams = Team::with('drivers')->orderByRaw('LOWER(name) asc')->get();
+            $driversByTeam = null;
         } else {
             $teams = Team::whereHas('participations.race', function ($query) use ($season) {
                 $query->whereYear('date', $season);
             })
                 ->orderByRaw('LOWER(name) asc')
                 ->get();
+
+            $teamDriverPairs = DB::table('participations as p')
+                ->join('races as r', 'r.id', '=', 'p.race_id')
+                ->whereYear('r.date', $season)
+                ->whereNotNull('p.team_id')
+                ->distinct()
+                ->get(['p.team_id', 'p.driver_id']);
+
+            $driversByTeam = $teamDriverPairs->groupBy('team_id');
         }
 
-        $data = $teams->map(function ($team) use ($season) {
+        $driversById = Driver::query()
+            ->whereIn('id', $season === 'all'
+                ? []
+                : $teamDriverPairs->pluck('driver_id')->unique())
+            ->get()
+            ->keyBy('id');
+
+        $data = $teams->map(function ($team) use ($season, $driversByTeam, $driversById) {
             return [
                 'id' => $team->id,
                 'name' => $team->name,
                 'nationality' => $team->nationality,
                 'status' => $team->status,
-                'drivers' => $team->drivers(),
+                'drivers' => $driversByTeam === null
+                    ? $team->drivers->unique('id')->values()
+                    : collect($driversByTeam->get($team->id, []))
+                        ->map(fn ($pair) => $driversById->get($pair->driver_id))
+                        ->filter()
+                        ->values(),
                 'races' => $team->races()->count(),
                 'wins' => $team->stats()->getPositionsCount($season),
                 'second_positions' => $team->stats()->getPositionsCount($season, 2),
@@ -59,7 +84,7 @@ class TeamController extends Controller
         $ranking = new RankingService;
         $teamStats = $team->stats();
 
-        $racesCount = $team->races->count();
+        $racesCount = $team->races()->count();
         $winsCount = $team->stats()->getPositionsCount();
         $podiumsCount = $team->stats()->getPodiums()->count();
 
@@ -75,10 +100,10 @@ class TeamController extends Controller
             'points' => $teamStats->lastPoints(),
             'maxPoints' => $teamStats->pointsHistory()->max('points'),
             'info' => [
-                'firstRace' => $team->races->first(),
-                'lastRace' => $team->races->last(),
+                'firstRace' => $team->races()->orderBy('races.date')->first(),
+                'lastRace' => $team->races()->orderByDesc('races.date')->first(),
                 'firstWin' => $team->races()->where('position', 1)->first(),
-                'lastWin' => $team->races()->where('position', 1)->get()->last(),
+                'lastWin' => $team->races()->where('position', 1)->orderByDesc('races.date')->first(),
                 'winPercentage' => $racesCount > 0
                     ? round($winsCount / $racesCount * 100, 2)
                     : null,
@@ -89,15 +114,20 @@ class TeamController extends Controller
                 'withoutPosition' => $team->participations()
                     ->where('position', null)
                     ->count(),
-                'ranking' => $ranking->teamsRanking()->firstWhere('team.id', $team->id),
+                'ranking' => $this->formatRankingPosition($ranking->teamPosition($team)),
                 'championships' => $teamStats->championships(),
             ],
             'pointsHistory' => $teamStats->pointsHistory(),
             // 'positionsHistory' => $teamStats->countForPosition(),
-            'drivers' => $team->drivers,
+            'drivers' => $team->drivers->unique('id')->values(),
         ];
 
         return Inertia::render('teams/show', ['team' => $team]);
+    }
+
+    private function formatRankingPosition(?int $position): ?array
+    {
+        return $position !== null ? ['position' => $position] : null;
     }
 
     public function create()

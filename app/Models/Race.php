@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -12,7 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
+ * @property int $id
+ * @property string $name
+ * @property string $date
  * @property string $season
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, Participation> $participations
  */
 class Race extends Model
 {
@@ -23,16 +31,19 @@ class Race extends Model
         'date',
     ];
 
+    /** @return HasMany<Participation, $this> */
     public function participations(): HasMany
     {
         return $this->hasMany(Participation::class);
     }
 
+    /** @return BelongsToMany<Driver, $this> */
     public function drivers(): BelongsToMany
     {
         return $this->belongsToMany(Driver::class, 'participations');
     }
 
+    /** @return BelongsToMany<Team, $this> */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'participations');
@@ -44,7 +55,7 @@ class Race extends Model
             ->pluck('date')
             ->map(fn ($date) => Carbon::parse($date)->format('Y'))
             ->unique()
-            ->sort()
+            ->sortDesc()
             ->values();
     }
 
@@ -71,6 +82,12 @@ class Race extends Model
             ->first();
     }
 
+    public function podiumPosition(int $position): ?Participation
+    {
+        return $this->participations
+            ->first(fn (Participation $participation) => $participation->position === $position && $participation->driver);
+    }
+
     public function betterDriver(): ?Participation
     {
         return $this->participations()
@@ -86,7 +103,7 @@ class Race extends Model
                     )
                     ->value('points');
 
-                if (! $previous) {
+                if ( ! $previous) {
                     return null;
                 }
 
@@ -116,7 +133,7 @@ class Race extends Model
                     )
                     ->value('points');
 
-                if (! $previous) {
+                if ( ! $previous) {
                     return null;
                 }
 

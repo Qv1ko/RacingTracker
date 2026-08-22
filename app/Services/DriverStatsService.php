@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Driver;
@@ -25,10 +27,12 @@ class DriverStatsService
 
     public function championships(): Collection
     {
-        return $this->seasons()->filter(function ($season) {
-            return Participation::seasonDriversClassification($season)
-                ->contains(fn ($item) => $item['position'] === 1 && $item['driver']->id === $this->driver->id);
-        })->values();
+        $champions = (new RankingService)->championsBySeason();
+
+        return collect($champions['driver'])
+            ->filter(fn ($championDriverId) => $championDriverId === $this->driver->id)
+            ->keys()
+            ->values();
     }
 
     public function lastPoints(?string $season = null): ?float
@@ -74,15 +78,15 @@ class DriverStatsService
     {
         $results = $this->driver
             ->participations()
-            ->toBase()
             ->when($season, fn ($q) => $q->whereHas('race', fn ($r) => $r->whereYear('date', $season)))
             ->selectRaw('position, count(*) as times')
             ->groupBy('position')
             ->orderBy('position', 'asc')
+            ->toBase()
             ->get();
 
         return $results
-            ->map(fn ($item) => [
+            ->map(fn (object $item) => [
                 'position' => $item->position,
                 'times' => $item->times,
                 'position_numeric' => is_numeric($item->position) ? (int) $item->position : null,
@@ -102,7 +106,7 @@ class DriverStatsService
     {
         return $this->driver
             ->participations()
-            ->whereHas('race', fn ($q) => $q->inSeason($season))
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->where('position', $position)
             ->count();
     }
@@ -112,10 +116,15 @@ class DriverStatsService
         return $this->driver
             ->participations()
             ->with('race')
-            ->whereHas('race', fn ($q) => $q->inSeason($season))
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
             ->get()
             ->sortBy(fn ($p) => $p->race->date)
-            ->values();
+            ->values()
+            ->map(fn ($p) => [
+                'position' => $p->status,
+                'name' => $p->race->name,
+                'date' => $p->race->date,
+            ]);
     }
 
     public function teammates(?string $season = null): Collection

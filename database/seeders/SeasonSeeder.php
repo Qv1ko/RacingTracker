@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
+use App\Events\RaceResultCalculated;
 use App\Models\Driver;
 use App\Models\Participation;
 use App\Models\Race;
@@ -12,9 +15,7 @@ class SeasonSeeder extends Seeder
 {
     private const SEASONS = 5;
 
-    /**
-     * Run the database seeds.
-     */
+    /** Run the database seeds. */
     public function run(): void
     {
         $startYear = now()->year - self::SEASONS;
@@ -35,9 +36,9 @@ class SeasonSeeder extends Seeder
                 for ($j = 0; $j < $participants; $j++) {
                     Participation::factory()->race($race->id)->create();
                 }
-                Participation::calcRaceResult(Participation::whereHas('race', function ($query) use ($race) {
+                RaceResultCalculated::dispatch(Participation::whereHas('race', function ($query) use ($race) {
                     $query->where('date', '>=', $race->date);
-                })->get());
+                })->with('race')->get());
             }
         }
     }

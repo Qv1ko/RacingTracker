@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Driver\StoreRequest;
 use App\Http\Requests\Driver\UpdateRequest;
 use App\Models\Driver;
 use App\Models\Race;
+use App\Models\Team;
 use App\Services\RankingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,27 +22,49 @@ class DriverController extends Controller
         $season = $req->query('season');
 
         if ($season !== 'all' && ! in_array($season, $seasons->all())) {
-            $season = Race::orderBy('date', 'desc')->value(DB::raw("strftime('%Y', date)")) ?? 'all';
+            $season = $seasons->first() ?? 'all';
         }
 
         if ($season === 'all') {
-            $drivers = Driver::orderByRaw('LOWER(surname) asc')->get();
+            $drivers = Driver::with('teams')->orderByRaw('LOWER(surname) asc')->get();
+            $teamsByDriver = null;
         } else {
             $drivers = Driver::whereHas('participations.race', function ($query) use ($season) {
                 $query->whereYear('date', $season);
             })
                 ->orderByRaw('LOWER(surname) asc')
                 ->get();
+
+            $driverTeamPairs = DB::table('participations as p')
+                ->join('races as r', 'r.id', '=', 'p.race_id')
+                ->whereYear('r.date', $season)
+                ->whereNotNull('p.team_id')
+                ->distinct()
+                ->get(['p.driver_id', 'p.team_id']);
+
+            $teamsByDriver = $driverTeamPairs->groupBy('driver_id');
         }
 
-        $data = $drivers->map(function ($driver) use ($season) {
+        $teamsById = Team::query()
+            ->whereIn('id', $season === 'all'
+                ? []
+                : $driverTeamPairs->pluck('team_id')->unique())
+            ->get()
+            ->keyBy('id');
+
+        $data = $drivers->map(function ($driver) use ($season, $teamsByDriver, $teamsById) {
             return [
                 'id' => $driver->id,
                 'name' => $driver->name,
                 'surname' => $driver->surname,
                 'nationality' => $driver->nationality,
                 'status' => $driver->status,
-                'teams' => $driver->teams(),
+                'teams' => $teamsByDriver === null
+                    ? $driver->teams->unique('id')->values()
+                    : collect($teamsByDriver->get($driver->id, []))
+                        ->map(fn ($pair) => $teamsById->get($pair->team_id))
+                        ->filter()
+                        ->values(),
                 'races' => $driver->races()->count(),
                 'wins' => $driver->stats()->getPositionsCount($season),
                 'second_positions' => $driver->stats()->getPositionsCount($season, 2),
@@ -70,19 +95,19 @@ class DriverController extends Controller
             'surname' => $driver->surname,
             'nationality' => $driver->nationality,
             'status' => $driver->status,
-            'teams' => $driver->teams,
+            'teams' => $driver->teams->unique('id')->values(),
             'races' => $racesCount,
             'wins' => $winsCount,
             'seasons' => $driverStats->seasons()->count(),
-            'championshipsCount' => $driverStats->championships()?->count() ?? 0,
+            'championshipsCount' => $driverStats->championships()->count(),
             'points' => $driverStats->lastPoints(),
             'maxPoints' => $driverStats->pointsHistory()->max('points'),
             'activity' => $driverStats->activity(),
             'info' => [
-                'firstRace' => $driver->races->first(),
-                'lastRace' => $driver->races->last(),
+                'firstRace' => $driver->races()->orderBy('races.date')->first(),
+                'lastRace' => $driver->races()->orderByDesc('races.date')->first(),
                 'firstWin' => $driver->races()->where('position', 1)->first(),
-                'lastWin' => $driver->races()->where('position', 1)->get()->last(),
+                'lastWin' => $driver->races()->where('position', 1)->orderByDesc('races.date')->first(),
                 'winPercentage' => $racesCount > 0
                     ? round($winsCount / $racesCount * 100, 2)
                     : null,
@@ -93,7 +118,7 @@ class DriverController extends Controller
                 'withoutPosition' => $driver->participations()
                     ->where('position', null)
                     ->count(),
-                'ranking' => $ranking->driversRanking()->firstWhere('driver.id', $driver->id),
+                'ranking' => $this->formatRankingPosition($ranking->driverPosition($driver)),
                 'championships' => $driverStats->championships(),
             ],
             'pointsHistory' => $driverStats->pointsHistory(),
@@ -135,5 +160,10 @@ class DriverController extends Controller
         $driver->delete();
 
         return back();
+    }
+
+    private function formatRankingPosition(?int $position): ?array
+    {
+        return $position !== null ? ['position' => $position] : null;
     }
 }

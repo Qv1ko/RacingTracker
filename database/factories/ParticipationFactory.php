@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Driver;
@@ -9,7 +11,7 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Participation>
+ * @extends Factory<Participation>
  */
 class ParticipationFactory extends Factory
 {
@@ -56,8 +58,8 @@ class ParticipationFactory extends Factory
 
         $notFinishStatuses = ['DNF', 'DNQ', 'DNS', 'DQ', 'EXC', 'NC', 'OTL', 'RET'];
 
-        $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
-        $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
+        $points = $lastParticipation ? $lastParticipation->points : config('ranking.defaults.mu');
+        $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : config('ranking.defaults.sigma');
 
         return $this->buildRace(
             $race->id,
@@ -108,8 +110,8 @@ class ParticipationFactory extends Factory
 
         $notFinishStatuses = ['DNF', 'DNQ', 'DNS', 'DQ', 'EXC', 'NC', 'OTL', 'RET'];
 
-        $points = $lastParticipation ? $lastParticipation->points : Participation::$MU;
-        $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : Participation::$SIGMA;
+        $points = $lastParticipation ? $lastParticipation->points : config('ranking.defaults.mu');
+        $uncertainty = $lastParticipation ? $lastParticipation->uncertainty : config('ranking.defaults.sigma');
 
         return $this->state(fn () => $this->buildRace(
             $raceId,
