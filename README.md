@@ -6,13 +6,15 @@
   <h1 align="center">RacingTracker</h1>
 
 [![Composer 2.8](https://img.shields.io/badge/Composer_2.8-885630?style=for-the-badge&logo=composer&logoColor=E3E3E3&labelColor=333333)](https://getcomposer.org)
-[![Laravel 12](https://img.shields.io/badge/Laravel_12-FF2D20?style=for-the-badge&logo=laravel&logoColor=E3E3E3&labelColor=333333)](https://laravel.com)
-[![Node.js 22.14](https://img.shields.io/badge/Node.js_22.14-5FA04E?style=for-the-badge&logo=node.js&logoColor=E3E3E3&labelColor=333333)](https://nodejs.org)
-[![PHP 8.2](https://img.shields.io/badge/PHP_8.2-777BB4?style=for-the-badge&logo=php&logoColor=E3E3E3&labelColor=333333)](https://www.php.net)
-[![React 16.8](https://img.shields.io/badge/React_16.8-61DAFB?style=for-the-badge&logo=react&logoColor=E3E3E3&labelColor=333333)](https://reactjs.org)
+[![Laravel 13](https://img.shields.io/badge/Laravel_13-FF2D20?style=for-the-badge&logo=laravel&logoColor=E3E3E3&labelColor=333333)](https://laravel.com)
+[![Node.js 26](https://img.shields.io/badge/Node.js_26-5FA04E?style=for-the-badge&logo=node.js&logoColor=E3E3E3&labelColor=333333)](https://nodejs.org)
+[![PHP 8.4](https://img.shields.io/badge/PHP_8.4-777BB4?style=for-the-badge&logo=php&logoColor=E3E3E3&labelColor=333333)](https://www.php.net)
+[![pnpm 11](https://img.shields.io/badge/pnpm_11-F9AD00?style=for-the-badge&logo=pnpm&logoColor=E3E3E3&labelColor=333333)](https://pnpm.io)
+[![React 19](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=E3E3E3&labelColor=333333)](https://react.dev)
 [![SQLite 3.47](https://img.shields.io/badge/SQLite_3.47-003B57?style=for-the-badge&logo=sqlite&logoColor=E3E3E3&labelColor=333333)](https://www.sqlite.org)
-[![TailwindCSS 3.3](https://img.shields.io/badge/TailwindCSS_3.3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=E3E3E3&labelColor=333333)](https://tailwindcss.com)
-[![Vite 6.2](https://img.shields.io/badge/Vite_6.2-646CFF?style=for-the-badge&logo=vite&logoColor=E3E3E3&labelColor=333333)](https://vitejs.dev)
+[![TailwindCSS 4](https://img.shields.io/badge/TailwindCSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=E3E3E3&labelColor=333333)](https://tailwindcss.com)
+[![Vite 8](https://img.shields.io/badge/Vite_8-646CFF?style=for-the-badge&logo=vite&logoColor=E3E3E3&labelColor=333333)](https://vite.dev)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=E3E3E3&labelColor=333333)](https://www.docker.com)
 
   <p align="center">
     <a href="https://github.com/Qv1ko/RacingTracker/tree/main/documents">🇪🇸 Docs</a> 
@@ -41,12 +43,17 @@ These limitations raise a fundamental question: is a scoring system that only co
 ```bash
 📁 root/
 |-- app/                         # Application core
+|   |-- Actions/                 # Business actions (e.g. race participation sync)
+|   |-- Contracts/               # Interfaces (rating calculation strategies)
+|   |-- Events/                  # Domain events
 |   |-- Http/
 |   |   |-- Controllers          # Route controllers
 |   |   |-- Middleware           # HTTP middleware
 |   |   \-- Requests             # Form request validation
+|   |-- Listeners/               # Event listeners (rating calculations)
 |   |-- Models                   # Eloquent models
-|   \-- Providers                # Service providers
+|   |-- Providers                # Service providers
+|   \-- Services                 # Domain services (ranking, stats, presentation)
 |
 |-- database/                    # Database files
 |   |-- factories                # Model factories for seeding
@@ -72,6 +79,10 @@ These limitations raise a fundamental question: is a scoring system that only co
 |   \-- views                    # Blade views
 |
 \-- routes/                      # Route definitions
+
+compose.yaml                     # Docker Compose (Laravel Sail + Node/pnpm)
+pint.json                        # PHP code style configuration
+phpstan.neon                     # Static analysis configuration (Larastan)
 ```
 
 ## 📊 Points calculation
@@ -140,8 +151,9 @@ $`σ_{new}=max⁡(0.001, σ+σ_{change})`$
 
 ### Prerequisites
 
-- [PHP ^8.2](https://www.php.net/downloads.php)
-- [Node.js ^22.14](https://nodejs.org/en/download/)
+- [PHP ^8.4](https://www.php.net/downloads.php)
+- [Node.js ^26](https://nodejs.org/en/download/)
+- [pnpm ^11](https://pnpm.io/installation)
 - [Composer ^2.8](https://getcomposer.org/download/)
 
 ### Installation
@@ -161,7 +173,7 @@ cd RacingTracker
 3. Install the dependencies:
 
 ```bash
-composer install && npm install
+composer install && pnpm install
 ```
 
 4. Copy the `.env.example` file to `.env`:
@@ -191,10 +203,135 @@ php artisan db:seed
 8. Run the server:
 
 ```bash
-npm run build && php artisan serve
+pnpm run build && php artisan serve
 ```
 
 9. Open [http://localhost:8000](http://0.0.0.0:8000) in your browser.
+
+## 🐳 Deployment with Docker
+
+### Prerequisites
+
+- [Docker Engine](https://docs.docker.com/engine/install/) with Docker Compose v2
+
+### Usage
+
+1. Start the containers (Laravel PHP 8.5 via Sail + Node/pnpm for assets):
+
+```bash
+./vendor/bin/sail up -d
+```
+
+2. Install the PHP dependencies inside the container:
+
+```bash
+./vendor/bin/sail composer install
+```
+
+3. Copy the `.env.example` file to `.env`, then generate the application key and run the migrations:
+
+```bash
+cp .env.example .env
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate --graceful
+```
+
+4. The Node container automatically installs the frontend dependencies with pnpm and starts the Vite dev server on port 5173. To build the assets for production instead:
+
+```bash
+./vendor/bin/sail exec node pnpm run build
+```
+
+5. Open [http://localhost](http://localhost) in your browser.
+
+> Useful commands: `./vendor/bin/sail down` (stop), `./vendor/bin/sail pest` (run tests), `./vendor/bin/sail composer lint` / `analyse` (code quality).
+
+## 🧹 Code quality
+
+The project enforces code style and static analysis through Composer scripts:
+
+```bash
+# Check code style (Pint + oxfmt) without fixing
+composer lint
+
+# Fix code style automatically (Pint + oxfmt)
+composer lint:fix
+
+# Run static analysis (Larastan, level 5)
+composer analyse
+```
+
+Additional frontend-only checks are available via pnpm:
+
+```bash
+pnpm run types   # TypeScript type checking
+pnpm run lint    # oxlint
+pnpm run fmt     # oxfmt formatter
+```
+
+## 🏆 Rating algorithms
+
+The application calculates its own driver and team ratings every time a race result is created or updated. The active algorithm is selected in your `.env` file:
+
+```bash
+RANKING_ALGORITHM=trueskill   # available: trueskill | classic | position
+```
+
+| Algorithm   | Description |
+| ----------- | ----------- |
+| `trueskill` *(default)* | TrueSkill-inspired rating system (see [Points calculation](#-points-calculation)). Each driver has points `μ` and uncertainty `σ` that evolve with every result. |
+| `classic` | Fixed F1 points table by final position (25, 18, 15...). Configurable in `config/ranking.php` under `classic_points`. |
+| `position` | Rating based purely on the final position of each participant. |
+
+The mapping between algorithm names and classes lives in `config/ranking.php` under `algorithms`.
+
+### Changing the algorithm
+
+1. Set `RANKING_ALGORITHM` in your `.env` to one of the available options.
+2. Recalculate all stored ratings so existing races use the new system:
+
+```bash
+php artisan tinker --execute="(new App\Actions\SyncRaceParticipations)->recalculateFrom('1950-01-01');"
+```
+
+### Adding a custom algorithm
+
+1. Create a class implementing the `App\Contracts\RatingCalculation` contract:
+
+```php
+<?php
+
+namespace App\Listeners\Calculations;
+
+use App\Contracts\RatingCalculation;
+use App\Events\RaceResultCalculated;
+
+class MySystemCalculation implements RatingCalculation
+{
+    public function handle(RaceResultCalculated $event): void
+    {
+        foreach ($event->participations as $participation) {
+            // $participation->position, $participation->race->date, etc.
+            $participation->points = 0; // your formula here
+            $participation->uncertainty = 0;
+            $participation->save();
+        }
+    }
+}
+```
+
+2. Register it in `config/ranking.php`:
+
+```php
+'algorithms' => [
+    // ...
+    'my-system' => MySystemCalculation::class,
+],
+```
+
+3. Select it with `RANKING_ALGORITHM=my-system` in `.env` and recalculate as explained above.
+
+> Note: some pages consider the season champion to be the driver or team that **gained the most points** during the season (not the one with the most accumulated points). Keep this in mind when designing a custom system.
 
 ## ☁️ Deployment on AWS
 
@@ -245,7 +382,7 @@ sudo apt update && sudo apt upgrade -y
 4. Install the necessary packages:
 
 ```bash
-sudo apt install nginx -y && sudo add-apt-repository ppa:ondrej/php -y && sudo apt install -y php8.2-fpm php8.2-curl php8.2-xml php8.2-mbstring php8.2-zip php8.2-mysql php8.2-sqlite3 php8.2-redis zip unzip && sudo curl -sS https://getcomposer.org/installer | php && sudo mv ~/composer.phar /usr/local/bin/composer && curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install nodejs -y && composer --version && node -v && npm -v
+sudo apt install nginx -y && sudo add-apt-repository ppa:ondrej/php -y && sudo apt install -y php8.4-fpm php8.4-curl php8.4-xml php8.4-mbstring php8.4-zip php8.4-mysql php8.4-sqlite3 php8.4-redis zip unzip && sudo curl -sS https://getcomposer.org/installer | php && sudo mv ~/composer.phar /usr/local/bin/composer && curl -fsSL https://deb.nodesource.com/setup_26.x | sudo -E bash - && sudo apt install nodejs -y && sudo npm install -g pnpm && composer --version && node -v && pnpm -v
 ```
 
 5. Create a new user to make deployment more secure:
@@ -301,7 +438,7 @@ git clone git@github.com:your-username/RacingTracker.git code && cd code
 3. Install the dependencies:
 
 ```bash
-composer install && npm install
+composer install && pnpm install
 ```
 
 4. Copy the `.env.example` file to `.env`:
@@ -331,7 +468,7 @@ php artisan db:seed
 8. Build the frontend:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 9. Remove default file in sites-enabled:
@@ -365,7 +502,7 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
@@ -404,7 +541,7 @@ sudo usermod -aG deploy-user www-data
 15. Modify php-fpm pool configuration:
 
 ```bash
-sudo nano /etc/php/8.2/fpm/pool.d/www.conf
+sudo nano /etc/php/8.4/fpm/pool.d/www.conf
 ```
 
 ```bash
@@ -425,7 +562,7 @@ listen.group = deploy-user
 16. Restart the php-fpm service:
 
 ```bash
-sudo service php8.2-fpm restart
+sudo service php8.4-fpm restart
 ```
 
 17. You can now access the application at [http://ec2-public-ip-address](http://ec2-public-ip-address).
@@ -527,7 +664,7 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
@@ -556,3 +693,4 @@ Distributed under the MIT License. See [LICENSE](https://github.com/Qv1ko/Racing
 - [Mr V's Garage inspiring video](https://www.youtube.com/live/U16a8tdrbII)
 - [TrueSkill System](https://en.wikipedia.org/wiki/TrueSkill)
 - [Pitwall App](https://pitwall.app)
+
