@@ -2,7 +2,6 @@ import { useMemo, useState, type MouseEvent as ReactMouseEvent } from "react";
 
 import { Brush, CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { downsample } from "@/lib/downsample";
@@ -111,44 +110,15 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
         }
     };
 
-    const step = (dir: -1 | 1) => {
-        const w = range.endIndex - range.startIndex;
-        const ns = Math.max(
-            0,
-            Math.min(points.length - 1 - w, range.startIndex + dir * MAX_WINDOW),
-        );
-        clampRange({ startIndex: ns, endIndex: ns + w });
-    };
-
     return (
         <Card className="mb-4">
             <CardHeader>
                 <CardTitle className="text-center">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                {showControls && (
-                    <div className="flex justify-center gap-2 pb-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            disabled={range.startIndex === 0}
-                            onClick={() => step(-1)}
-                        >
-                            ‹ {MAX_WINDOW} anteriores
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            disabled={range.endIndex >= points.length - 1}
-                            onClick={() => step(1)}
-                        >
-                            {MAX_WINDOW} siguientes ›
-                        </Button>
-                    </div>
-                )}
                 <div className="relative">
                     <ChartContainer config={chartConfig} className="h-[360px] w-full">
-                        <LineChart accessibilityLayer data={points} margin={{ top: 12, left: -22 }}>
+                        <LineChart accessibilityLayer data={points} margin={{ top: 12, left: 8, right: 12 }}>
                             <CartesianGrid vertical={false} />
                             <XAxis
                                 dataKey="race"
@@ -192,16 +162,26 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                                     dataKey="race"
                                     height={22}
                                     stroke="var(--border)"
-                                    fill="var(--muted)"
-                                    travellerWidth={8}
+                                    fill="var(--card)"
+                                    travellerWidth={0}
+                                    traveller={() => <g pointerEvents="none" />}
                                     startIndex={range.startIndex}
                                     endIndex={range.endIndex}
-                                    onChange={(r) => clampRange(r)}
-                                    tickFormatter={(value) =>
-                                        typeof value === "string"
-                                            ? value.slice(0, 3)
-                                            : String(value)
-                                    }
+                                    onChange={(r) => {
+                                        const len = points.length;
+                                        const snapped =
+                                            Math.round((r.startIndex ?? 0) / MAX_WINDOW) *
+                                            MAX_WINDOW;
+                                        const start = Math.max(
+                                            0,
+                                            Math.min(snapped, len - MAX_WINDOW),
+                                        );
+                                        setRange({
+                                            startIndex: start,
+                                            endIndex: start + MAX_WINDOW - 1,
+                                        });
+                                    }}
+                                    tickFormatter={() => ""}
                                 />
                             )}
 
@@ -217,7 +197,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                         </LineChart>
                     </ChartContainer>
                     {showControls && (
-                        <div className="absolute right-2 top-2 z-10 rounded border bg-background/80 p-1">
+                        <div className="absolute left-20 top-0 z-10 rounded border bg-background/80 p-1">
                             <MiniMap
                                 points={points}
                                 startIndex={range.startIndex}
