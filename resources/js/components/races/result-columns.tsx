@@ -8,6 +8,7 @@ export const columns: DataTableColumn<NonNullable<Race["result"]>[number]>[] = [
     {
         id: "positions",
         header: () => <div className="font-bold">Pos.</div>,
+        accessorFn: (row) => row.position,
         cell: ({ row }) => {
             return row.original.position;
         },
@@ -15,6 +16,7 @@ export const columns: DataTableColumn<NonNullable<Race["result"]>[number]>[] = [
     {
         id: "driver",
         header: () => <div className="font-bold">Driver</div>,
+        accessorFn: (row) => `${row.driver.name} ${row.driver.surname}`,
         cell: ({ row }) => {
             const driver = row.original.driver;
             return (
@@ -39,6 +41,7 @@ export const columns: DataTableColumn<NonNullable<Race["result"]>[number]>[] = [
     {
         id: "team",
         header: () => <div className="font-bold">Team</div>,
+        accessorFn: (row) => row.team?.name ?? "",
         cell: ({ row }) => {
             const team = row.original.team;
             return (

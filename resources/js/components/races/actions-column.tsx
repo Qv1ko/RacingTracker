@@ -16,6 +16,7 @@ import { type DataTableColumn } from "@/components/data-table";
 
 export const ActionsColumn: DataTableColumn<Race> = {
     id: "actions",
+    enableSorting: false,
     header: () => <div className="font-bold"></div>,
     cell: ({ row }) => {
         const handleEdit = (id: number) => {

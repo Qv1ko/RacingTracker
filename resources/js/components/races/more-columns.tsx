@@ -8,6 +8,7 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "date",
         header: () => <div className="font-bold">Date</div>,
+        accessorFn: (row) => row.date,
         cell: ({ row }) => {
             return (
                 <Link
@@ -26,6 +27,8 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "winner",
         header: () => <div className="font-bold">Winner</div>,
+        accessorFn: (row) =>
+            row.winner ? `${row.winner.name} ${row.winner.surname}` : "",
         cell: ({ row }) => {
             const winner = row.original.winner ? row.original.winner : null;
             const winnerTeam = winner?.team ? winner.team : null;
@@ -60,6 +63,8 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "second",
         header: () => <div className="hidden font-bold md:table-cell">2nd</div>,
+        accessorFn: (row) =>
+            row.second ? `${row.second.name} ${row.second.surname}` : "",
         cell: ({ row }) => {
             const second = row.original.second ? row.original.second : undefined;
             const secondTeam = second?.team ? second.team : null;
@@ -94,6 +99,8 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "third",
         header: () => <div className="hidden font-bold md:table-cell">3rd</div>,
+        accessorFn: (row) =>
+            row.third ? `${row.third.name} ${row.third.surname}` : "",
         cell: ({ row }) => {
             const third = row.original.third ? row.original.third : undefined;
             const thirdTeam = third?.team ? third.team : null;
@@ -128,6 +135,10 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "betterDriver",
         header: () => <div className="font-bold">Better driver</div>,
+        accessorFn: (row) =>
+            row.betterDriver
+                ? `${row.betterDriver.name} ${row.betterDriver.surname}`
+                : "",
         cell: ({ row }) => {
             const betterDriver = row.original.betterDriver ? row.original.betterDriver : null;
             const betterTeam = betterDriver?.team ? betterDriver.team : null;
@@ -162,6 +173,7 @@ export const columns: DataTableColumn<Race>[] = [
     {
         id: "betterTeam",
         header: () => <div className="font-bold">Better team</div>,
+        accessorFn: (row) => (row.betterTeam ? row.betterTeam.name : ""),
         cell: ({ row }) => {
             const betterTeam = row.original.betterTeam ? row.original.betterTeam : null;
             return (

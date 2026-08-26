@@ -5,18 +5,25 @@ import { Link } from "@inertiajs/react";
 import { type DataTableColumn } from "@/components/data-table";
 
 export const columns: DataTableColumn<
-    NonNullable<{ position: number; driver: Driver; points: number }[]>[number]
+    NonNullable<{
+        position: number;
+        driver: Driver;
+        points: number;
+        championships: number;
+    }[]>[number]
 >[] = [
     {
         id: "positions",
         header: () => <div className="font-bold">Pos.</div>,
+        accessorFn: (row) => row.position,
         cell: ({ row }) => {
             return row.original.position;
         },
     },
     {
-        accessorKey: "drivers",
+        id: "driver",
         header: () => <div className="font-bold">Driver</div>,
+        accessorFn: (row) => `${row.driver.name} ${row.driver.surname}`,
         cell: ({ row }) => {
             const driver = row.original.driver;
             return (
@@ -36,6 +43,13 @@ export const columns: DataTableColumn<
                     </span>{" "}
                 </Link>
             );
+        },
+    },
+    {
+        accessorKey: "championships",
+        header: () => <div className="font-bold">Championships</div>,
+        cell: ({ row }) => {
+            return <p>{row.original.championships}</p>;
         },
     },
     {

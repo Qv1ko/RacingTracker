@@ -8,6 +8,7 @@ export const columns: DataTableColumn<NonNullable<Race["driverStandings"]>[numbe
     {
         id: "positions",
         header: () => <div className="font-bold">Pos.</div>,
+        enableSorting: false,
         cell: ({ row }) => {
             return row.index + 1;
         },
@@ -15,6 +16,7 @@ export const columns: DataTableColumn<NonNullable<Race["driverStandings"]>[numbe
     {
         id: "driver",
         header: () => <div className="font-bold">Driver</div>,
+        accessorFn: (row) => `${row.driver.name} ${row.driver.surname}`,
         cell: ({ row }) => {
             const driver = row.original.driver;
             return (
@@ -46,6 +48,7 @@ export const columns: DataTableColumn<NonNullable<Race["driverStandings"]>[numbe
     {
         id: "gap",
         header: () => <div className="font-bold">Gap</div>,
+        accessorFn: (row) => row.gap,
         cell: ({ row }) => {
             return row.original.gap !== 0 && <p>{row.original.gap.toFixed(3)}</p>;
         },

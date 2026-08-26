@@ -46,7 +46,11 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
                     />
                     {auth.user && <CreateButton item="driver" createRoute="drivers.create" />}
                 </div>
-                <DataTable columns={columns} data={drivers} />
+                <DataTable
+                    columns={columns}
+                    data={drivers}
+                    initialSorting={[{ id: "points", desc: true }]}
+                />
             </div>
         </AppLayout>
     );

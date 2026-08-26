@@ -34,6 +34,8 @@ export default function Races({ seasons, races }: { seasons: string[]; races: Ra
         columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
+    const dateSortId = season === "all" ? "date-wy" : "date";
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Races" />
@@ -46,7 +48,11 @@ export default function Races({ seasons, races }: { seasons: string[]; races: Ra
                     />
                     {auth.user && <CreateButton item="race" createRoute="races.create" />}
                 </div>
-                <DataTable columns={columns} data={races} />
+                <DataTable
+                    columns={columns}
+                    data={races}
+                    initialSorting={[{ id: dateSortId, desc: true }]}
+                />
             </div>
         </AppLayout>
     );

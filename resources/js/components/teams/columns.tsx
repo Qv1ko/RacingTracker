@@ -10,6 +10,7 @@ export const columns: DataTableColumn<Team>[] = [
     {
         id: "team",
         header: () => <div className="font-bold">Team</div>,
+        accessorFn: (row) => row.name,
         cell: ({ row }) => {
             const { nationality, name } = row.original;
             return (

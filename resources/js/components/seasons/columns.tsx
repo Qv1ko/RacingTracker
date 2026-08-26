@@ -8,6 +8,7 @@ export const columns: DataTableColumn<Season>[] = [
     {
         id: "season",
         header: () => <div className="font-bold">Season</div>,
+        accessorFn: (row) => row.season,
         cell: ({ row }) => {
             return (
                 <Link
@@ -22,6 +23,10 @@ export const columns: DataTableColumn<Season>[] = [
     {
         id: "champion-driver",
         header: () => <div className="font-bold">Champion driver</div>,
+        accessorFn: (row) =>
+            row.championDriver
+                ? `${row.championDriver.name} ${row.championDriver.surname}`
+                : "",
         cell: ({ row }) => {
             const champion = row.original.championDriver;
             return (
@@ -47,6 +52,7 @@ export const columns: DataTableColumn<Season>[] = [
     {
         id: "champion-team",
         header: () => <div className="font-bold">Champion team</div>,
+        accessorFn: (row) => (row.championTeam ? row.championTeam.name : ""),
         cell: ({ row }) => {
             const champion = row.original.championTeam;
             return (

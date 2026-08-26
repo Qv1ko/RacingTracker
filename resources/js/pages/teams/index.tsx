@@ -1,5 +1,5 @@
 import { CreateButton } from "@/components/create-button";
-import { DataTable } from "@/components/data-table";
+import { DataTable, getColumnKey } from "@/components/data-table";
 import { SelectSeason } from "@/components/select-season";
 import { columns as tableColumns } from "@/components/teams/columns";
 import AppLayout from "@/layouts/app-layout";
@@ -22,21 +22,16 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
     if (season === "all") {
         columns = columns.filter(
             (column) =>
-                "accessorKey" in column &&
-                column.accessorKey !== "drivers" &&
-                column.accessorKey !== "second_positions" &&
-                column.accessorKey !== "third_positions",
+                getColumnKey(column) !== "drivers" &&
+                getColumnKey(column) !== "second_positions" &&
+                getColumnKey(column) !== "third_positions",
         );
     } else {
-        columns = columns.filter(
-            (column) => "accessorKey" in column && column.accessorKey !== "status",
-        );
+        columns = columns.filter((column) => getColumnKey(column) !== "status");
     }
 
     if (!auth.user || teams.length === 0) {
-        columns = columns.filter(
-            (column) => "accessorKey" in column && column.accessorKey !== "actions",
-        );
+        columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
     return (
@@ -51,7 +46,11 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
                     />
                     {auth.user && <CreateButton item="team" createRoute="teams.create" />}
                 </div>
-                <DataTable columns={columns} data={teams} />
+                <DataTable
+                    columns={columns}
+                    data={teams}
+                    initialSorting={[{ id: "points", desc: true }]}
+                />
             </div>
         </AppLayout>
     );

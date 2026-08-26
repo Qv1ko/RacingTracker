@@ -1,15 +1,10 @@
 import { MultiPointsChart } from "@/components/charts/multi-points-chart";
 import { DataTable } from "@/components/data-table";
-import { columns as driverRankingColumns } from "@/components/drivers/ranking-column";
 import { SelectSeason } from "@/components/select-season";
-import { columns as teamRankingColumns } from "@/components/teams/ranking-column";
 import { columns as teamStandingsColumns } from "@/components/teams/team-standings-columns";
-import { Icon } from "@/components/ui/icon";
 import AppLayout from "@/layouts/app-layout";
-import { HelmetIconNode } from "@/lib/utils";
 import { Driver, Team, type BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
-import { Users } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -93,29 +88,11 @@ export default function Home({
                             chartConfig={driversPointsChartConfig}
                         />
                     </div>
-                    {season.teamStandings && season.teamStandings.length > 0 && (
-                        <div>
-                            <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
-                        </div>
-                    )}
-                </div>
-                <div>
-                    <div className="mb-4 flex items-center justify-center gap-2">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full">
-                            <Icon iconNode={HelmetIconNode} className="h-8 w-8" />
-                        </div>
-                        <h3 className="text-xl font-semibold">Driver history</h3>
+                {season.teamStandings && season.teamStandings.length > 0 && (
+                    <div>
+                        <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
                     </div>
-                    <DataTable columns={driverRankingColumns} data={drivers.ranking} />
-                </div>
-                <div>
-                    <div className="mb-4 flex items-center justify-center gap-2">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full">
-                            <Users className="h-8 w-8" />
-                        </div>
-                        <h3 className="text-xl font-semibold">Team history</h3>
-                    </div>
-                    <DataTable columns={teamRankingColumns} data={teams.ranking} />
+                )}
                 </div>
             </div>
         </AppLayout>

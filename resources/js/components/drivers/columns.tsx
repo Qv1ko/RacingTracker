@@ -10,6 +10,7 @@ export const columns: DataTableColumn<Driver>[] = [
     {
         id: "driver",
         header: () => <div className="font-bold">Driver</div>,
+        accessorFn: (row) => `${row.name} ${row.surname}`,
         cell: ({ row }) => {
             const { name, surname, nationality } = row.original;
             return (

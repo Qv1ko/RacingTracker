@@ -16,7 +16,11 @@ export default function Seasons({ seasons }: { seasons: Season[] }) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Seasons" />
             <div className="container mx-auto px-4 py-8">
-                <DataTable columns={columns} data={seasons} />
+                <DataTable
+                    columns={columns}
+                    data={seasons}
+                    initialSorting={[{ id: "season", desc: true }]}
+                />
             </div>
         </AppLayout>
     );
