@@ -77,7 +77,7 @@ class TeamStatsService
                     'race' => $race->name,
                     'date' => $race->date,
                     'season' => $race->season,
-                    'average' => array_sum($latestByDriver) / count($latestByDriver),
+                    'total' => array_sum($latestByDriver),
                 ];
             })
             ->values();
@@ -88,7 +88,7 @@ class TeamStatsService
                     'race_id' => $row['race_id'],
                     'race' => $row['race'],
                     'date' => $row['date'],
-                    'points' => round($row['average'], 3),
+                    'points' => round($row['total'], 3),
                 ]);
         }
 
@@ -100,8 +100,8 @@ class TeamStatsService
             ->map(function ($row) use ($neutral, &$total, &$previousBySeason) {
                 $base = $previousBySeason[$row['season']] ?? $neutral;
 
-                $total += $row['average'] - $base;
-                $previousBySeason[$row['season']] = $row['average'];
+                $total += $row['total'] - $base;
+                $previousBySeason[$row['season']] = $row['total'];
 
                 return [
                     'race_id' => $row['race_id'],
@@ -129,7 +129,7 @@ class TeamStatsService
 
         $points = $this->latestPointsPerDriver(
             $participations->filter(fn ($p) => $p->race->season === $targetSeason)
-        )->avg('points');
+        )->sum('points');
 
         return $points === null ? null : (float) number_format((float) $points, 3);
     }

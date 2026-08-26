@@ -53,17 +53,19 @@ class RankingService
             ])
             ->groupBy(fn ($row) => substr($row->date, 0, 4));
 
-        $championIds = collect($championDriverIdBySeason->values())
-            ->merge($championTeamIdBySeason->values())
-            ->filter()
-            ->unique()
-            ->values();
+        $driversById = Driver::query()
+            ->whereIn('id', $championDriverIdBySeason->filter()->values())
+            ->get()
+            ->keyBy('id');
 
-        $modelsById = Driver::query()->whereIn('id', $championIds)->get()->keyBy('id');
+        $teamsById = Team::query()
+            ->whereIn('id', $championTeamIdBySeason->filter()->values())
+            ->get()
+            ->keyBy('id');
 
         return $rowsBySeason
             ->keys()
-            ->map(function ($season) use ($rowsBySeason, $racesCountBySeason, $championDriverIdBySeason, $championTeamIdBySeason, $modelsById) {
+            ->map(function ($season) use ($rowsBySeason, $racesCountBySeason, $championDriverIdBySeason, $championTeamIdBySeason, $driversById, $teamsById) {
                 $rowsInSeason = $rowsBySeason->get($season);
                 $driverId = $championDriverIdBySeason->get($season);
                 $teamId = $championTeamIdBySeason->get($season);
@@ -73,8 +75,8 @@ class RankingService
                     'racesCount' => $racesCountBySeason->get($season, 0),
                     'driversCount' => $rowsInSeason->pluck('driver_id')->unique()->count(),
                     'teamsCount' => $rowsInSeason->pluck('team_id')->filter()->unique()->count(),
-                    'championDriver' => $driverId !== null ? $modelsById->get($driverId) : null,
-                    'championTeam' => $teamId !== null ? $modelsById->get($teamId) : null,
+                    'championDriver' => $driverId !== null ? $driversById->get($driverId) : null,
+                    'championTeam' => $teamId !== null ? $teamsById->get($teamId) : null,
                 ];
             })
             ->sortByDesc('season')
@@ -123,18 +125,18 @@ class RankingService
                 $pointsByTeamAndDriver[$row->team_id][$row->driver_id] = (float) $row->points;
             }
 
-            $avgByTeam = [];
+            $sumByTeam = [];
 
             foreach ($pointsByTeamAndDriver as $teamId => $pointsByDriver) {
-                $avgByTeam[$teamId] = array_sum($pointsByDriver) / count($pointsByDriver);
+                $sumByTeam[$teamId] = array_sum($pointsByDriver);
             }
 
             $bestTeamId = null;
-            $bestAvg = null;
+            $bestSum = null;
 
-            foreach ($avgByTeam as $teamId => $avg) {
-                if ($bestAvg === null || $avg > $bestAvg || ($avg === $bestAvg && $teamId < $bestTeamId)) {
-                    $bestAvg = $avg;
+            foreach ($sumByTeam as $teamId => $sum) {
+                if ($bestSum === null || $sum > $bestSum || ($sum === $bestSum && $teamId < $bestTeamId)) {
+                    $bestSum = $sum;
                     $bestTeamId = $teamId;
                 }
             }
@@ -148,27 +150,33 @@ class RankingService
     public function driverPosition(Driver $driver): ?int
     {
         $points = $this->historicalDriverPoints();
+        $championships = $this->championsBySeason()['driver']->filter()->countBy();
 
-        $mine = $points->get($driver->id);
-
-        if ($mine === null) {
-            return null;
-        }
-
-        return $points->filter(fn ($sum) => $sum > $mine)->count() + 1;
+        return $this->rankPosition($points, $championships, $driver->id);
     }
 
     public function teamPosition(Team $team): ?int
     {
         $points = $this->historicalTeamPoints();
+        $championships = $this->championsBySeason()['team']->filter()->countBy();
 
-        $mine = $points->get($team->id);
+        return $this->rankPosition($points, $championships, $team->id);
+    }
 
-        if ($mine === null) {
+    private function rankPosition(Collection $points, Collection $championships, int $id): ?int
+    {
+        if (! $points->has($id)) {
             return null;
         }
 
-        return $points->filter(fn ($sum) => $sum > $mine)->count() + 1;
+        return $points
+            ->map(fn ($sum, $key) => [
+                'championships' => $championships->get($key, 0),
+                'points' => $sum,
+            ])
+            ->sortByDesc(fn ($entry) => [$entry['championships'], $entry['points']])
+            ->keys()
+            ->search($id) + 1;
     }
 
     public function historicalDriverPoints(): Collection
@@ -200,14 +208,18 @@ class RankingService
             ])
             ->groupBy('team_id')
             ->mapWithKeys(function ($teamRows, $teamId) {
-                $lastAvgBySeason = [];
+                $lastSumBySeason = [];
 
                 foreach ($teamRows->groupBy('race_id') as $raceRows) {
-                    $avg = $raceRows->avg(fn ($row) => (float) $row->points);
-                    $lastAvgBySeason[substr($raceRows->first()->date, 0, 4)] = $avg;
+                    $sum = $raceRows
+                        ->groupBy('driver_id')
+                        ->map(fn ($rows) => $rows->sortByDesc('date')->first())
+                        ->sum(fn ($row) => (float) $row->points);
+
+                    $lastSumBySeason[substr($raceRows->first()->date, 0, 4)] = $sum;
                 }
 
-                return [$teamId => round(array_sum($lastAvgBySeason), 3)];
+                return [$teamId => round(array_sum($lastSumBySeason), 3)];
             });
     }
 
@@ -225,14 +237,16 @@ class RankingService
     public function driversRanking(): Collection
     {
         $points = $this->historicalDriverPoints();
+        $driverChampionships = $this->championsBySeason()['driver']->filter()->countBy();
 
         return Driver::whereIn('id', $points->keys()->all())
             ->get()
             ->map(fn ($driver) => [
                 'driver' => $driver,
                 'points' => $points->get($driver->id),
+                'championships' => $driverChampionships->get($driver->id, 0),
             ])
-            ->sortByDesc('points')
+            ->sortByDesc(fn ($item) => [$item['championships'], $item['points'] ?? 0])
             ->values()
             ->map(fn ($item, $key) => array_merge($item, ['position' => $key + 1]));
     }
@@ -240,14 +254,16 @@ class RankingService
     public function teamsRanking(): Collection
     {
         $points = $this->historicalTeamPoints();
+        $teamChampionships = $this->championsBySeason()['team']->filter()->countBy();
 
         return Team::whereIn('id', $points->keys()->all())
             ->get()
             ->map(fn ($team) => [
                 'team' => $team,
                 'points' => $points->get($team->id),
+                'championships' => $teamChampionships->get($team->id, 0),
             ])
-            ->sortByDesc('points')
+            ->sortByDesc(fn ($item) => [$item['championships'], $item['points'] ?? 0])
             ->values()
             ->map(fn ($item, $key) => array_merge($item, ['position' => $key + 1]));
     }
@@ -287,7 +303,7 @@ class RankingService
                     ->filter(fn ($p) => $p->race->season == $season)
                     ->sortByDesc(fn ($p) => $p->race->date)
                     ->unique('driver_id')
-                    ->avg('points');
+                    ->sum('points');
 
                 return [
                     'team' => $team,
@@ -329,14 +345,14 @@ class RankingService
                     ->value('points');
 
                 $currentTeamPoints = $teamPointsByTeam[$participation->team_id] ?? 0;
-                $previousTeamPoints = $previousTeamPointsByTeam[$participation->team_id];
+                $previousTeamPoints = $previousTeamPointsByTeam[$participation->team_id] ?? 0;
 
                 return [
                     'sort_position' => $participation->position,
                     'position' => $participation->status,
                     'driver' => $participation->driver,
                     'points' => $participation->points,
-                    'pointsDiff' => $participation->points - $previousPoints,
+                    'pointsDiff' => $participation->points - ($previousPoints ?? 0),
                     'team' => $participation->team,
                     'teamPoints' => $currentTeamPoints,
                     'teamPointsDiff' => $currentTeamPoints - $previousTeamPoints,
@@ -380,7 +396,7 @@ class RankingService
             ->groupBy('team_id')
             ->map(fn ($group) => [
                 'team' => $group->first()->team,
-                'points' => $group->sortByDesc('race.date')->unique('driver_id')->avg('points'),
+                'points' => $group->sortByDesc('race.date')->unique('driver_id')->sum('points'),
             ])
             ->sortByDesc('points')
             ->values();
@@ -431,6 +447,6 @@ class RankingService
             ->with(['race'])
             ->get()
             ->groupBy('team_id')
-            ->map(fn ($group) => $group->sortByDesc('race.date')->unique('driver_id')->avg('points'));
+            ->map(fn ($group) => $group->sortByDesc('race.date')->unique('driver_id')->sum('points'));
     }
 }

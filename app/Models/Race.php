@@ -119,26 +119,35 @@ class Race extends Model
     public function betterTeam(): ?Participation
     {
         return $this->participations()
-            ->with('team')
+            ->with('team', 'race')
             ->whereNotNull('team_id')
             ->get()
             ->groupBy('team_id')
             ->map(function ($teamParticipations) {
-                $previous = Participation::where('team_id', $teamParticipations->first()->team_id)
-                    ->whereHas('race', fn ($q) => $q->where('date', '<', $this->date))
-                    ->orderByDesc(
-                        Race::select('date')
-                            ->whereColumn('races.id', 'participations.race_id')
-                            ->limit(1)
-                    )
-                    ->value('points');
+                $teamId = $teamParticipations->first()->team_id;
 
-                if ( ! $previous) {
+                $current = $teamParticipations
+                    ->sortByDesc(fn ($p) => $p->race->date)
+                    ->unique('driver_id')
+                    ->sum('points');
+
+                $previousRace = Race::where('date', '<', $this->date)
+                    ->orderByDesc('date')
+                    ->first();
+
+                if ( ! $previousRace) {
                     return null;
                 }
 
+                $previous = Participation::where('team_id', $teamId)
+                    ->where('race_id', $previousRace->id)
+                    ->get()
+                    ->sortByDesc('race.date')
+                    ->unique('driver_id')
+                    ->sum('points');
+
                 $participation = $teamParticipations->first();
-                $participation->points_diff = $teamParticipations->avg('points') - $previous;
+                $participation->points_diff = $current - $previous;
 
                 return $participation;
             })
