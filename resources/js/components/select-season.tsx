@@ -22,7 +22,7 @@ export const SelectSeason = ({
     compact?: boolean;
 }) => {
     const handleSelectChange = (season: string) => {
-        router.get(url + `?season=${season}`);
+        router.get(url, { season }, { preserveScroll: true });
     };
 
     return (

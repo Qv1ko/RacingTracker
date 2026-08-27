@@ -28,9 +28,9 @@ export default function Compare({
     selected: { driver1: number | null; driver2: number | null };
     comparison: DriverComparison[];
 }) {
-    const update = (key: "season" | "driver1" | "driver2", value: string) => {
+    const update = (key: "driver1" | "driver2", value: string) => {
         const next = {
-            season: key === "season" ? value : (season ?? ""),
+            season: season ?? seasons[0] ?? "",
             driver1: key === "driver1" ? value : (selected.driver1?.toString() ?? ""),
             driver2: key === "driver2" ? value : (selected.driver2?.toString() ?? ""),
         };
@@ -60,27 +60,17 @@ export default function Compare({
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Compare drivers" />
             <div className="container mx-auto px-4 py-8">
-                <div className="mb-8 flex flex-col items-center gap-3 text-center">
-                    <GitCompareArrows className="h-12 w-12" />
-                    <h1 className="text-2xl font-bold">Head-to-head</h1>
-                    <p className="text-muted-foreground">Compare two drivers across a season.</p>
+                <div className="mb-4 flex items-center justify-center gap-2">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full">
+                        <GitCompareArrows className="h-8 w-8" />
+                    </div>
+                    <h3 className="text-xl font-semibold">Head to head</h3>
                 </div>
-                <div className="mb-6 grid gap-4 md:grid-cols-3">
-                    <Selector
-                        label="Season"
-                        value={season ?? ""}
-                        onChange={(value) => update("season", value)}
-                    >
-                        {seasons.map((item) => (
-                            <SelectItem key={item} value={item}>
-                                {item}
-                            </SelectItem>
-                        ))}
-                    </Selector>
+                <div className="mb-6 grid gap-4 md:grid-cols-2">
                     <Selector
                         label="Driver 1"
                         value={selected.driver1?.toString() ?? ""}
-                        onChange={(value) => update("driver1", value)}
+                        onValueChange={(value) => update("driver1", value)}
                     >
                         {drivers.map((driver) => (
                             <SelectItem key={driver.id} value={driver.id.toString()}>
@@ -91,7 +81,7 @@ export default function Compare({
                     <Selector
                         label="Driver 2"
                         value={selected.driver2?.toString() ?? ""}
-                        onChange={(value) => update("driver2", value)}
+                        onValueChange={(value) => update("driver2", value)}
                     >
                         {drivers.map((driver) => (
                             <SelectItem key={driver.id} value={driver.id.toString()}>
@@ -157,7 +147,7 @@ function Selector({
 }: {
     label: string;
     value: string;
-    onChange: (value: string) => void;
+    onValueChange: (value: string) => void;
     children: React.ReactNode;
 }) {
     return (
