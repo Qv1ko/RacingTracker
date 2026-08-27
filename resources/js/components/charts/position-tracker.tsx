@@ -25,7 +25,7 @@ type PositionTrackerProps = {
     title?: string;
 };
 
-const DEFAULT_DRIVER_COUNT = 8;
+const DEFAULT_DRIVER_COUNT = 10;
 
 export function PositionTracker({
     drivers,
