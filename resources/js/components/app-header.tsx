@@ -26,7 +26,6 @@ import {
     Flag,
     FolderCode,
     History,
-    LayoutGrid,
     Menu,
     User,
     Users,
@@ -37,11 +36,6 @@ import { GlobalSearch } from "./global-search";
 import { SelectSeason } from "./select-season";
 
 const mainNavItems: NavItem[] = [
-    {
-        title: "Home",
-        href: "/",
-        icon: LayoutGrid,
-    },
     {
         title: "Seasons",
         href: "/seasons",
@@ -178,14 +172,14 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                         </Sheet>
                     </div>
 
-                    <Link href="/" prefetch className="flex items-center space-x-2">
+                    <Link href="/" prefetch className="flex shrink-0 items-center space-x-2">
                         <AppLogo />
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
+                    <div className="ml-4 hidden min-w-0 flex-1 items-center lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                            <NavigationMenuList className="flex h-full items-stretch space-x-1">
                                 {mainNavItems.map((item, index) => (
                                     <NavigationMenuItem
                                         key={`desktop-main-${index}`}
@@ -196,7 +190,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
                                                 currentPath === item.href && activeItemStyles,
-                                                "h-9 cursor-pointer px-3",
+                                                "h-9 cursor-pointer px-2",
                                             )}
                                         >
                                             {item.icon && (
@@ -217,7 +211,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                         </NavigationMenu>
                     </div>
 
-                    <div className="ml-auto flex items-center space-x-2">
+                    <div className="ml-4 flex shrink-0 items-center gap-3">
                         {showSeasonSwitcher && (
                             <SelectSeason
                                 all={false}
