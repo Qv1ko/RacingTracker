@@ -26,6 +26,7 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    seasons: string[];
     ziggy: Config & { location: string };
     [key: string]: unknown;
 }
@@ -76,6 +77,18 @@ export interface Driver {
     pointsHistory?: { race: string; date: string; points: number }[];
     positionsHistory?: { position: string; times: number }[];
     teammates?: Driver[];
+}
+
+export interface DriverComparison {
+    driver: Driver;
+    summary: {
+        races: number;
+        wins: number;
+        podiums: number;
+        averageFinish: number | null;
+        points: number;
+    };
+    pointsHistory: { race: string; date: string; points: number }[];
 }
 
 export interface Participation {
@@ -138,6 +151,10 @@ export interface Season {
         driver: Driver;
         pointsHistory: { race: string; date: string; points: number }[];
     }[];
+    positionTracker: {
+        drivers: { id: number; key: string; name: string; color?: string | null }[];
+        data: { race: string; date: string; [key: string]: string | number | null }[];
+    };
     teamStandings?: { position: string; team: Team; points: number; gap: number }[];
     teamsPoints?: { team: Team; pointsHistory: { race: string; date: string; points: number }[] }[];
     races: Race[];
@@ -160,7 +177,7 @@ export interface Team {
     seasons?: number;
     championshipsCount?: number;
     maxPoints?: number;
-    activity?: { status: string; race_id: number; name: string; date: string }[];
+    activity?: { position: string; name: string; date: string }[];
     info?: {
         firstRace?: Race;
         lastRace?: Race;

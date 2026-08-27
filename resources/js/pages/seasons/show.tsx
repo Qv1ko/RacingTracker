@@ -1,6 +1,8 @@
 import { MultiPointsChart } from "@/components/charts/multi-points-chart";
+import { PositionTracker } from "@/components/charts/position-tracker";
 import { DataTable } from "@/components/data-table";
 import { columns as driverStandingsColumns } from "@/components/drivers/driver-standings-columns";
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import InfoGrid from "@/components/info-grid";
 import { columns as racesColumns } from "@/components/seasons/races-columns";
@@ -10,7 +12,7 @@ import AppLayout from "@/layouts/app-layout";
 import { HelmetIconNode } from "@/lib/utils";
 import { Season, type BreadcrumbItem } from "@/types";
 import { Head, Link } from "@inertiajs/react";
-import { CalendarFold, Flag, Users } from "lucide-react";
+import { CalendarFold, ChartNoAxesCombined, Flag, Users } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -255,28 +257,50 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Drivers</h3>
                     </div>
-                    {season.driverStandings && (
-                        <DataTable columns={driverStandingsColumns} data={season.driverStandings} />
+                    <DataTable columns={driverStandingsColumns} data={season.driverStandings ?? []} />
+                    {driversPointsChartData.length > 0 ? (
+                        <MultiPointsChart
+                            title="Drivers points"
+                            data={driversPointsChartData}
+                            chartConfig={driversPointsChartConfig}
+                        />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No driver points data"
+                            description="Driver points will appear here once races have been recorded."
+                        />
                     )}
-                    <MultiPointsChart
-                        title="Drivers points"
-                        data={driversPointsChartData}
-                        chartConfig={driversPointsChartConfig}
-                    />
+                    {season.positionTracker.data.length > 0 ? (
+                        <PositionTracker
+                            drivers={season.positionTracker.drivers}
+                            data={season.positionTracker.data}
+                        />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No position data"
+                            description="Race position tracking will appear here once results are available."
+                        />
+                    )}
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full">
                             <Users className="h-8 w-8" />
                         </div>
                         <h3 className="text-xl font-semibold">Teams</h3>
                     </div>
-                    {season.teamStandings && (
-                        <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
-                    )}
-                    {season.teamsPoints && (
+                    <DataTable columns={teamStandingsColumns} data={season.teamStandings ?? []} />
+                    {teamsPointsData && teamsPointsData.length > 0 ? (
                         <MultiPointsChart
                             title="Teams points"
                             data={teamsPointsChartData}
                             chartConfig={teamsPointsChartConfig}
+                        />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No team points data"
+                            description="Team points will appear here once races have been recorded."
                         />
                     )}
                     <div className="flex items-center justify-center gap-2">
@@ -285,7 +309,11 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Races</h3>
                     </div>
-                    <DataTable columns={racesColumns} data={season.races} initialSorting={[{ id: "date", desc: false }]} />
+                    <DataTable
+                        columns={racesColumns}
+                        data={season.races}
+                        initialSorting={[{ id: "date", desc: false }]}
+                    />
                 </div>
             </div>
         </AppLayout>
