@@ -211,10 +211,23 @@ class RankingService
 
         $teamPoints = [];
 
-        foreach ($participations->groupBy('driver_id') as $rows) {
-            $previous = null;
+        foreach ($participations->groupBy('driver_id') as $driverId => $rows) {
+            $byRace = $rows
+                ->sortBy(fn ($p) => $p->race->date)
+                ->groupBy(fn ($p) => $p->race->date)
+                ->map(fn ($raceRows) => $raceRows->sortByDesc('points')->first());
 
-            foreach ($rows->sortBy(fn ($p) => $p->race->date) as $row) {
+            $previous = null;
+            $lastSeason = null;
+
+            foreach ($byRace as $row) {
+                $season = substr($row->race->date, 0, 4);
+
+                if ($season !== $lastSeason) {
+                    $previous = null;
+                    $lastSeason = $season;
+                }
+
                 $delta = $previous === null ? (float) $row->points : (float) $row->points - $previous;
                 $previous = (float) $row->points;
 
