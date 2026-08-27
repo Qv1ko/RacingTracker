@@ -1,3 +1,4 @@
+import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
 import {
     Select,
@@ -140,8 +141,12 @@ export function DataTable<TData extends RowData>({
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                <TableCell colSpan={columns.length} className="p-0">
+                                    <EmptyState
+                                        title="No results"
+                                        description="There is no data to display here yet."
+                                        className="rounded-none border-0"
+                                    />
                                 </TableCell>
                             </TableRow>
                         )}
