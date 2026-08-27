@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\SyncRaceParticipations;
 use App\Models\Participation;
 use App\Models\Team;
 use Carbon\Carbon;
@@ -67,7 +68,8 @@ class TeamStatsService
             ->groupBy(fn ($p) => $p->race->id)
             ->sortBy(fn ($group) => $group->first()->race->date);
 
-        $previousByDriver = [];
+        $neutral = (float) SyncRaceParticipations::neutralRating()['points'];
+        $previousByDriverSeason = [];
         $teamRunning = [];
 
         $result = [];
@@ -75,12 +77,17 @@ class TeamStatsService
         foreach ($races as $raceId => $rows) {
             $race = $rows->first()->race;
 
-            foreach ($rows as $row) {
-                $delta = ($previousByDriver[$row->driver_id] ?? null) === null
-                    ? (float) $row->points
-                    : (float) $row->points - $previousByDriver[$row->driver_id];
+            $deduped = $rows
+                ->groupBy(fn ($p) => $p->driver_id)
+                ->map(fn ($driverRows) => $driverRows->sortByDesc('points')->first());
 
-                $previousByDriver[$row->driver_id] = (float) $row->points;
+            foreach ($deduped as $row) {
+                $year = substr($row->race->date, 0, 4);
+                $base = $previousByDriverSeason[$row->driver_id][$year] ?? $neutral;
+
+                $delta = (float) $row->points - $base;
+
+                $previousByDriverSeason[$row->driver_id][$year] = (float) $row->points;
 
                 $teamRunning[$row->team_id] = ($teamRunning[$row->team_id] ?? 0) + $delta;
             }
