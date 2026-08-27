@@ -1,6 +1,7 @@
 import { ActivityChart } from "@/components/charts/activity-chart";
 import { PositionsChart } from "@/components/charts/positions-chart";
 import { SinglePointsChart } from "@/components/charts/single-points-chart";
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import InfoGrid from "@/components/info-grid";
 import StatCard from "@/components/stat-card";
@@ -9,7 +10,7 @@ import AppLayout from "@/layouts/app-layout";
 import { HelmetIconNode, medal, formatNumber } from "@/lib/utils";
 import { Driver, type BreadcrumbItem } from "@/types";
 import { Head, Link } from "@inertiajs/react";
-import { Trophy, Users } from "lucide-react";
+import { ChartNoAxesCombined, Trophy, Users } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -61,7 +62,7 @@ export default function Drivers({ driver }: { driver: Driver }) {
                         <StatCard mainValue={formatNumber(driver.points)} label="Points" />
                         <StatCard mainValue={formatNumber(driver.maxPoints)} label="Max points" />
                     </div>
-                    {driver.activity && driver.activity.length > 0 && (
+                    {driver.activity && driver.activity.length > 0 ? (
                         <ActivityChart
                             data={{
                                 activity: driver.activity.map((activity) => ({
@@ -70,6 +71,11 @@ export default function Drivers({ driver }: { driver: Driver }) {
                                     date: activity.date,
                                 })),
                             }}
+                        />
+                    ) : (
+                        <EmptyState
+                            title="No activity history"
+                            description="Race activity will appear here once this driver has results."
                         />
                     )}
                     {driver.info && (
@@ -172,11 +178,25 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             />
                         </div>
                     )}
-                    {driver.pointsHistory && (
+                    {driver.pointsHistory && driver.pointsHistory.length > 0 ? (
                         <SinglePointsChart data={driver.pointsHistory} color={driver.color} />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No points history"
+                            description="Points history will appear here once this driver has raced."
+                        />
                     )}
                     <table key="seasons"></table>
-                    {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}
+                    {driver.positionsHistory && driver.positionsHistory.length > 0 ? (
+                        <PositionsChart data={driver.positionsHistory} />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No positions history"
+                            description="Finishing positions will appear here once this driver has results."
+                        />
+                    )}
                     {((driver.teams?.length || 0) > 0 || (driver.teammates?.length || 0) > 0) && (
                         <div className="grid auto-rows-min grid-cols-1 gap-4 md:grid-cols-2">
                             <div className="grid auto-rows-min justify-items-center gap-4">
