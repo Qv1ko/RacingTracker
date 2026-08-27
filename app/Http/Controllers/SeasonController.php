@@ -100,7 +100,6 @@ class SeasonController extends Controller
         $driverOrder = $driverResults->pluck('driver.id')->flip();
         $positionDrivers = $races
             ->flatMap(fn (Race $race) => $race->participations)
-            ->filter(fn (Participation $participation) => $participation->driver)
             ->map(fn (Participation $participation) => $participation->driver)
             ->unique('id')
             ->sortBy(fn (Driver $driver) => $driverOrder[$driver->id] ?? PHP_INT_MAX)
@@ -120,10 +119,6 @@ class SeasonController extends Controller
                 ];
 
                 foreach ($race->participations as $participation) {
-                    if ($participation->driver === null) {
-                        continue;
-                    }
-
                     $row['driver_'.$participation->driver_id] = $participation->position === null
                         ? null
                         : (int) $participation->position;
