@@ -17,8 +17,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Home({
     season,
-    drivers,
-    teams,
 }: {
     season: {
         season: string;
@@ -28,12 +26,6 @@ export default function Home({
         }[];
         teamStandings: { position: string; team: Team; points: number; gap: number }[];
         teamWins: { id: number; name: string; color: string; count: number }[];
-    };
-    drivers: {
-        ranking: { position: number; driver: Driver; points: number }[];
-    };
-    teams: {
-        ranking: { position: number; team: Team; points: number }[];
     };
 }) {
     const driversPointsData = season.driversPoints.flatMap(({ driver: { id }, pointsHistory }) =>
@@ -70,8 +62,7 @@ export default function Home({
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-sm px-4 py-8">
-                <div className="flex justify-between">
-                </div>
+                <div className="flex justify-between"></div>
                 <div className="grid grid-cols-1 gap-4">
                     <div>
                         {driversPointsChartData.length > 0 ? (

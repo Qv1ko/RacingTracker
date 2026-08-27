@@ -28,7 +28,6 @@ import {
     History,
     LayoutGrid,
     Menu,
-    Search,
     User,
     Users,
 } from "lucide-react";
@@ -100,7 +99,9 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const { auth } = page.props;
     const currentPath = page.url.split("?")[0];
     const getInitials = useInitials();
-    const showSeasonSwitcher = ["/", "/drivers", "/teams", "/races", "/compare"].includes(currentPath);
+    const showSeasonSwitcher = ["/", "/drivers", "/teams", "/races", "/compare"].includes(
+        currentPath,
+    );
     const selectedSeason = new URLSearchParams(page.url.split("?")[1] ?? "").get("season") ?? "";
     return (
         <>

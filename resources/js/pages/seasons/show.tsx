@@ -257,7 +257,10 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Drivers</h3>
                     </div>
-                    <DataTable columns={driverStandingsColumns} data={season.driverStandings ?? []} />
+                    <DataTable
+                        columns={driverStandingsColumns}
+                        data={season.driverStandings ?? []}
+                    />
                     {driversPointsChartData.length > 0 ? (
                         <MultiPointsChart
                             title="Drivers points"
