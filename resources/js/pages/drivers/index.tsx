@@ -1,7 +1,6 @@
 import { CreateButton } from "@/components/create-button";
 import { DataTable, getColumnKey } from "@/components/data-table";
 import { columns as tableColumns } from "@/components/drivers/columns";
-import { SelectSeason } from "@/components/select-season";
 import AppLayout from "@/layouts/app-layout";
 import { SharedData, type BreadcrumbItem, type Driver } from "@/types";
 import { Head, usePage } from "@inertiajs/react";
@@ -13,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Drivers({ seasons, drivers }: { seasons: string[]; drivers: Driver[] }) {
+export default function Drivers({ drivers }: { drivers: Driver[] }) {
     const page = usePage<SharedData>();
     const { auth, season } = page.props;
 
@@ -45,11 +44,6 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
             <Head title="Drivers" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason
-                        seasons={seasons}
-                        selectedValue={season ? season.toString() : ""}
-                        url={"/drivers"}
-                    />
                     {auth.user && <CreateButton item="driver" createRoute="drivers.create" />}
                 </div>
                 <DataTable

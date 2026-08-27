@@ -1,7 +1,6 @@
 import { CreateButton } from "@/components/create-button";
 import { DataTable, getColumnKey } from "@/components/data-table";
 import { columns as tableColumns } from "@/components/races/columns";
-import { SelectSeason } from "@/components/select-season";
 import AppLayout from "@/layouts/app-layout";
 import { SharedData, type BreadcrumbItem, type Race } from "@/types";
 import { Head, usePage } from "@inertiajs/react";
@@ -13,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Races({ seasons, races }: { seasons: string[]; races: Race[] }) {
+export default function Races({ races }: { races: Race[] }) {
     const page = usePage<SharedData>();
     const { auth, season } = page.props;
 
@@ -41,11 +40,6 @@ export default function Races({ seasons, races }: { seasons: string[]; races: Ra
             <Head title="Races" />
             <div className="container mx-auto px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason
-                        seasons={seasons}
-                        selectedValue={season ? season.toString() : ""}
-                        url={"/races"}
-                    />
                     {auth.user && <CreateButton item="race" createRoute="races.create" />}
                 </div>
                 <DataTable

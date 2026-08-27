@@ -22,6 +22,7 @@ import { type BreadcrumbItem, type NavItem, type SharedData } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import {
     CalendarFold,
+    GitCompareArrows,
     Flag,
     FolderCode,
     History,
@@ -34,6 +35,7 @@ import {
 import AppLogo from "./app-logo";
 import AppLogoIcon from "./app-logo-icon";
 import { GlobalSearch } from "./global-search";
+import { SelectSeason } from "./select-season";
 
 const mainNavItems: NavItem[] = [
     {
@@ -66,6 +68,11 @@ const mainNavItems: NavItem[] = [
         href: "/history",
         icon: History,
     },
+    {
+        title: "Compare",
+        href: "/compare",
+        icon: GitCompareArrows,
+    },
 ];
 
 const rightNavItems: NavItem[] = [
@@ -91,7 +98,10 @@ interface AppHeaderProps {
 export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
+    const currentPath = page.url.split("?")[0];
     const getInitials = useInitials();
+    const showSeasonSwitcher = ["/", "/drivers", "/teams", "/races", "/compare"].includes(currentPath);
+    const selectedSeason = new URLSearchParams(page.url.split("?")[1] ?? "").get("season") ?? "";
     return (
         <>
             <div className="border-sidebar-border/80 border-b">
@@ -123,7 +133,11 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                 <Link
                                                     key={`mobile-main-${index}`}
                                                     href={item.href}
-                                                    className="flex items-center space-x-2 font-medium"
+                                                    className={cn(
+                                                        "flex items-center space-x-2 rounded-sm px-2 py-1 font-medium",
+                                                        currentPath === item.href &&
+                                                            activeItemStyles,
+                                                    )}
                                                 >
                                                     {item.icon && (
                                                         <Icon
@@ -180,7 +194,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             href={item.href}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
-                                                page.url === item.href && activeItemStyles,
+                                                currentPath === item.href && activeItemStyles,
                                                 "h-9 cursor-pointer px-3",
                                             )}
                                         >
@@ -193,7 +207,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             )}
                                             {item.title}
                                         </Link>
-                                        {page.url === item.href && (
+                                        {currentPath === item.href && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}
                                     </NavigationMenuItem>
@@ -203,6 +217,15 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </div>
 
                     <div className="ml-auto flex items-center space-x-2">
+                        {showSeasonSwitcher && (
+                            <SelectSeason
+                                all={false}
+                                compact
+                                seasons={page.props.seasons}
+                                selectedValue={selectedSeason}
+                                url={currentPath}
+                            />
+                        )}
                         <GlobalSearch />
                         <div className="relative flex items-center space-x-1">
                             <div className="hidden lg:flex">
