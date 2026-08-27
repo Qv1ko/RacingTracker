@@ -25,7 +25,7 @@ class SearchController extends Controller
             ]);
         }
 
-        $like = '%' . mb_strtolower($term) . '%';
+        $like = '%'.mb_strtolower($term).'%';
 
         $drivers = Driver::query()
             ->where(function ($query) use ($like) {
@@ -38,9 +38,9 @@ class SearchController extends Controller
             ->get(['id', 'name', 'surname', 'nationality'])
             ->map(fn (Driver $driver) => [
                 'id' => $driver->id,
-                'name' => $driver->name . ' ' . $driver->surname,
+                'name' => $driver->name.' '.$driver->surname,
                 'nationality' => $driver->nationality,
-                'href' => '/drivers/' . $driver->id,
+                'href' => '/drivers/'.$driver->id,
             ]);
 
         $teams = Team::query()
@@ -52,7 +52,7 @@ class SearchController extends Controller
                 'id' => $team->id,
                 'name' => $team->name,
                 'nationality' => $team->nationality,
-                'href' => '/teams/' . $team->id,
+                'href' => '/teams/'.$team->id,
             ]);
 
         $races = Race::query()
@@ -64,7 +64,7 @@ class SearchController extends Controller
                 'id' => $race->id,
                 'name' => $race->name,
                 'date' => $race->date,
-                'href' => '/races/' . $race->id,
+                'href' => '/races/'.$race->id,
             ]);
 
         $seasons = Race::seasons()
@@ -72,7 +72,7 @@ class SearchController extends Controller
             ->take(8)
             ->map(fn (string $year) => [
                 'year' => $year,
-                'href' => '/seasons/' . $year,
+                'href' => '/seasons/'.$year,
             ])
             ->values();
 

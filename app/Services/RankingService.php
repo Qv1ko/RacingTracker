@@ -115,26 +115,29 @@ class RankingService
         $champions = collect();
 
         foreach ($rowsBySeason as $season => $rows) {
-            $pointsByTeamAndDriver = [];
+            $teamPoints = [];
 
-            foreach ($rows as $row) {
-                if ($row->team_id === null) {
-                    continue;
+            foreach ($rows->groupBy('driver_id') as $driverRows) {
+                $previous = null;
+
+                foreach ($driverRows->sortBy('date') as $row) {
+                    if ($row->team_id === null) {
+                        $previous = (float) $row->points;
+
+                        continue;
+                    }
+
+                    $delta = $previous === null ? (float) $row->points : (float) $row->points - $previous;
+                    $previous = (float) $row->points;
+
+                    $teamPoints[$row->team_id] = ($teamPoints[$row->team_id] ?? 0) + $delta;
                 }
-
-                $pointsByTeamAndDriver[$row->team_id][$row->driver_id] = (float) $row->points;
-            }
-
-            $sumByTeam = [];
-
-            foreach ($pointsByTeamAndDriver as $teamId => $pointsByDriver) {
-                $sumByTeam[$teamId] = array_sum($pointsByDriver);
             }
 
             $bestTeamId = null;
             $bestSum = null;
 
-            foreach ($sumByTeam as $teamId => $sum) {
+            foreach ($teamPoints as $teamId => $sum) {
                 if ($bestSum === null || $sum > $bestSum || ($sum === $bestSum && $teamId < $bestTeamId)) {
                     $bestSum = $sum;
                     $bestTeamId = $teamId;
@@ -165,7 +168,7 @@ class RankingService
 
     private function rankPosition(Collection $points, Collection $championships, int $id): ?int
     {
-        if (! $points->has($id)) {
+        if ( ! $points->has($id)) {
             return null;
         }
 
@@ -195,32 +198,31 @@ class RankingService
 
     public function historicalTeamPoints(): Collection
     {
-        return DB::table('participations')
-            ->join('races', 'races.id', '=', 'participations.race_id')
-            ->whereNotNull('participations.team_id')
-            ->orderBy('races.date')
-            ->get([
-                'participations.team_id',
-                'participations.race_id',
-                'participations.driver_id',
-                'participations.points',
-                'races.date',
-            ])
-            ->groupBy('team_id')
-            ->mapWithKeys(function ($teamRows, $teamId) {
-                $lastSumBySeason = [];
+        $participations = Participation::whereNotNull('team_id')
+            ->with('race')
+            ->get();
 
-                foreach ($teamRows->groupBy('race_id') as $raceRows) {
-                    $sum = $raceRows
-                        ->groupBy('driver_id')
-                        ->map(fn ($rows) => $rows->sortByDesc('date')->first())
-                        ->sum(fn ($row) => (float) $row->points);
+        return $this->teamPointsFromParticipations($participations);
+    }
 
-                    $lastSumBySeason[substr($raceRows->first()->date, 0, 4)] = $sum;
-                }
+    public function teamPointsFromParticipations(Collection $participations): Collection
+    {
+        $participations = $participations->filter(fn ($p) => $p->team_id !== null);
 
-                return [$teamId => round(array_sum($lastSumBySeason), 3)];
-            });
+        $teamPoints = [];
+
+        foreach ($participations->groupBy('driver_id') as $rows) {
+            $previous = null;
+
+            foreach ($rows->sortBy(fn ($p) => $p->race->date) as $row) {
+                $delta = $previous === null ? (float) $row->points : (float) $row->points - $previous;
+                $previous = (float) $row->points;
+
+                $teamPoints[$row->team_id] = ($teamPoints[$row->team_id] ?? 0) + $delta;
+            }
+        }
+
+        return collect($teamPoints)->map(fn ($value) => round((float) $value, 3));
     }
 
     private function sumOfSeasonEnds(Collection $rows): float
@@ -295,21 +297,19 @@ class RankingService
 
     public function seasonTeamsClassification(string $season): Collection
     {
-        $classification = Team::whereHas('participations.race', fn ($q) => $q->whereYear('date', $season))
-            ->with(['participations.race'])
-            ->get()
-            ->map(function ($team) use ($season) {
-                $points = $team->participations
-                    ->filter(fn ($p) => $p->race->season == $season)
-                    ->sortByDesc(fn ($p) => $p->race->date)
-                    ->unique('driver_id')
-                    ->sum('points');
+        $participations = Participation::whereHas('race', fn ($q) => $q->whereYear('date', $season))
+            ->whereNotNull('team_id')
+            ->with('race')
+            ->get();
 
-                return [
-                    'team' => $team,
-                    'points' => (float) number_format((float) $points, 3),
-                ];
-            })
+        $points = $this->teamPointsFromParticipations($participations);
+
+        $classification = Team::whereHas('participations.race', fn ($q) => $q->whereYear('date', $season))
+            ->get()
+            ->map(fn ($team) => [
+                'team' => $team,
+                'points' => (float) ($points->get($team->id) ?? 0),
+            ])
             ->sortByDesc('points')
             ->values();
 
@@ -389,26 +389,34 @@ class RankingService
 
     public function raceTeamStandings(Race $race): Collection
     {
-        $teams = Participation::whereHas('race', fn ($q) => $q->whereYear('date', $race->season)->where('date', '<=', $race->date))
+        $participations = Participation::whereHas('race', fn ($q) => $q->whereYear('date', $race->season)->where('date', '<=', $race->date))
             ->whereNotNull('team_id')
             ->with(['team', 'race'])
-            ->get()
-            ->groupBy('team_id')
-            ->map(fn ($group) => [
-                'team' => $group->first()->team,
-                'points' => $group->sortByDesc('race.date')->unique('driver_id')->sum('points'),
-            ])
-            ->sortByDesc('points')
+            ->get();
+
+        $points = $this->teamPointsFromParticipations($participations);
+
+        $teams = Team::whereIn('id', $points->keys()->all())->get();
+
+        if ($points->isEmpty()) {
+            return collect();
+        }
+
+        $maxPoints = $points->max();
+
+        $position = 1;
+
+        return $points
+            ->sortByDesc(fn ($value) => $value)
+            ->map(function ($pts, $teamId) use ($teams, &$position, $maxPoints) {
+                return [
+                    'position' => $position++,
+                    'team' => $teams->firstWhere('id', $teamId),
+                    'points' => $pts,
+                    'gap' => $pts - $maxPoints,
+                ];
+            })
             ->values();
-
-        $maxPoints = $teams->max('points');
-
-        return $teams->map(fn ($team, $index) => [
-            'position' => $index + 1,
-            'team' => $team['team'],
-            'points' => $team['points'],
-            'gap' => $team['points'] - $maxPoints,
-        ]);
     }
 
     public function seasonDriversCount(string $season): int
@@ -438,15 +446,15 @@ class RankingService
 
     private function teamPointsUpTo(string $season, string $date): Collection
     {
-        return Participation::whereHas(
+        $participations = Participation::whereHas(
             'race',
             fn ($q) => $q->whereYear('date', $season)
                 ->where('date', '<=', $date)
         )
             ->whereNotNull('team_id')
             ->with(['race'])
-            ->get()
-            ->groupBy('team_id')
-            ->map(fn ($group) => $group->sortByDesc('race.date')->unique('driver_id')->sum('points'));
+            ->get();
+
+        return $this->teamPointsFromParticipations($participations);
     }
 }

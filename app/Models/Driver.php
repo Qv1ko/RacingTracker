@@ -31,7 +31,17 @@ class Driver extends Model
         'surname',
         'nationality',
         'status',
+        'color',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $driver) {
+            if ($driver->color === null) {
+                $driver->color = \App\Support\Color::fromString($driver->name.' '.$driver->surname);
+            }
+        });
+    }
 
     /** @return HasMany<Participation, $this> */
     public function participations(): HasMany

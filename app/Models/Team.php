@@ -29,7 +29,17 @@ class Team extends Model
         'name',
         'nationality',
         'status',
+        'color',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $team) {
+            if ($team->color === null) {
+                $team->color = \App\Support\Color::fromString($team->name);
+            }
+        });
+    }
 
     /** @return HasMany<Participation, $this> */
     public function participations(): HasMany

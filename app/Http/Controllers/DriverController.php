@@ -59,6 +59,7 @@ class DriverController extends Controller
                 'surname' => $driver->surname,
                 'nationality' => $driver->nationality,
                 'status' => $driver->status,
+                'color' => $driver->color,
                 'teams' => $teamsByDriver === null
                     ? $driver->teams->unique('id')->values()
                     : collect($teamsByDriver->get($driver->id, []))
@@ -95,6 +96,7 @@ class DriverController extends Controller
             'surname' => $driver->surname,
             'nationality' => $driver->nationality,
             'status' => $driver->status,
+            'color' => $driver->color,
             'teams' => $driver->teams->unique('id')->values(),
             'races' => $racesCount,
             'wins' => $winsCount,

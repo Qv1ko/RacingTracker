@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Actions\SyncRaceParticipations;
+use App\Models\Participation;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -57,87 +57,73 @@ class TeamStatsService
 
     public function pointsHistory(?string $season = null): Collection
     {
-        $perRace = $this->team
-            ->participations()
-            ->with('race')
+        $participations = Participation::with('race')
             ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
+            ->whereNotNull('team_id')
             ->get()
-            ->sortBy(fn ($p) => $p->race->date)
+            ->sortBy(fn ($p) => $p->race->date);
+
+        $races = $participations
             ->groupBy(fn ($p) => $p->race->id)
-            ->map(function ($rows) {
-                $race = $rows->first()->race;
-                $latestByDriver = [];
+            ->sortBy(fn ($group) => $group->first()->race->date);
 
-                foreach ($rows as $p) {
-                    $latestByDriver[$p->driver_id] = (float) $p->points;
-                }
+        $previousByDriver = [];
+        $teamRunning = [];
 
-                return [
-                    'race_id' => $race->id,
-                    'race' => $race->name,
-                    'date' => $race->date,
-                    'season' => $race->season,
-                    'total' => array_sum($latestByDriver),
-                ];
-            })
-            ->values();
+        $result = [];
 
-        if ($season !== null) {
-            return $perRace
-                ->map(fn ($row) => [
-                    'race_id' => $row['race_id'],
-                    'race' => $row['race'],
-                    'date' => $row['date'],
-                    'points' => round($row['total'], 3),
-                ]);
+        foreach ($races as $raceId => $rows) {
+            $race = $rows->first()->race;
+
+            foreach ($rows as $row) {
+                $delta = ($previousByDriver[$row->driver_id] ?? null) === null
+                    ? (float) $row->points
+                    : (float) $row->points - $previousByDriver[$row->driver_id];
+
+                $previousByDriver[$row->driver_id] = (float) $row->points;
+
+                $teamRunning[$row->team_id] = ($teamRunning[$row->team_id] ?? 0) + $delta;
+            }
+
+            $result[] = [
+                'race_id' => $raceId,
+                'race' => $race->name,
+                'date' => $race->date,
+                'points' => round($teamRunning[$this->team->id] ?? 0, 3),
+            ];
         }
 
-        $neutral = (float) SyncRaceParticipations::neutralRating()['points'];
-        $total = 0.0;
-        $previousBySeason = [];
-
-        return $perRace
-            ->map(function ($row) use ($neutral, &$total, &$previousBySeason) {
-                $base = $previousBySeason[$row['season']] ?? $neutral;
-
-                $total += $row['total'] - $base;
-                $previousBySeason[$row['season']] = $row['total'];
-
-                return [
-                    'race_id' => $row['race_id'],
-                    'race' => $row['race'],
-                    'date' => $row['date'],
-                    'points' => round($total, 3),
-                ];
-            });
+        return collect($result);
     }
 
     public function lastPoints(?string $season = null): ?float
     {
-        $participations = $this->team
-            ->participations()
-            ->with('race')
-            ->get();
+        $teamParticipations = $this->team->participations()->with('race')->get();
 
-        $targetSeason = ! $season
-        ? $participations->pluck('race')->map(fn ($r) => $r->season)->unique()->sortDesc()->first()
-        : $season;
-
-        if ( ! $targetSeason) {
+        if ($teamParticipations->isEmpty()) {
             return null;
         }
 
-        $points = $this->latestPointsPerDriver(
-            $participations->filter(fn ($p) => $p->race->season === $targetSeason)
-        )->sum('points');
+        $targetSeason = $season
+            ?? $teamParticipations->pluck('race.season')->filter()->unique()->sortDesc()->first();
 
-        return $points === null ? null : (float) number_format((float) $points, 3);
-    }
+        if ($targetSeason === null) {
+            return null;
+        }
 
-    private function latestPointsPerDriver(Collection $participations): Collection
-    {
-        return $participations
-            ->groupBy('driver_id')
-            ->map(fn ($group) => $group->sortByDesc('race.date')->first());
+        $seasonParticipations = Participation::with('race')
+            ->whereHas('race', fn ($q) => $q->whereYear('date', $targetSeason))
+            ->whereNotNull('team_id')
+            ->get();
+
+        if ($seasonParticipations->isEmpty()) {
+            return null;
+        }
+
+        $points = (new RankingService)->teamPointsFromParticipations($seasonParticipations);
+
+        return $points->has($this->team->id)
+            ? (float) $points->get($this->team->id)
+            : null;
     }
 }

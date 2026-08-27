@@ -58,6 +58,7 @@ class TeamController extends Controller
                 'name' => $team->name,
                 'nationality' => $team->nationality,
                 'status' => $team->status,
+                'color' => $team->color,
                 'drivers' => $driversByTeam === null
                     ? $team->drivers->unique('id')->values()
                     : collect($driversByTeam->get($team->id, []))
@@ -93,6 +94,7 @@ class TeamController extends Controller
             'name' => $team->name,
             'nationality' => $team->nationality,
             'status' => $team->status,
+            'color' => $team->color,
             'races' => $racesCount,
             'wins' => $winsCount,
             'seasons' => $teamStats->seasons()->count(),
