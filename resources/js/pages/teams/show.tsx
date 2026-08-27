@@ -1,5 +1,4 @@
 import { ActivityChart } from "@/components/charts/activity-chart";
-import { PositionsChart } from "@/components/charts/positions-chart";
 import { SinglePointsChart } from "@/components/charts/single-points-chart";
 import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
@@ -55,7 +54,7 @@ export default function Teams({ team }: { team: Team }) {
                     </div>
                     {team.activity && team.activity.length > 0 ? (
                         <ActivityChart
-                            title={`${team.name} activity history`}
+                            title="Activity history"
                             data={{
                                 activity: team.activity.map((activity) => ({
                                     position: activity.position,
@@ -180,15 +179,6 @@ export default function Teams({ team }: { team: Team }) {
                         />
                     )}
                     <table key="seasons"></table>
-                    {team.positionsHistory && team.positionsHistory.length > 0 ? (
-                        <PositionsChart data={team.positionsHistory} />
-                    ) : (
-                        <EmptyState
-                            icon={<ChartNoAxesCombined aria-hidden="true" />}
-                            title="No positions history"
-                            description="Finishing positions will appear here once this team has results."
-                        />
-                    )}
                     {(team.drivers?.length || 0) > 0 && (
                         <div className="grid auto-rows-min justify-items-center gap-4">
                             <div className="flex items-center justify-center gap-2">

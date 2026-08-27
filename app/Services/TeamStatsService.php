@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Actions\SyncRaceParticipations;
 use App\Models\Participation;
-use App\Models\Race;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -59,31 +58,86 @@ class TeamStatsService
 
     public function activity(?string $season = null): Collection
     {
-        return $this->team
+        $raceIds = $this->team
             ->participations()
-            ->with('race:id,name,date')
             ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
-            ->orderBy(
-                Race::select('date')
-                    ->whereColumn('races.id', 'participations.race_id')
-            )
-            ->orderBy('participations.id')
+            ->pluck('race_id')
+            ->unique();
+
+        if ($raceIds->isEmpty()) {
+            return collect();
+        }
+
+        $participations = Participation::with('race:id,name,date')
+            ->whereIn('race_id', $raceIds)
+            ->where('status', '!=', 'DQ')
             ->get()
-            ->groupBy(fn ($p) => $p->driver_id.'-'.$p->race_id)
-            ->map(fn ($rows) => $rows->first())
-            ->sortBy(fn ($p) => $p->race->date)
-            ->values()
-            ->map(fn ($p) => [
-                'position' => $p->status,
-                'name' => $p->race->name,
-                'date' => $p->race->date,
-            ]);
+            ->sortBy(fn ($p) => $p->race->date);
+
+        $teamPoints = [];
+        $previousByDriverSeason = [];
+        $currentYear = null;
+        $result = [];
+
+        foreach ($participations->groupBy('race_id')->sortBy(fn ($rows) => $rows->first()->race->date) as $rows) {
+            $race = $rows->first()->race;
+            $year = substr($race->date, 0, 4);
+
+            if ($currentYear !== $year) {
+                $teamPoints = [];
+                $currentYear = $year;
+            }
+
+            foreach ($rows->groupBy(fn ($p) => $p->driver_id)->map(
+                fn ($driverRows) => $driverRows->sortByDesc('points')->first(),
+            ) as $participation) {
+                $base = $previousByDriverSeason[$participation->driver_id][$year] ?? 0;
+                $points = (float) $participation->points;
+                $delta = max(0, $points - $base);
+
+                $previousByDriverSeason[$participation->driver_id][$year] = $points;
+                $teamPoints[$participation->team_id] = ($teamPoints[$participation->team_id] ?? 0) + $delta;
+            }
+
+            $raceTeamIds = $rows->pluck('team_id')->filter()->unique();
+            foreach ($raceTeamIds as $teamId) {
+                $teamPoints[$teamId] ??= 0;
+            }
+
+            $position = collect($teamPoints)
+                ->map(fn ($points, $teamId) => ['id' => (int) $teamId, 'points' => $points])
+                ->sort(
+                    fn ($teamA, $teamB) => $teamB['points'] <=> $teamA['points'] ?: $teamA['id'] <=> $teamB['id']
+                )
+                ->pluck('id')
+                ->search($this->team->id);
+
+            if ($position !== false) {
+                $result[] = [
+                    'position' => (string) ($position + 1),
+                    'name' => $race->name,
+                    'date' => $race->date,
+                ];
+            }
+        }
+
+        return collect($result);
     }
 
     public function pointsHistory(?string $season = null): Collection
     {
-        $participations = Participation::with('race')
+        $teamRaceIds = $this->team
+            ->participations()
             ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
+            ->pluck('race_id')
+            ->unique();
+
+        if ($teamRaceIds->isEmpty()) {
+            return collect();
+        }
+
+        $participations = Participation::with('race')
+            ->whereIn('race_id', $teamRaceIds)
             ->whereNotNull('team_id')
             ->get()
             ->sortBy(fn ($p) => $p->race->date);
