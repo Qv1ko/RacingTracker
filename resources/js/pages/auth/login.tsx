@@ -3,6 +3,7 @@ import { LoaderCircle } from "lucide-react";
 import { FormEventHandler } from "react";
 
 import InputError from "@/components/input-error";
+import TextLink from "@/components/text-link";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -17,10 +18,10 @@ type LoginForm = {
 
 interface LoginProps {
     status?: string;
-    // canResetPassword: boolean;
+    canResetPassword: boolean;
 }
 
-export default function Login({ status }: LoginProps) {
+export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: "",
         password: "",
@@ -62,11 +63,15 @@ export default function Login({ status }: LoginProps) {
                     <div className="grid gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
-                            {/* {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
+                            {canResetPassword && (
+                                <TextLink
+                                    href={route("password.request")}
+                                    className="ml-auto text-sm"
+                                    tabIndex={5}
+                                >
                                     Forgot password?
                                 </TextLink>
-                            )} */}
+                            )}
                         </div>
                         <Input
                             id="password"
@@ -103,12 +108,12 @@ export default function Login({ status }: LoginProps) {
                     </Button>
                 </div>
 
-                {/* <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                <div className="text-muted-foreground text-center text-sm">
+                    Don't have an account?{" "}
+                    <TextLink href={route("register")} tabIndex={6}>
                         Sign up
                     </TextLink>
-                </div> */}
+                </div>
             </form>
 
             {status && (

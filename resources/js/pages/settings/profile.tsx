@@ -4,6 +4,7 @@ import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
 import HeadingSmall from "@/components/heading-small";
+import DeleteUser from "@/components/delete-user";
 import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -130,7 +131,7 @@ export default function Profile({
                     </form>
                 </div>
 
-                {/* <DeleteUser /> */}
+                <DeleteUser />
             </SettingsLayout>
         </AppLayout>
     );
