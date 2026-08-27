@@ -89,8 +89,12 @@ class CompareController extends Controller
         ]);
     }
 
-    private function validSelection(?int $id, $available): ?int
+    private function validSelection(mixed $id, $available): ?int
     {
-        return $id !== null && $available->contains($id) ? $id : null;
+        $normalizedId = $id === null ? null : (int) $id;
+
+        return $normalizedId !== null && $available->contains($normalizedId)
+            ? $normalizedId
+            : null;
     }
 }
