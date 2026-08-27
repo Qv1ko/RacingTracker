@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::resource('seasons', SeasonController::class)->only(['index', 'show']);
 Route::get('history', [HistoryController::class, 'index'])->name('history');
+Route::get('compare', [CompareController::class, 'index'])->name('compare');
 Route::resource('drivers', DriverController::class)->only(['index', 'show']);
 Route::resource('teams', TeamController::class)->only(['index', 'show']);
 Route::resource('races', RaceController::class)->only(['index', 'show']);
