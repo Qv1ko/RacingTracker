@@ -34,10 +34,10 @@ export default function History({
                         <h3 className="text-xl font-semibold">Driver history</h3>
                     </div>
                     <DataTable
-                    columns={driverRankingColumns}
-                    data={drivers}
-                    initialSorting={[{ id: "positions", desc: false }]}
-                />
+                        columns={driverRankingColumns}
+                        data={drivers}
+                        initialSorting={[{ id: "positions", desc: false }]}
+                    />
                 </div>
                 <div>
                     <div className="mb-4 flex items-center justify-center gap-2">
@@ -47,10 +47,10 @@ export default function History({
                         <h3 className="text-xl font-semibold">Team history</h3>
                     </div>
                     <DataTable
-                    columns={teamRankingColumns}
-                    data={teams}
-                    initialSorting={[{ id: "positions", desc: false }]}
-                />
+                        columns={teamRankingColumns}
+                        data={teams}
+                        initialSorting={[{ id: "positions", desc: false }]}
+                    />
                 </div>
             </div>
         </AppLayout>

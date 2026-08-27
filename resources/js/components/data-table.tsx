@@ -148,56 +148,55 @@ export function DataTable<TData extends RowData>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-between space-x-2 py-4">
-                <span className="text-muted-foreground text-sm">
-                    Page {pagination.pageIndex + 1} of{" "}
-                    {table.getPageCount() || 1}
-                </span>
-                <div className="flex items-center space-x-4">
-                    <div className="flex items-center space-x-2">
-                        <span className="text-muted-foreground text-sm">
-                            Rows per page
-                        </span>
-                        <Select
-                            value={String(pagination.pageSize)}
-                            onValueChange={(value) =>
-                                setPagination((prev) => ({
-                                    ...prev,
-                                    pageSize: Number(value),
-                                    pageIndex: 0,
-                                }))
-                            }
+            {data.length > 25 && (
+                <div className="flex items-center justify-between space-x-2 py-4">
+                    <span className="text-muted-foreground text-sm">
+                        Page {pagination.pageIndex + 1} of {table.getPageCount() || 1}
+                    </span>
+                    <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                            <span className="text-muted-foreground text-sm">Rows per page</span>
+                            <Select
+                                value={String(pagination.pageSize)}
+                                onValueChange={(value) =>
+                                    setPagination((prev) => ({
+                                        ...prev,
+                                        pageSize: Number(value),
+                                        pageIndex: 0,
+                                    }))
+                                }
+                            >
+                                <SelectTrigger className="h-8 w-[72px]">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {[25, 50, 100].map((size) => (
+                                        <SelectItem key={size} value={String(size)}>
+                                            {size}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
                         >
-                            <SelectTrigger className="h-8 w-[72px]">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {[25, 50, 100].map((size) => (
-                                    <SelectItem key={size} value={String(size)}>
-                                        {size}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                            Previous
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            Next
+                        </Button>
                     </div>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Next
-                    </Button>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

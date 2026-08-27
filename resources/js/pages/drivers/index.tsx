@@ -34,6 +34,12 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
         columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
+    const leaderPoints = drivers.length ? Math.max(...drivers.map((d) => d.points ?? 0)) : 0;
+    const tableData = drivers.map((d) => ({
+        ...d,
+        gap: leaderPoints - (d.points ?? 0),
+    }));
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Drivers" />
@@ -48,7 +54,7 @@ export default function Drivers({ seasons, drivers }: { seasons: string[]; drive
                 </div>
                 <DataTable
                     columns={columns}
-                    data={drivers}
+                    data={tableData}
                     initialSorting={[{ id: "points", desc: true }]}
                 />
             </div>

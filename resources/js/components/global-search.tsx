@@ -115,9 +115,7 @@ export function GlobalSearch() {
 
             {open && query.trim().length >= 2 && (
                 <div className="bg-popover text-popover-foreground absolute z-50 mt-1 max-h-96 w-full overflow-y-auto rounded-md border shadow-lg">
-                    {loading && (
-                        <div className="text-muted-foreground p-3 text-sm">Searching…</div>
-                    )}
+                    {loading && <div className="text-muted-foreground p-3 text-sm">Searching…</div>}
 
                     {!loading && !hasResults && (
                         <div className="text-muted-foreground p-3 text-sm">No results found.</div>

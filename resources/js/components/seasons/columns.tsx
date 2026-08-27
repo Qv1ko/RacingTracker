@@ -24,9 +24,7 @@ export const columns: DataTableColumn<Season>[] = [
         id: "champion-driver",
         header: () => <div className="font-bold">Champion driver</div>,
         accessorFn: (row) =>
-            row.championDriver
-                ? `${row.championDriver.name} ${row.championDriver.surname}`
-                : "",
+            row.championDriver ? `${row.championDriver.name} ${row.championDriver.surname}` : "",
         cell: ({ row }) => {
             const champion = row.original.championDriver;
             return (

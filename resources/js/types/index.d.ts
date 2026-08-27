@@ -47,6 +47,7 @@ export interface Driver {
     surname: string;
     nationality?: string;
     status: boolean;
+    color?: string;
     // index
     teams?: Team[];
     races?: number;
@@ -54,6 +55,7 @@ export interface Driver {
     second_positions?: number;
     third_positions?: number;
     points?: number;
+    gap?: number;
     // show
     seasons?: number;
     championshipsCount?: number;
@@ -146,12 +148,14 @@ export interface Team {
     name: string;
     nationality: string;
     status: boolean;
+    color?: string;
     // index
     races?: number;
     wins?: number;
     second_positions?: number;
     third_positions?: number;
     points?: number;
+    gap?: number;
     // show
     seasons?: number;
     championshipsCount?: number;

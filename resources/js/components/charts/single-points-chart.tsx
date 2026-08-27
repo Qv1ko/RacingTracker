@@ -1,6 +1,15 @@
 import { useMemo, useState, type MouseEvent as ReactMouseEvent } from "react";
 
-import { Brush, CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+    Brush,
+    CartesianGrid,
+    Line,
+    LineChart,
+    ReferenceLine,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
@@ -14,6 +23,7 @@ const chartConfig = {
 
 type SinglePointsChartProps = {
     title?: string;
+    color?: string;
     data: {
         race: string;
         date: string;
@@ -26,11 +36,13 @@ function MiniMap({
     startIndex,
     endIndex,
     onSelect,
+    color,
 }: {
     points: { points: number }[];
     startIndex: number;
     endIndex: number;
     onSelect: (centerIndex: number) => void;
+    color: string;
 }) {
     const W = 180;
     const H = 44;
@@ -63,20 +75,15 @@ function MiniMap({
             role="img"
             aria-label="Overview of all races; click to navigate"
         >
-            <polyline
-                points={poly}
-                fill="none"
-                stroke="var(--color-primary)"
-                strokeWidth={1.5}
-            />
+            <polyline points={poly} fill="none" stroke={color} strokeWidth={1.5} />
             <rect
                 x={rectX}
                 y={0}
                 width={rectW}
                 height={H}
-                fill="var(--color-primary)"
+                fill={color}
                 fillOpacity={0.2}
-                stroke="var(--color-primary)"
+                stroke={color}
                 strokeWidth={1}
             />
         </svg>
@@ -85,9 +92,12 @@ function MiniMap({
 
 export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
     title = "Points history",
+    color = "var(--color-primary)",
     data,
 }) => {
     const points = useMemo(() => downsample(data), [data]);
+
+    const lineColor = color ?? "var(--color-primary)";
 
     const MAX_WINDOW = 25;
     const [range, setRange] = useState<{ startIndex: number; endIndex: number }>({
@@ -95,6 +105,8 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
         endIndex: points.length - 1,
     });
     const showControls = points.length > MAX_WINDOW;
+
+    const [hover, setHover] = useState<number | null>(null);
 
     const clampRange = (next: { startIndex: number; endIndex: number }) => {
         const len = points.length;
@@ -118,7 +130,16 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
             <CardContent>
                 <div className="relative">
                     <ChartContainer config={chartConfig} className="h-[360px] w-full">
-                        <LineChart accessibilityLayer data={points} margin={{ top: 12, left: 8, right: 12 }}>
+                        <LineChart
+                            accessibilityLayer
+                            data={points}
+                            margin={{ top: 12, left: 8, right: 12 }}
+                            onMouseMove={(state) => {
+                                const i = state?.activeTooltipIndex;
+                                setHover(typeof i === "number" ? i : null);
+                            }}
+                            onMouseLeave={() => setHover(null)}
+                        >
                             <CartesianGrid vertical={false} />
                             <XAxis
                                 dataKey="race"
@@ -136,7 +157,7 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                             />
                             <Tooltip
                                 isAnimationActive={false}
-                                cursor={{ strokeDasharray: "3 3" }}
+                                cursor={false}
                                 content={({ payload = [], label, active, coordinate, offset }) => {
                                     const point = payload[0]?.payload as
                                         | { race?: string; date?: string }
@@ -185,13 +206,20 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                                 />
                             )}
 
+                            {hover != null && points[hover] && (
+                                <ReferenceLine
+                                    x={points[hover].race}
+                                    stroke="var(--muted-foreground)"
+                                    strokeDasharray="3 3"
+                                    strokeWidth={1}
+                                />
+                            )}
                             <Line
                                 dataKey="points"
                                 type="linear"
-                                stroke="var(--color-primary)"
+                                stroke={lineColor}
                                 strokeWidth={2}
                                 dot={{ r: 2, strokeWidth: 1 }}
-                                activeDot={{ r: 6, strokeWidth: 2 }}
                                 isAnimationActive={false}
                             />
                         </LineChart>
@@ -202,14 +230,12 @@ export const SinglePointsChart: React.FC<SinglePointsChartProps> = ({
                                 points={points}
                                 startIndex={range.startIndex}
                                 endIndex={range.endIndex}
+                                color={lineColor}
                                 onSelect={(center) => {
                                     const w = range.endIndex - range.startIndex;
                                     const ns = Math.max(
                                         0,
-                                        Math.min(
-                                            center - Math.floor(w / 2),
-                                            points.length - 1 - w,
-                                        ),
+                                        Math.min(center - Math.floor(w / 2), points.length - 1 - w),
                                     );
                                     clampRange({ startIndex: ns, endIndex: ns + w });
                                 }}

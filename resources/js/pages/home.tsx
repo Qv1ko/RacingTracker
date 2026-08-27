@@ -58,13 +58,12 @@ export default function Home({
         }, {}),
     ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    const driversPointsChartConfig = season.driversPoints.reduce<Record<string, { label: string }>>(
-        (acc, { driver: { id, name, surname } }) => {
-            acc[id] = { label: `${name[0].toUpperCase()}. ${surname}` };
-            return acc;
-        },
-        {},
-    );
+    const driversPointsChartConfig = season.driversPoints.reduce<
+        Record<string, { label: string; color?: string }>
+    >((acc, { driver: { id, name, surname, color } }) => {
+        acc[id] = { label: `${name[0].toUpperCase()}. ${surname}`, color };
+        return acc;
+    }, {});
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -88,11 +87,11 @@ export default function Home({
                             chartConfig={driversPointsChartConfig}
                         />
                     </div>
-                {season.teamStandings && season.teamStandings.length > 0 && (
-                    <div>
-                        <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
-                    </div>
-                )}
+                    {season.teamStandings && season.teamStandings.length > 0 && (
+                        <div>
+                            <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
+                        </div>
+                    )}
                 </div>
             </div>
         </AppLayout>

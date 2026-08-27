@@ -6,7 +6,7 @@ import InfoGrid from "@/components/info-grid";
 import StatCard from "@/components/stat-card";
 import FlagIcon from "@/components/ui/flag-icon";
 import AppLayout from "@/layouts/app-layout";
-import { HelmetIconNode, medal } from "@/lib/utils";
+import { HelmetIconNode, medal, formatNumber } from "@/lib/utils";
 import { Driver, type BreadcrumbItem } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { Trophy, Users } from "lucide-react";
@@ -58,11 +58,8 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             subValue={driver.races}
                             label="Wins"
                         />
-                        <StatCard mainValue={driver.points?.toFixed(3) || 0} label="Points" />
-                        <StatCard
-                            mainValue={driver.maxPoints?.toFixed(3) || 0}
-                            label="Max points"
-                        />
+                        <StatCard mainValue={formatNumber(driver.points)} label="Points" />
+                        <StatCard mainValue={formatNumber(driver.maxPoints)} label="Max points" />
                     </div>
                     {driver.activity && driver.activity.length > 0 && (
                         <ActivityChart
@@ -175,7 +172,9 @@ export default function Drivers({ driver }: { driver: Driver }) {
                             />
                         </div>
                     )}
-                    {driver.pointsHistory && <SinglePointsChart data={driver.pointsHistory} />}
+                    {driver.pointsHistory && (
+                        <SinglePointsChart data={driver.pointsHistory} color={driver.color} />
+                    )}
                     <table key="seasons"></table>
                     {driver.positionsHistory && <PositionsChart data={driver.positionsHistory} />}
                     {((driver.teams?.length || 0) > 0 || (driver.teammates?.length || 0) > 0) && (

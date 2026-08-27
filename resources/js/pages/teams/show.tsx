@@ -5,7 +5,7 @@ import InfoGrid from "@/components/info-grid";
 import StatCard from "@/components/stat-card";
 import FlagIcon from "@/components/ui/flag-icon";
 import AppLayout from "@/layouts/app-layout";
-import { HelmetIconNode, medal } from "@/lib/utils";
+import { HelmetIconNode, medal, formatNumber } from "@/lib/utils";
 import { Team, type BreadcrumbItem } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { Trophy, Users } from "lucide-react";
@@ -48,8 +48,8 @@ export default function Teams({ team }: { team: Team }) {
                         />
                         <StatCard mainValue={team.races || 0} label="Races" />
                         <StatCard mainValue={team.wins || 0} subValue={team.races} label="Wins" />
-                        <StatCard mainValue={team.points?.toFixed(3) || 0} label="Points" />
-                        <StatCard mainValue={team.maxPoints?.toFixed(3) || 0} label="Max points" />
+                        <StatCard mainValue={formatNumber(team.points)} label="Points" />
+                        <StatCard mainValue={formatNumber(team.maxPoints)} label="Max points" />
                     </div>
                     {team.info && (
                         <div>
@@ -151,7 +151,9 @@ export default function Teams({ team }: { team: Team }) {
                             />
                         </div>
                     )}
-                    {team.pointsHistory && <SinglePointsChart data={team.pointsHistory} />}
+                    {team.pointsHistory && (
+                        <SinglePointsChart data={team.pointsHistory} color={team.color} />
+                    )}
                     <table key="seasons"></table>
                     {team.positionsHistory && <PositionsChart data={team.positionsHistory} />}
                     {(team.drivers?.length || 0) > 0 && (

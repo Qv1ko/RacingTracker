@@ -1,16 +1,19 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { Team } from "@/types";
 import { Link } from "@inertiajs/react";
+import { formatNumber } from "@/lib/utils";
 
 import { type DataTableColumn } from "@/components/data-table";
 
 export const columns: DataTableColumn<
-    NonNullable<{
-        position: number;
-        team: Team;
-        points: number;
-        championships: number;
-    }[]>[number]
+    NonNullable<
+        {
+            position: number;
+            team: Team;
+            points: number;
+            championships: number;
+        }[]
+    >[number]
 >[] = [
     {
         id: "positions",
@@ -51,7 +54,7 @@ export const columns: DataTableColumn<
         accessorKey: "points",
         header: () => <div className="font-bold">Points</div>,
         cell: ({ row }) => {
-            return <p className="flex items-center gap-2">{row.original.points.toFixed(3)} </p>;
+            return <p className="flex items-center gap-2">{formatNumber(row.original.points)} </p>;
         },
     },
 ];

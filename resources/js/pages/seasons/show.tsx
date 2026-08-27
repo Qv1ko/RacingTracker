@@ -43,13 +43,12 @@ export default function Seasons({ season }: { season: Season }) {
         }, {}),
     ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    const driversPointsChartConfig = season.driversPoints.reduce<Record<string, { label: string }>>(
-        (acc, { driver: { id, name, surname } }) => {
-            acc[id] = { label: `${name[0].toUpperCase()}. ${surname}` };
-            return acc;
-        },
-        {},
-    );
+    const driversPointsChartConfig = season.driversPoints.reduce<
+        Record<string, { label: string; color?: string }>
+    >((acc, { driver: { id, name, surname, color } }) => {
+        acc[id] = { label: `${name[0].toUpperCase()}. ${surname}`, color };
+        return acc;
+    }, {});
 
     const teamsPointsData = season.teamsPoints?.flatMap(({ team: { id }, pointsHistory }) =>
         pointsHistory.map(({ race, date, points }) => ({ race, date, id, points })),
@@ -77,9 +76,9 @@ export default function Seasons({ season }: { season: Season }) {
         : [];
 
     const teamsPointsChartConfig = season.teamsPoints
-        ? season.teamsPoints.reduce<Record<string, { label: string }>>(
-              (acc, { team: { id, name } }) => {
-                  acc[id] = { label: name };
+        ? season.teamsPoints.reduce<Record<string, { label: string; color?: string }>>(
+              (acc, { team: { id, name, color } }) => {
+                  acc[id] = { label: name, color };
                   return acc;
               },
               {},

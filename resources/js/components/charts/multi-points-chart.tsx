@@ -85,7 +85,11 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
                         />
                         <Tooltip
                             isAnimationActive={false}
-                            cursor={{ strokeDasharray: "3 3" }}
+                            cursor={{
+                                stroke: "var(--muted-foreground)",
+                                strokeDasharray: "3 3",
+                                strokeWidth: 1,
+                            }}
                             content={({ payload = [], label, active, coordinate, offset }) => {
                                 const sorted = payload
                                     .slice()
@@ -117,18 +121,29 @@ export const MultiPointsChart: React.FC<MultiPointsChartProps> = ({
                             }}
                             wrapperStyle={{ zIndex: 9999, pointerEvents: "none" }}
                         />
-                        {driverKeys.map((key, i) => (
-                            <Line
-                                key={key}
-                                dataKey={key}
-                                type="linear"
-                                stroke={`var(--chart-${(i % 5) + 1})`}
-                                strokeWidth={2}
-                                dot={false}
-                                connectNulls
-                                isAnimationActive={false}
-                            />
-                        ))}
+                        {driverKeys.map((key, i) => {
+                            const configColor = (chartConfig[key] as { color?: string } | undefined)
+                                ?.color;
+                            const lineColor = configColor ?? `var(--chart-${(i % 5) + 1})`;
+
+                            return (
+                                <Line
+                                    key={key}
+                                    dataKey={key}
+                                    type="linear"
+                                    stroke={lineColor}
+                                    strokeWidth={2}
+                                    dot={false}
+                                    activeDot={{
+                                        r: 5,
+                                        strokeWidth: 2,
+                                        fill: lineColor,
+                                    }}
+                                    connectNulls
+                                    isAnimationActive={false}
+                                />
+                            );
+                        })}
                     </LineChart>
                 </ChartContainer>
             </CardContent>

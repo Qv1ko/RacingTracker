@@ -34,6 +34,12 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
         columns = columns.filter((column) => getColumnKey(column) !== "actions");
     }
 
+    const leaderPoints = teams.length ? Math.max(...teams.map((t) => t.points ?? 0)) : 0;
+    const tableData = teams.map((t) => ({
+        ...t,
+        gap: leaderPoints - (t.points ?? 0),
+    }));
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Teams" />
@@ -48,7 +54,7 @@ export default function Teams({ seasons, teams }: { seasons: string[]; teams: Te
                 </div>
                 <DataTable
                     columns={columns}
-                    data={teams}
+                    data={tableData}
                     initialSorting={[{ id: "points", desc: true }]}
                 />
             </div>

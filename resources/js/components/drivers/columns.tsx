@@ -1,6 +1,7 @@
 import { ActionsColumn } from "@/components/drivers/actions-column";
 import { Badge } from "@/components/ui/badge";
 import FlagIcon from "@/components/ui/flag-icon";
+import { formatNumber } from "@/lib/utils";
 import { type Driver } from "@/types";
 import { Link } from "@inertiajs/react";
 
@@ -70,14 +71,6 @@ export const columns: DataTableColumn<Driver>[] = [
         },
     },
     {
-        accessorKey: "races",
-        header: () => <div className="hidden font-bold sm:table-cell">Races</div>,
-        cell: ({ row }) => {
-            const races = row.original.races || 0;
-            return <p className="hidden sm:table-cell">{races}</p>;
-        },
-    },
-    {
         accessorKey: "wins",
         header: () => <div className="hidden font-bold sm:table-cell">Wins</div>,
         cell: ({ row }) => {
@@ -105,8 +98,16 @@ export const columns: DataTableColumn<Driver>[] = [
         accessorKey: "points",
         header: () => <div className="font-bold">Points</div>,
         cell: ({ row }) => {
-            const points = row.original.points || "";
+            const points = row.original.points || null;
             return <p>{points}</p>;
+        },
+    },
+    {
+        accessorKey: "gap",
+        header: () => <div className="hidden font-bold sm:table-cell">Gap</div>,
+        cell: ({ row }) => {
+            const gap = row.original.gap ?? 0;
+            return <p className="hidden sm:table-cell">{gap !== 0 ? formatNumber(gap) : ""}</p>;
         },
     },
     ActionsColumn,

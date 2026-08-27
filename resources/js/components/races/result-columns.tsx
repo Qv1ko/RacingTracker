@@ -1,6 +1,7 @@
 import { type Race } from "@/types";
 import { Link } from "@inertiajs/react";
 import FlagIcon from "../ui/flag-icon";
+import { formatNumber } from "@/lib/utils";
 
 import { type DataTableColumn } from "@/components/data-table";
 
@@ -66,12 +67,12 @@ export const columns: DataTableColumn<NonNullable<Race["result"]>[number]>[] = [
         cell: ({ row }) => {
             return (
                 <p className="hidden items-center gap-2 md:flex">
-                    {row.original.points.toFixed(3)}{" "}
+                    {formatNumber(row.original.points)}{" "}
                     <span
                         className={`flex items-center text-sm ${row.original.pointsDiff > 0 ? "text-green-600" : row.original.pointsDiff < 0 ? "text-red-500" : ""}`}
                     >
                         ({row.original.pointsDiff > 0 && <span>+</span>}
-                        {row.original.pointsDiff.toFixed(3)})
+                        {formatNumber(row.original.pointsDiff)})
                     </span>
                 </p>
             );
@@ -84,12 +85,12 @@ export const columns: DataTableColumn<NonNullable<Race["result"]>[number]>[] = [
             return (
                 row.original.team && (
                     <p className="hidden items-center gap-2 md:flex">
-                        {row.original.teamPoints.toFixed(3)}
+                        {formatNumber(row.original.teamPoints)}
                         <span
                             className={`flex items-center text-sm ${row.original.teamPointsDiff > 0 ? "text-green-600" : row.original.teamPointsDiff < 0 ? "text-red-500" : ""}`}
                         >
                             ({row.original.teamPointsDiff > 0 && <span>+</span>}
-                            {row.original.teamPointsDiff.toFixed(3)})
+                            {formatNumber(row.original.teamPointsDiff)})
                         </span>
                     </p>
                 )

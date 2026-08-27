@@ -21,6 +21,11 @@ export const medal = (position: number) => {
     return position === 1 ? "🥇" : position === 2 ? "🥈" : position === 3 ? "🥉" : "";
 };
 
+export function formatNumber(value: number | null | undefined): string {
+    if (value == null || Number.isNaN(value)) return "0";
+    return parseFloat(Number(value).toFixed(3)).toString();
+}
+
 interface Status {
     type: string;
     value: boolean;

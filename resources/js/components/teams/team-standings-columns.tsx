@@ -1,6 +1,7 @@
 import FlagIcon from "@/components/ui/flag-icon";
 import { type Race } from "@/types";
 import { Link } from "@inertiajs/react";
+import { formatNumber } from "@/lib/utils";
 
 import { type DataTableColumn } from "@/components/data-table";
 
@@ -44,7 +45,7 @@ export const columns: DataTableColumn<NonNullable<Race["teamStandings"]>[number]
         cell: ({ row }) => {
             return (
                 row.original.team && (
-                    <p className="flex items-center gap-2">{row.original.points.toFixed(3)}</p>
+                    <p className="flex items-center gap-2">{formatNumber(row.original.points)}</p>
                 )
             );
         },
@@ -55,7 +56,8 @@ export const columns: DataTableColumn<NonNullable<Race["teamStandings"]>[number]
         accessorFn: (row) => row.gap,
         cell: ({ row }) => {
             return (
-                row.original.team && row.original.gap !== 0 && <p>{row.original.gap.toFixed(3)}</p>
+                row.original.team &&
+                row.original.gap !== 0 && <p>{formatNumber(row.original.gap)}</p>
             );
         },
     },

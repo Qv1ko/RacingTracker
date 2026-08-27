@@ -20,7 +20,17 @@ import { useInitials } from "@/hooks/use-initials";
 import { cn, HelmetIconNode } from "@/lib/utils";
 import { type BreadcrumbItem, type NavItem, type SharedData } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
-import { CalendarFold, Flag, FolderCode, History, LayoutGrid, Menu, Search, User, Users } from "lucide-react";
+import {
+    CalendarFold,
+    Flag,
+    FolderCode,
+    History,
+    LayoutGrid,
+    Menu,
+    Search,
+    User,
+    Users,
+} from "lucide-react";
 import AppLogo from "./app-logo";
 import AppLogoIcon from "./app-logo-icon";
 import { GlobalSearch } from "./global-search";
