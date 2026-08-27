@@ -718,6 +718,32 @@ sudo nginx -t && sudo systemctl reload nginx
 
 8. You can now access the application at [https://ec2-public-ip-address](https://ec2-public-ip-address).
 
+## 🧭 Application features
+
+RacingTracker provides public read-only access to historical racing data and a set of authenticated editing tools:
+
+- Season, race, driver and team standings with cumulative points and gaps.
+- Interactive cumulative-points charts, finishing-position charts and race position tracking.
+- Driver and team activity heatmaps, plus team win distribution on the home dashboard.
+- Head-to-head driver comparison at `/compare`, including season-specific points histories.
+- Global season selection from the application header on dashboard and index pages.
+- Responsive data tables with sorting, pagination, column visibility and contextual empty states.
+- Public pages can be browsed without an account. Creating, editing and deleting races, drivers and teams requires a verified account.
+
+### Maintaining calculated points
+
+When imported or manually edited results leave cumulative points inconsistent, normalize stored values with:
+
+```bash
+php artisan points:normalize
+```
+
+The command is idempotent and only raises a driver's cumulative points when a later race is lower than a previous result in the same season. Team points are calculated from each driver's race-to-race delta, including team changes and shared-car historical entries.
+
+### User accounts
+
+Users can register, log in, reset passwords, verify email addresses, update their profile and password, and delete their account from profile settings. Authenticated and verified users can manage the racing data through the create, edit and delete actions.
+
 ## 📄 License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/Qv1ko/RacingTracker/blob/main/LICENSE) for more information.
