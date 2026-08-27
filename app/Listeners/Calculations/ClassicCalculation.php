@@ -23,6 +23,19 @@ class ClassicCalculation implements RatingCalculation
             $participation->uncertainty = 0;
             $participation->save();
         }
+
+        $event->participations
+            ->groupBy('driver_id')
+            ->each(function ($driverRows) {
+                $maxPoints = $driverRows->max('points');
+
+                $driverRows->each(function ($participation) use ($maxPoints) {
+                    if ($participation->points < $maxPoints) {
+                        $participation->points = $maxPoints;
+                        $participation->save();
+                    }
+                });
+            });
     }
 
     private function previousRating(Participation $participation): array
