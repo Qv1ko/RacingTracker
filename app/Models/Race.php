@@ -118,42 +118,46 @@ class Race extends Model
 
     public function betterTeam(): ?Participation
     {
-        return $this->participations()
-            ->with('team', 'race')
+        $participations = $this->participations()
+            ->with('team', 'driver', 'race')
             ->whereNotNull('team_id')
-            ->get()
+            ->get();
+
+        $deduped = $participations
+            ->groupBy('driver_id')
+            ->map(fn ($rows) => $rows->sortByDesc('points')->first());
+
+        $withDeltas = $deduped->map(function (Participation $participation) {
+            $previous = Participation::where('driver_id', $participation->driver_id)
+                ->whereHas('race', fn ($q) => $q->where('date', '<', $this->date))
+                ->orderByDesc(
+                    Race::select('date')
+                        ->whereColumn('races.id', 'participations.race_id')
+                        ->limit(1)
+                )
+                ->value('points');
+
+            if ($previous === null) {
+                return null;
+            }
+
+            $participation->points_diff = $participation->points - $previous;
+
+            return $participation;
+        })->filter();
+
+        if ($withDeltas->isEmpty()) {
+            return null;
+        }
+
+        $best = $withDeltas
             ->groupBy('team_id')
-            ->map(function ($teamParticipations) {
-                $teamId = $teamParticipations->first()->team_id;
-
-                $current = $teamParticipations
-                    ->sortByDesc(fn ($p) => $p->race->date)
-                    ->unique('driver_id')
-                    ->sum('points');
-
-                $previousRace = Race::where('date', '<', $this->date)
-                    ->orderByDesc('date')
-                    ->first();
-
-                if ( ! $previousRace) {
-                    return null;
-                }
-
-                $previous = Participation::where('team_id', $teamId)
-                    ->where('race_id', $previousRace->id)
-                    ->get()
-                    ->sortByDesc('race.date')
-                    ->unique('driver_id')
-                    ->sum('points');
-
-                $participation = $teamParticipations->first();
-                $participation->points_diff = $current - $previous;
-
-                return $participation;
-            })
-            ->filter()
-            ->sortByDesc('points_diff')
+            ->map(fn ($driverRows) => $driverRows->sum('points_diff'))
+            ->sortDesc()
+            ->keys()
             ->first();
+
+        return $withDeltas->firstWhere('team_id', $best);
     }
 
     public function scopeInSeason(Builder $query, ?string $season = null): Builder

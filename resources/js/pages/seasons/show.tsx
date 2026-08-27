@@ -285,7 +285,7 @@ export default function Seasons({ season }: { season: Season }) {
                         </div>
                         <h3 className="text-xl font-semibold">Races</h3>
                     </div>
-                    <DataTable columns={racesColumns} data={season.races} />
+                    <DataTable columns={racesColumns} data={season.races} initialSorting={[{ id: "date", desc: false }]} />
                 </div>
             </div>
         </AppLayout>
