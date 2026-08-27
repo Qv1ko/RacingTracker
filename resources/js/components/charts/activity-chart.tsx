@@ -11,9 +11,13 @@ type ActivityChartProps = {
     data: {
         activity: Activity[];
     };
+    title?: string;
 };
 
-export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
+export const ActivityChart: React.FC<ActivityChartProps> = ({
+    data,
+    title = "Activity history",
+}) => {
     const getColorFromStatus = (position: string): string => {
         const gold = "gold";
         const silver = "silver";
@@ -39,7 +43,7 @@ export const ActivityChart: React.FC<ActivityChartProps> = ({ data }) => {
 
     return (
         <div className="rounded-sm border">
-            <h3 className="mt-4 text-center font-medium">Activity history</h3>
+            <h3 className="mt-4 text-center font-medium">{title}</h3>
             <div className="m-8 mt-4 flex flex-wrap gap-1">
                 {data.activity.map((activity, index) => (
                     <TooltipProvider key={index}>

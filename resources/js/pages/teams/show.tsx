@@ -1,5 +1,7 @@
+import { ActivityChart } from "@/components/charts/activity-chart";
 import { PositionsChart } from "@/components/charts/positions-chart";
 import { SinglePointsChart } from "@/components/charts/single-points-chart";
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import InfoGrid from "@/components/info-grid";
 import StatCard from "@/components/stat-card";
@@ -8,7 +10,7 @@ import AppLayout from "@/layouts/app-layout";
 import { HelmetIconNode, medal, formatNumber } from "@/lib/utils";
 import { Team, type BreadcrumbItem } from "@/types";
 import { Head, Link } from "@inertiajs/react";
-import { Trophy, Users } from "lucide-react";
+import { ChartNoAxesCombined, Trophy, Users } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -51,6 +53,23 @@ export default function Teams({ team }: { team: Team }) {
                         <StatCard mainValue={formatNumber(team.points)} label="Points" />
                         <StatCard mainValue={formatNumber(team.maxPoints)} label="Max points" />
                     </div>
+                    {team.activity && team.activity.length > 0 ? (
+                        <ActivityChart
+                            title={`${team.name} activity history`}
+                            data={{
+                                activity: team.activity.map((activity) => ({
+                                    position: activity.position,
+                                    name: activity.name,
+                                    date: activity.date,
+                                })),
+                            }}
+                        />
+                    ) : (
+                        <EmptyState
+                            title="No activity history"
+                            description="Race activity will appear here once this team has results."
+                        />
+                    )}
                     {team.info && (
                         <div>
                             <InfoGrid
@@ -151,11 +170,25 @@ export default function Teams({ team }: { team: Team }) {
                             />
                         </div>
                     )}
-                    {team.pointsHistory && (
+                    {team.pointsHistory && team.pointsHistory.length > 0 ? (
                         <SinglePointsChart data={team.pointsHistory} color={team.color} />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No points history"
+                            description="Points history will appear here once this team has raced."
+                        />
                     )}
                     <table key="seasons"></table>
-                    {team.positionsHistory && <PositionsChart data={team.positionsHistory} />}
+                    {team.positionsHistory && team.positionsHistory.length > 0 ? (
+                        <PositionsChart data={team.positionsHistory} />
+                    ) : (
+                        <EmptyState
+                            icon={<ChartNoAxesCombined aria-hidden="true" />}
+                            title="No positions history"
+                            description="Finishing positions will appear here once this team has results."
+                        />
+                    )}
                     {(team.drivers?.length || 0) > 0 && (
                         <div className="grid auto-rows-min justify-items-center gap-4">
                             <div className="flex items-center justify-center gap-2">

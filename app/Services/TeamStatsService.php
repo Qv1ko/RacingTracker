@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Actions\SyncRaceParticipations;
 use App\Models\Participation;
+use App\Models\Race;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -54,6 +55,29 @@ class TeamStatsService
             ->get()
             ->sortBy(fn ($participation) => $participation->race->date)
             ->values();
+    }
+
+    public function activity(?string $season = null): Collection
+    {
+        return $this->team
+            ->participations()
+            ->with('race:id,name,date')
+            ->whereHas('race', fn ($q) => $q->when($season, fn ($w) => $w->whereYear('date', $season)))
+            ->orderBy(
+                Race::select('date')
+                    ->whereColumn('races.id', 'participations.race_id')
+            )
+            ->orderBy('participations.id')
+            ->get()
+            ->groupBy(fn ($p) => $p->driver_id.'-'.$p->race_id)
+            ->map(fn ($rows) => $rows->first())
+            ->sortBy(fn ($p) => $p->race->date)
+            ->values()
+            ->map(fn ($p) => [
+                'position' => $p->status,
+                'name' => $p->race->name,
+                'date' => $p->race->date,
+            ]);
     }
 
     public function pointsHistory(?string $season = null): Collection

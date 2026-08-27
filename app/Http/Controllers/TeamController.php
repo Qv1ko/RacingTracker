@@ -101,6 +101,7 @@ class TeamController extends Controller
             'championshipsCount' => $teamStats->championships()->count(),
             'points' => $teamStats->lastPoints(),
             'maxPoints' => $teamStats->pointsHistory()->max('points'),
+            'activity' => $teamStats->activity(),
             'info' => [
                 'firstRace' => $team->races()->orderBy('races.date')->first(),
                 'lastRace' => $team->races()->orderByDesc('races.date')->first(),
