@@ -1,10 +1,12 @@
 import { MultiPointsChart } from "@/components/charts/multi-points-chart";
+import { WinDistributionChart } from "@/components/charts/win-distribution-chart";
 import { DataTable } from "@/components/data-table";
-import { SelectSeason } from "@/components/select-season";
+import { EmptyState } from "@/components/empty-state";
 import { columns as teamStandingsColumns } from "@/components/teams/team-standings-columns";
 import AppLayout from "@/layouts/app-layout";
 import { Driver, Team, type BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
+import { ChartNoAxesCombined } from "lucide-react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,12 +16,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Home({
-    seasons,
     season,
     drivers,
     teams,
 }: {
-    seasons: string[];
     season: {
         season: string;
         driversPoints: {
@@ -27,6 +27,7 @@ export default function Home({
             pointsHistory: { race: string; date: string; points: number }[];
         }[];
         teamStandings: { position: string; team: Team; points: number; gap: number }[];
+        teamWins: { id: number; name: string; color: string; count: number }[];
     };
     drivers: {
         ranking: { position: number; driver: Driver; points: number }[];
@@ -70,28 +71,36 @@ export default function Home({
             <Head title="" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-sm px-4 py-8">
                 <div className="flex justify-between">
-                    <SelectSeason
-                        all={false}
-                        seasons={seasons}
-                        selectedValue={season.season ? season.season.toString() : ""}
-                        url={""}
-                    />
                 </div>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <div
-                        className={`${season.teamStandings && season.teamStandings.length > 0 ? "lg:col-span-2" : "lg:col-span-3"}`}
-                    >
-                        <MultiPointsChart
-                            title=""
-                            data={driversPointsChartData}
-                            chartConfig={driversPointsChartConfig}
-                        />
+                <div className="grid grid-cols-1 gap-4">
+                    <div>
+                        {driversPointsChartData.length > 0 ? (
+                            <MultiPointsChart
+                                title=""
+                                data={driversPointsChartData}
+                                chartConfig={driversPointsChartConfig}
+                            />
+                        ) : (
+                            <EmptyState
+                                icon={<ChartNoAxesCombined aria-hidden="true" />}
+                                title="No points data"
+                                description="Driver points will appear here once races have been recorded."
+                            />
+                        )}
                     </div>
-                    {season.teamStandings && season.teamStandings.length > 0 && (
-                        <div>
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-stretch">
+                        {season.teamStandings && (
                             <DataTable columns={teamStandingsColumns} data={season.teamStandings} />
-                        </div>
-                    )}
+                        )}
+                        {season.teamWins.length > 0 ? (
+                            <WinDistributionChart data={season.teamWins} />
+                        ) : (
+                            <EmptyState
+                                title="No team wins data"
+                                description="Team wins will appear here once race results are available."
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
         </AppLayout>

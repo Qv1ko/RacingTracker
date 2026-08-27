@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use App\Models\Participation;
 use App\Models\Race;
 use App\Services\DriverStatsService;
 use App\Services\RankingService;
+use App\Support\Color;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -39,10 +41,32 @@ class HomeController extends Controller
 
         $ranking = new RankingService;
 
+        $teamWins = Participation::query()
+            ->where('position', 1)
+            ->whereNotNull('team_id')
+            ->whereHas('race', fn ($query) => $query->whereYear('date', $season))
+            ->with('team:id,name,nationality,color')
+            ->get(['team_id'])
+            ->filter(fn (Participation $participation) => $participation->team !== null)
+            ->groupBy('team_id')
+            ->map(function ($wins): array {
+                $team = $wins->first()->team;
+
+                return [
+                    'id' => $team->id,
+                    'name' => $team->name,
+                    'color' => $team->color ?? Color::fromString($team->name),
+                    'count' => $wins->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->values();
+
         $seasonData = [
             'season' => $season,
             'driversPoints' => $driverSeasonPointsHistory,
             'teamStandings' => $lastRace ? $ranking->raceTeamStandings($lastRace) : [],
+            'teamWins' => $teamWins,
         ];
 
         return Inertia::render('home', [
