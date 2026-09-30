@@ -14,9 +14,6 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
-    esbuild: {
-        jsx: 'automatic',
-    },
     resolve: {
         alias: {
             'ziggy-js': resolve(import.meta.dirname, 'vendor/tightenco/ziggy'),
